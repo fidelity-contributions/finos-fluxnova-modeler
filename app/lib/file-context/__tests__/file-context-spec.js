@@ -184,6 +184,65 @@ describe('FileContext', function() {
     expect(file).to.exist;
     expect(file).to.have.property('type');
   });
+
+
+  describe.only('broken files', function() {
+
+    it('should NOT throw for empty BPMN', async function() {
+
+      // given
+      const filePath = path.resolve(__dirname, './fixtures/broken-files/empty.dmn');
+
+      // when
+      const file = await fileContext.addFile(filePath);
+
+      // then
+      expect(file).to.exist;
+      expect(file).to.have.property('type');
+    });
+
+
+    it('should NOT throw for empty DMN', async function() {
+
+      // given
+      const filePath = path.resolve(__dirname, './fixtures/broken-files/empty.bpmn');
+
+      // when
+      const file = await fileContext.addFile(filePath);
+
+      // then
+      expect(file).to.exist;
+      expect(file).to.have.property('type');
+    });
+
+
+    it('should NOT throw for empty FORM', async function() {
+
+      // given
+      const filePath = path.resolve(__dirname, './fixtures/broken-files/empty.json');
+
+      // when
+      const file = await fileContext.addFile(filePath);
+
+      // then
+      expect(file).to.exist;
+      expect(file).to.have.property('type');
+    });
+
+
+    it('should NOT throw for FORM without `id`', async function() {
+
+      // given
+      const filePath = path.resolve(__dirname, './fixtures/broken-files/form-null.json');
+
+      // when
+      const file = await fileContext.addFile(filePath);
+
+      // then
+      expect(file).to.exist;
+      expect(file).to.have.property('type');
+    });
+  });
 });
 
 function createWaitFor(fileContext) {
