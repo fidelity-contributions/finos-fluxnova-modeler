@@ -1,5 +1,3 @@
-[![FINOS - Forming](https://cdn.jsdelivr.net/gh/finos/contrib-toolbox@master/images/badge-forming.svg)](https://community.finos.org/docs/governance/Software-Projects/project-lifecycle)
-
 # Camunda Modeler
 
 [![CI](https://github.com/camunda/camunda-modeler/actions/workflows/CI.yml/badge.svg)](https://github.com/camunda/camunda-modeler/actions/workflows/CI.yml)
@@ -44,11 +42,14 @@ npm run dev
 
 ## Contributing
 
-Please checkout our [contributing guidelines](./CONTRIBUTING.md) if you plan to file an issue or pull request.
+Please checkout our [contributing guidelines](./.github/CONTRIBUTING.md) if you plan to
+file an issue or pull request.
+
+## Code of Conduct
+
+By participating to this project, please uphold to our [Code of Conduct](https://github.com/camunda/.github/blob/main/.github/CODE_OF_CONDUCT.md).
 
 ## License
-
-Copyright 2025 FINOS
 
 MIT
 
