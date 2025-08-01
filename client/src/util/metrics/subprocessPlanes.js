@@ -9,7 +9,7 @@
  */
 
 import { is } from 'bpmn-js/lib/util/ModelUtil';
-import { getBpmnDefinitions } from '../parse';
+import { getBpmnDefinitions } from '../xmlConversion';
 
 export async function getSubprocessPlaneMetrics(file, type) {
 

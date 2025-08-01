@@ -15,7 +15,7 @@ import {
 
 import {
   getEngineProfile
-} from '../../../util/parse';
+} from '../../../util/xmlConversion';
 
 export default class DeploymentEventHandler {
   constructor(props) {

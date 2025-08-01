@@ -15,9 +15,8 @@ import classnames from 'classnames';
 import semverCompare from 'semver-compare';
 
 
-import Flags, {
-  PLATFORM_ENGINE_VERSION,
-  CLOUD_ENGINE_VERSION
+import {
+  FLOWAVE_ENGINE_VERSION
 } from '../../util/Flags';
 
 import {
@@ -284,16 +283,14 @@ export function getStatusBarLabel(engineProfile) {
 
   if (!executionPlatformVersion) {
     return `${ENGINE_LABELS[executionPlatform]}`;
-  } else if (executionPlatformVersion.startsWith('1.')) {
-    return `${ENGINE_LABELS[executionPlatform]} (Zeebe ${toSemverMinor(executionPlatformVersion)})`;
   } else {
-    return `Camunda ${toDisplayVersion(engineProfile)}`;
+    return `Flowave ${toDisplayVersion(engineProfile)}`;
   }
 }
 
 export function getAnnotatedVersion(version, platform) {
   if (version.startsWith('1.')) {
-    return 'Zeebe ' + version;
+    return version;
   }
 
   if (platform && isAlpha(version, platform)) {
@@ -304,7 +301,7 @@ export function getAnnotatedVersion(version, platform) {
 }
 
 export function getDefaultVersion(engine) {
-  const flagVersion = getFlagVersion(engine);
+  const flagVersion = getFlagVersion();
 
   const versions = getVersions(engine);
   if (isKnownVersion(versions, flagVersion)) {
@@ -314,12 +311,8 @@ export function getDefaultVersion(engine) {
   return getLatestStable(engine);
 }
 
-function getFlagVersion(engine) {
-  if (engine === ENGINES.PLATFORM) {
-    return Flags.get(PLATFORM_ENGINE_VERSION);
-  } else if (engine === ENGINES.CLOUD) {
-    return Flags.get(CLOUD_ENGINE_VERSION);
-  }
+function getFlagVersion() {
+  return FLOWAVE_ENGINE_VERSION;
 }
 
 function getVersions(engine) {

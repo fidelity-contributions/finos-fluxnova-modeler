@@ -1,11 +1,11 @@
 {
-  "name": "camunda-modeler",
-  "version": "5.33.0-rc.0",
-  "description": "Camunda Modeler for BPMN, DMN and CMMN, based on bpmn.io",
+  "name": "flowave-modeler",
+  "version": "0.0.1-dev",
+  "description": "Flowave Modeler for BPMN, DMN and CMMN, based on bpmn.io",
   "private": true,
   "main": "prod.js",
   "author": {
-    "name": "Camunda Services GmbH",
+    "name": "FINOS",
     "email": "info@camunda.com",
     "url": "https://camunda.com"
   },

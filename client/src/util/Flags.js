@@ -48,6 +48,7 @@ export const MIXPANEL_STAGE = 'mixpanel-stage';
 export const DISPLAY_VERSION = 'display-version';
 export const CLOUD_ENGINE_VERSION = 'c8-engine-version';
 export const PLATFORM_ENGINE_VERSION = 'c7-engine-version';
+export const FLOWAVE_ENGINE_VERSION = 'flowave-engine-version';
 export const DISABLE_HTTL_HINT = 'disable-httl-hint';
 export const DEFAULT_HTTL = 'default-httl';
 export const ENABLE_NEW_CONTEXT_PAD = 'enable-new-context-pad';

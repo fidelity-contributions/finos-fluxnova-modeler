@@ -44,6 +44,7 @@ import Panel from './panel/Panel';
 
 import LintingTab from './panel/tabs/linting/LintingTab';
 import LogTab from './panel/tabs/log/LogTab';
+import BpmnModdle from 'bpmn-moddle';
 
 import { StatusBar } from './status-bar';
 
@@ -71,6 +72,7 @@ import * as css from './App.less';
 
 import Notifications, { NOTIFICATION_TYPES } from './notifications';
 import { RecentTabs } from './RecentTabs';
+import CamundaBpmnModdle from 'camunda-bpmn-moddle/resources/camunda';
 
 const log = debug('App');
 
@@ -943,6 +945,14 @@ export class App extends PureComponent {
 
     if (!contents) {
       contents = tab.file.contents;
+    }
+
+    if (isString(contents) && tab.type === 'bpmn') {
+      const moddle = new BpmnModdle(
+        { camunda: CamundaBpmnModdle }
+      );
+      const { rootElement } = await moddle.fromXML(contents);
+      contents = rootElement;
     }
 
     const results = await linter.lint(contents);

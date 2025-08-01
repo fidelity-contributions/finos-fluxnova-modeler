@@ -3,73 +3,73 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Classes]
 
 [HKEY_CURRENT_USER\Software\Classes\.bpmn]
-@="CamundaModeler.BPMN"
+@="FlowaveModeler.BPMN"
 
 [HKEY_CURRENT_USER\Software\Classes\.cmmn]
-@="CamundaModeler.CMMN"
+@="FlowaveModeler.CMMN"
 
 [HKEY_CURRENT_USER\Software\Classes\.dmn]
-@="CamundaModeler.DMN"
+@="FlowaveModeler.DMN"
 
 [HKEY_CURRENT_USER\Software\Classes\.form]
-@="CamundaModeler.FORM"
+@="FlowaveModeler.FORM"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.BPMN]
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.BPMN]
 @="BPMN file"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.BPMN\DefaultIcon]
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.BPMN\DefaultIcon]
 @="__CWD__,0"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.BPMN\shell]
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.BPMN\shell]
 @="open"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.BPMN\shell\open]
-@="Open with Camunda Modeler"
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.BPMN\shell\open]
+@="Open with Flowave Modeler"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.BPMN\shell\open\command]
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.BPMN\shell\open\command]
 @="__CWD__ \"%1\""
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.CMMN]
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.CMMN]
 @="CMMN file"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.CMMN\DefaultIcon]
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.CMMN\DefaultIcon]
 @="__CWD__,0"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.CMMN\shell]
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.CMMN\shell]
 @="open"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.CMMN\shell\open]
-@="Open with Camunda Modeler"
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.CMMN\shell\open]
+@="Open with Flowave Modeler"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.CMMN\shell\open\command]
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.CMMN\shell\open\command]
 @="__CWD__ \"%1\""
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.DMN]
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.DMN]
 @="DMN file"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.DMN\DefaultIcon]
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.DMN\DefaultIcon]
 @="__CWD__,0"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.DMN\shell]
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.DMN\shell]
 @="open"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.DMN\shell\open]
-@="Open with Camunda Modeler"
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.DMN\shell\open]
+@="Open with Flowave Modeler"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.DMN\shell\open\command]
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.DMN\shell\open\command]
 @="__CWD__ \"%1\""
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.FORM]
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.FORM]
 @="FORM file"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.FORM\DefaultIcon]
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.FORM\DefaultIcon]
 @="__CWD__,0"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.FORM\shell]
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.FORM\shell]
 @="open"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.FORM\shell\open]
-@="Open with Camunda Modeler"
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.FORM\shell\open]
+@="Open with Flowave Modeler"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.FORM\shell\open\command]
+[HKEY_CURRENT_USER\Software\Classes\FlowaveModeler.FORM\shell\open\command]
 @="__CWD__ \"%1\""

@@ -25,7 +25,6 @@ import Flags, { DISABLE_DMN, DISABLE_FORM, DISABLE_ZEEBE, DISABLE_PLATFORM } fro
 describe('<EmptyTab>', function() {
 
   describe('dispatching action', function() {
-
     it('should dispatch create-* actions', function() {
 
       // given
@@ -41,9 +40,9 @@ describe('<EmptyTab>', function() {
       // then
       expect(onAction).to.have.callCount(6);
       expect(onAction.args).to.eql([
-        [ 'create-cloud-bpmn-diagram', undefined ],
-        [ 'create-cloud-dmn-diagram', undefined ],
-        [ 'create-cloud-form', undefined ],
+        [ 'create-bpmn-diagram', undefined ],
+        [ 'create-dmn-diagram', undefined ],
+        [ 'create-form', undefined ],
         [ 'create-bpmn-diagram', undefined ],
         [ 'create-dmn-diagram', undefined ],
         [ 'create-form', undefined ]

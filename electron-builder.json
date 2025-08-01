@@ -1,6 +1,6 @@
 {
-  "appId": "com.camunda.CamundaModeler",
-  "productName": "Camunda Modeler",
+  "appId": "org.finos.flowave.FlowaveModeler",
+  "productName": "Flowave Modeler",
   "files": [
     {
       "filter": [
@@ -47,28 +47,28 @@
   "fileAssociations": [
     {
       "ext": "bpmn",
-      "name": "CamundaModeler.BPMN",
+      "name": "FlowaveModeler.BPMN",
       "description": "BPMN file",
       "role": "Editor",
       "mimeType": "application/bpmn"
     },
     {
       "ext": "dmn",
-      "name": "CamundaModeler.DMN",
+      "name": "FlowaveModeler.DMN",
       "description": "DMN file",
       "role": "Editor",
       "mimeType": "application/dmn"
     },
     {
       "ext": "cmmn",
-      "name": "CamundaModeler.CMMN",
+      "name": "FlowaveModeler.CMMN",
       "description": "CMMN file",
       "role": "Editor",
       "mimeType": "application/cmmn"
     },
     {
       "ext": "form",
-      "name": "CamundaModeler.FORM",
+      "name": "FlowaveModeler.FORM",
       "description": "FORM file",
       "role": "Editor",
       "mimeType": "application/camunda-form"

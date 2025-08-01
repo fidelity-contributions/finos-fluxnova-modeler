@@ -59,38 +59,38 @@ const platforms = [
 const expectedFiles = {
   win: [
     {
-      name: 'camunda-modeler-${version}-win-${arch}.zip',
+      name: 'flowave-modeler-${version}-win-${arch}.zip',
       archs,
       contents: [
-        'Camunda Modeler.exe',
+        'Flowave Modeler.exe',
         'support/register_fileassoc.bat',
-        'LICENSE.camunda-modeler.txt',
-        'THIRD_PARTY_NOTICES.camunda-modeler.txt',
+        'LICENSE.flowave-modeler.txt',
+        'THIRD_PARTY_NOTICES.flowave-modeler.txt',
         'VERSION'
       ]
     }
   ],
   linux: [
     {
-      name: 'camunda-modeler-${version}-linux-${arch}.tar.gz',
+      name: 'flowave-modeler-${version}-linux-${arch}.tar.gz',
       archs: [ 'x64' ],
       contents: [
-        'camunda-modeler-${version}-linux-${arch}/camunda-modeler',
-        'camunda-modeler-${version}-linux-${arch}/support/xdg_register.sh',
-        'camunda-modeler-${version}-linux-${arch}/VERSION'
+        'flowave-modeler-${version}-linux-${arch}/flowave-modeler',
+        'flowave-modeler-${version}-linux-${arch}/support/xdg_register.sh',
+        'flowave-modeler-${version}-linux-${arch}/VERSION'
       ]
     }
   ],
   mac: [
     {
-      name: 'camunda-modeler-${version}-mac-${arch}.dmg',
+      name: 'flowave-modeler-${version}-mac-${arch}.dmg',
       archs: [ 'x64', 'arm64' ]
     },
     {
-      name: 'camunda-modeler-${version}-mac-${arch}.zip',
+      name: 'flowave-modeler-${version}-mac-${arch}.zip',
       archs: [ 'x64', 'arm64' ],
       contents: [
-        'Camunda Modeler.app/Contents/Info.plist'
+        'Flowave Modeler.app/Contents/Info.plist'
       ]
     }
   ]

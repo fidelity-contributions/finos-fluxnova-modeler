@@ -10,7 +10,7 @@
 
 import { getProcessVariables } from '@bpmn-io/extract-process-variables';
 
-import { getBpmnDefinitions } from '../parse';
+import { getBpmnDefinitions } from '../xmlConversion';
 
 export async function getProcessVariablesCount(file, type) {
 

@@ -2028,7 +2028,7 @@ describe('cloud-bpmn - <BpmnEditor>', function() {
       // then
       expect(onImportSpy).to.have.been.calledOnce;
       expect(instance.getCached().engineProfile).to.eql({
-        executionPlatform: 'Camunda Cloud',
+        executionPlatform: 'Flowave Platform',
         executionPlatformVersion: '7.15.0'
       });
     });

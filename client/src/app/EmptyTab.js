@@ -63,7 +63,7 @@ export default class EmptyTab extends PureComponent {
 
   renderCloudColumn = () => {
 
-    const createButtons = this.getCreateButtons('Camunda 8');
+    const createButtons = this.getCreateButtons('Flowave');
 
     return (
       <div id="welcome-page-cloud" className="welcome-card relative">
@@ -84,7 +84,7 @@ export default class EmptyTab extends PureComponent {
 
   renderPlatformColumn = () => {
 
-    const createButtons = this.getCreateButtons('Camunda 7');
+    const createButtons = this.getCreateButtons('Flowave');
 
     return (
       <div id="welcome-page-platform" className="welcome-card">

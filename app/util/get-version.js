@@ -33,8 +33,9 @@ module.exports = function getVersion() {
   var appVersion = pkg.version;
   var increment = IS_NIGHTLY || IS_DEV;
 
+  // todo: Increment on minor once 1.0.0 is ready.
   if (increment) {
-    appVersion = semver.inc(appVersion, 'minor');
+    appVersion = semver.inc(appVersion, 'patch');
   }
 
   if (IS_NIGHTLY) {

@@ -1,5 +1,4 @@
 import bpmnIoPlugin from 'eslint-plugin-bpmn-io';
-import camundaLicensedPlugin from 'eslint-plugin-camunda-licensed';
 
 const files = {
   client: [
@@ -33,14 +32,6 @@ export default [
   {
     ignores: files.ignored
   },
-
-  // license header
-  ...camundaLicensedPlugin.configs.mit.map((config) => {
-    return {
-      ...config,
-      files: files.sources
-    };
-  }),
 
   // build + app
   ...bpmnIoPlugin.configs.node.map((config) => {

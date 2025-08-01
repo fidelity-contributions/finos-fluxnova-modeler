@@ -11,20 +11,38 @@
 import { is } from 'bpmn-js/lib/util/ModelUtil';
 
 import BpmnModdle from 'bpmn-moddle';
+import DmnModdle from 'dmn-moddle';
 
 import CamundaBpmnModdle from 'camunda-bpmn-moddle/resources/camunda';
+import CamundaDmnModdle from 'camunda-dmn-moddle/resources/camunda';
 import ZeebeBpmnModdle from 'zeebe-bpmn-moddle/resources/zeebe';
-import ModelerModdle from 'modeler-moddle/resources/modeler';
+import FlowaveModelerModdle from '../moddle/flowave-bpmn-modeler-moddle';
 
 import { selfAndAllFlowElements } from './elementsUtil';
 import parseExecutionPlatform from '../app/util/parseExecutionPlatform';
 import { ENGINES } from './Engines';
 
+export async function getBpmnDefinitionsForConversion(xml) {
+  return await getBpmnDefinitions(xml, 'bpmn', null);
+}
 
-export async function getBpmnDefinitions(xml, diagramType) {
+export async function getDmnDefinitionsForConversion(xml) {
+  const extensions = {
+    camunda: CamundaDmnModdle
+  };
+
+  const moddle = new DmnModdle(extensions);
+
+  const { rootElement: definitions } = await moddle.fromXML(xml);
+
+  return definitions;
+}
+
+
+export async function getBpmnDefinitions(xml, diagramType, modelerModdle = FlowaveModelerModdle) {
 
   const extensions = {
-    modeler: ModelerModdle
+    modeler: modelerModdle
   };
 
   if (diagramType === 'bpmn') {
@@ -64,7 +82,7 @@ export async function getEngineProfile(contents, resourceType) {
 
   const { executionPlatform } = engineProfile;
 
-  engineProfile.executionPlatform = executionPlatform || getDefaultExecutionPlatform(resourceType);
+  engineProfile.executionPlatform = executionPlatform || getDefaultExecutionPlatform();
 
   return engineProfile;
 }
@@ -142,12 +160,26 @@ export function parseFormFieldCounts(contents) {
   return typeCounts;
 }
 
-function getDefaultExecutionPlatform(type) {
-  if (/^cloud/.test(type)) {
-    return ENGINES.CLOUD;
-  }
+export async function toBpmnXml(definitions) {
+  const extensions = {
+    camunda: CamundaBpmnModdle
+  };
 
-  return ENGINES.PLATFORM;
+  const moddle = new BpmnModdle(extensions);
+  return await moddle.toXML(definitions, { format: true });
+}
+
+export async function toDmnXml(definitions) {
+  const extensions = {
+    camunda: CamundaDmnModdle
+  };
+
+  const moddle = new DmnModdle(extensions);
+  return await moddle.toXML(definitions, { format: true });
+}
+
+function getDefaultExecutionPlatform() {
+  return ENGINES.FLOWAVE;
 }
 
 function parsFormExecutionPlatform(contents) {

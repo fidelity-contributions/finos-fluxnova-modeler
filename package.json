@@ -1,8 +1,8 @@
 {
-  "name": "camunda-modeler-builder",
+  "name": "flowave-modeler-builder",
   "version": "0.0.0",
   "private": true,
-  "description": "Camunda Modeler for BPMN, DMN and CMMN, based on bpmn.io",
+  "description": "Flowave Modeler for BPMN, DMN and CMMN, based on bpmn.io",
   "scripts": {
     "app:auto-test": "npm run app:test -- --watch",
     "app:dev": "electron ./dev.js --force-update-checks resources/diagram/simple.bpmn",
@@ -60,7 +60,6 @@
     "electron-reloader": "^1.2.0",
     "eslint": "^9.12.0",
     "eslint-plugin-bpmn-io": "^2.0.2",
-    "eslint-plugin-camunda-licensed": "^1.0.0",
     "execa": "^1.0.0",
     "lerna": "^8.1.8",
     "license-webpack-plugin": "^4.0.2",

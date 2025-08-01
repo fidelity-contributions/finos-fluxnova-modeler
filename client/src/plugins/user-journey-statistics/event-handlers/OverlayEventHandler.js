@@ -14,7 +14,7 @@ import {
 
 import {
   getEngineProfile
-} from '../../../util/parse';
+} from '../../../util/xmlConversion';
 
 export default class UIEventHandler {
   constructor(props) {

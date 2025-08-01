@@ -407,18 +407,18 @@ describe('DmnModeler', function() {
       // when
       const executionPlatformHelper = modeler.getActiveViewer().get('executionPlatform');
       executionPlatformHelper.setExecutionPlatform({
-        name: 'Camunda Platform',
-        version: '7.16.0'
+        name: 'Flowave Platform',
+        version: '1.0.0'
       });
 
       // then
       const { xml } = await modeler.saveXML();
 
       expect(executionPlatformHelper.getExecutionPlatform()).to.eql({
-        name: 'Camunda Platform',
-        version: '7.16.0'
+        name: 'Flowave Platform',
+        version: '1.0.0'
       });
-      expect(xml).to.contain('xmlns:modeler="http://camunda.org/schema/modeler/1.0"');
+      expect(xml).to.contain('xmlns:modeler="http://flowave.finos.org/schema/modeler/1.0"');
     });
   });
 

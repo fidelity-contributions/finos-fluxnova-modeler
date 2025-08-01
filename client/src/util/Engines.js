@@ -10,7 +10,8 @@
 
 export const ENGINES = {
   PLATFORM: 'Camunda Platform',
-  CLOUD: 'Camunda Cloud'
+  CLOUD: 'Camunda Cloud',
+  FLOWAVE: 'Flowave Platform'
 };
 
 export const ENGINE_PROFILES = [
@@ -23,11 +24,17 @@ export const ENGINE_PROFILES = [
     executionPlatform: ENGINES.CLOUD,
     executionPlatformVersions: [ '8.8.0', '8.7.0', '8.6.0', '8.5.0', '8.4.0', '8.3.0', '8.2.0', '8.1.0', '8.0.0' ],
     latestStable: '8.6.0'
+  },
+  {
+    executionPlatform: ENGINES.FLOWAVE,
+    executionPlatformVersions: [ '0.0.1' ],
+    latestStable: '0.0.1'
   }
 ];
 
 export const ENGINE_LABELS = {
   [ ENGINES.PLATFORM ]: 'Camunda 7',
+  [ ENGINES.FLOWAVE ]: 'Flowave',
   [ ENGINES.CLOUD ]: 'Camunda 8'
 };
 
