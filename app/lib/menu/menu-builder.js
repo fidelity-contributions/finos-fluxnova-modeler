@@ -601,7 +601,7 @@ class MenuBuilder {
       getSeparatorTemplate(),
       {
         label: 'Search Feature Requests',
-        click: () => browserOpen('https://github.com/camunda/camunda-modeler/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement')
+        click: () => browserOpen('https://github.com/finos/flowave-modeler/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement')
       },
       {
         label: 'Report Issue',

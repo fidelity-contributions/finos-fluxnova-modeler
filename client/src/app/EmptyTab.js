@@ -19,8 +19,6 @@ import {
   Tab
 } from './primitives';
 
-import Flags, { DISABLE_ZEEBE, DISABLE_PLATFORM } from '../util/Flags';
-
 
 export default class EmptyTab extends PureComponent {
 
@@ -72,7 +70,6 @@ export default class EmptyTab extends PureComponent {
             <PlatformIcon className="engine-icon platform-icon" />
             <h3>Flowave</h3>
           </div>
-          <a href="https://camunda.com/products/camunda-platform/?utm_source=modeler&utm_medium=referral">See version details</a>
         </div>
 
         <p>Create a new file</p>
@@ -90,11 +87,11 @@ export default class EmptyTab extends PureComponent {
           <h3>Learn more</h3>
           <div className="article relative">
             <p>Introduction to Flowave</p>
-            <a href="https://camunda.com/blog/2022/04/camunda-platform-8-orchestrate-all-the-things?utm_source=modeler&utm_medium=referral">Read blog post</a>
+            <a href="https://docs.flowave.finos.org/get-started/quick-start">Getting Started</a>
           </div>
           <div className="article relative">
             <p>Migrating from Camunda 7</p>
-            <a href="https://docs.camunda.io/docs/guides/migrating-from-Camunda-Platform/?utm_source=modeler&utm_medium=referral">Camunda Docs</a>
+            <a href="https://docs.flowave.finos.org/modeler">Flowave Modeler Docs</a>
           </div>
           <div className="article">
             <p>About Modeler 1</p>
@@ -113,9 +110,9 @@ export default class EmptyTab extends PureComponent {
 
     return (
       <Tab className={ css.EmptyTab }>
-        {!Flags.get(DISABLE_ZEEBE) && !Flags.get(DISABLE_PLATFORM) && <h2 className="welcome-header">Choose the right version for your project:</h2>}
+        {<h2 className="welcome-header">Get Started:</h2>}
         <div className="welcome-cards">
-          {!Flags.get(DISABLE_PLATFORM) && <>{this.renderPlatformColumn()}</>}
+          {this.renderPlatformColumn()}
           {this.renderLearnMoreColumn()}
         </div>
       </Tab>
