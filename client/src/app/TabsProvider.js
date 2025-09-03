@@ -50,7 +50,8 @@ import Flags, {
   DISABLE_CMMN,
   DISABLE_HTTL_HINT,
   DEFAULT_HTTL,
-  DISABLE_RPA
+  DISABLE_RPA,
+  DEFAULTS
 } from '../util/Flags';
 
 import BPMNIcon from '../../resources/icons/file-types/BPMN.svg';
@@ -552,11 +553,9 @@ function DisableHTTLHintPlugin() {
 }
 
 function replaceHistoryTimeToLive(contents) {
-  if (!Flags.get(DEFAULT_HTTL)) {
-    return contents.replace('camunda:historyTimeToLive="{{ DEFAULT_HTTL }}"', '');
-  }
+  let historyTimeToLive = Flags.get(DEFAULT_HTTL);
   return (
     contents
-      .replace('{{ DEFAULT_HTTL }}', Flags.get(DEFAULT_HTTL))
+      .replace('{{ DEFAULT_HTTL }}', historyTimeToLive ? historyTimeToLive : DEFAULTS.DEFAULT_HTTL)
   );
 }

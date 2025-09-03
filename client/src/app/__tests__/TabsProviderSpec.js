@@ -891,7 +891,7 @@ describe('TabsProvider', function() {
       const { file: { contents } } = tabsProvider.createTab('bpmn');
 
       // then
-      expect(contents).to.not.include('historyTimeToLive');
+      expect(contents).to.include('historyTimeToLive="30"');
 
     });
 
@@ -900,7 +900,7 @@ describe('TabsProvider', function() {
 
       // given
       Flags.init({
-        [DEFAULT_HTTL]: '30'
+        [DEFAULT_HTTL]: '40'
       });
       const tabsProvider = new TabsProvider();
 
@@ -908,7 +908,7 @@ describe('TabsProvider', function() {
       const { file: { contents } } = tabsProvider.createTab('bpmn');
 
       // then
-      expect(contents).to.include('historyTimeToLive="30"');
+      expect(contents).to.include('historyTimeToLive="40"');
     });
 
   });
