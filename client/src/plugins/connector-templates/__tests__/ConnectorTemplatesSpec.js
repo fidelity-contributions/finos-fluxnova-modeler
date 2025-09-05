@@ -44,7 +44,7 @@ describe('<ConnectorTemplates>', function() {
     backend.receive('client:connector-templates-update-success', null, true);
 
     // then
-    expect(displayNotificationSpy).to.have.been.calledWithMatch({ type: 'success', title: 'Camunda Connector templates updated' });
+    expect(displayNotificationSpy).to.have.been.calledWithMatch({ type: 'success', title: 'Flowave Connector templates updated' });
 
     expect(triggerActionSpy).to.have.been.calledWith('elementTemplates.reload');
   });
@@ -69,7 +69,7 @@ describe('<ConnectorTemplates>', function() {
     backend.receive('client:connector-templates-update-success', null, false);
 
     // then
-    expect(displayNotificationSpy).to.have.been.calledWithMatch({ type: 'success', title: 'Camunda Connector templates up to date' });
+    expect(displayNotificationSpy).to.have.been.calledWithMatch({ type: 'success', title: 'Flowave Connector templates up to date' });
 
     expect(triggerActionSpy).to.have.been.calledWith('elementTemplates.reload');
   });
@@ -94,7 +94,7 @@ describe('<ConnectorTemplates>', function() {
     backend.receive('client:connector-templates-update-success', null, true, [ 'foo', 'bar' ]);
 
     // then
-    expect(displayNotificationSpy).to.have.been.calledWithMatch({ type: 'warning', title: 'Camunda Connector templates updated with warnings' });
+    expect(displayNotificationSpy).to.have.been.calledWithMatch({ type: 'warning', title: 'Flowave Connector templates updated with warnings' });
     expect(displayNotificationSpy.args[0][0].content).to.exist;
   });
 
@@ -118,7 +118,7 @@ describe('<ConnectorTemplates>', function() {
     backend.receive('client:connector-templates-update-error', null, 'error');
 
     // then
-    expect(displayNotificationSpy).to.have.been.calledWithMatch({ type: 'error', title: 'Error updating Camunda Connector templates' });
+    expect(displayNotificationSpy).to.have.been.calledWithMatch({ type: 'error', title: 'Error updating Flowave Connector templates' });
     expect(displayNotificationSpy.args[0][0].content).to.exist;
   });
 

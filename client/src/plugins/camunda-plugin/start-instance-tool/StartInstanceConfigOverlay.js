@@ -64,7 +64,7 @@ export default class StartInstanceConfigOverlay extends React.PureComponent {
 
                 <Section.Body>
                   <p className="intro">
-                    Enter details to start a process instance on Camunda Platform. Alternatively, you can start a process instance <a href="https://docs.flowave.finos.org/manual/latest/reference/rest/process-definition/post-start-process-instance/#request">via a Rest Client</a>.
+                    Enter details to start a process instance on Flowave Platform. Alternatively, you can start a process instance <a href="https://docs.flowave.finos.org/manual/latest/reference/rest/process-definition/post-start-process-instance/#request">via a Rest Client</a>.
                   </p>
 
                   <fieldset>

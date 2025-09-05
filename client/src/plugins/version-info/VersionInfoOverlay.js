@@ -15,7 +15,7 @@ import { Overlay, Section } from '../../shared/ui';
 import { ReleaseInfo } from './ReleaseInfo';
 
 const RELEASE_NOTES_LINK = 'https://flowave.finos.org/blog/category/releases/&utm_source=modeler&utm_medium=referral';
-const DOCS_LINK = 'https://docs.camunda.io/docs/components/modeler/desktop-modeler/?utm_source=modeler&utm_medium=referral';
+const DOCS_LINK = 'https://docs.flowave.finos.org/modeler/?utm_source=modeler&utm_medium=referral';
 const CHANGELOG_LINK = 'https://github.com/finos/flowave-modeler/blob/main/CHANGELOG.md';
 
 const OFFSET = { right: 0 };
@@ -54,8 +54,8 @@ function LearnMoreSection(props) {
       </Section.Header>
       <Section.Body>
         <ul className="dashed">
-          <li><a href={ RELEASE_NOTES_LINK }>Release Notes on Camunda blog</a></li>
-          <li><a href={ DOCS_LINK }>Camunda Modeler docs</a></li>
+          <li><a href={ RELEASE_NOTES_LINK }>Flowave Release Notes</a></li>
+          <li><a href={ DOCS_LINK }>Flowave Modeler Docs</a></li>
           <li><a href={ CHANGELOG_LINK }>Changelog on GitHub</a></li>
         </ul>
       </Section.Body>

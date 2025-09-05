@@ -153,7 +153,7 @@ describe('tabs/form/linting - FormLinter', function() {
 
       // then
       expect(reports).to.eql([
-        { id: 'test_submit', label: 'Submit', message: 'Submit buttons will be hidden in favor of built-in ones in the Camunda Tasklist.', category: 'info' }
+        { id: 'test_submit', label: 'Submit', message: 'Submit buttons will be hidden in favor of built-in ones in the Flowave Tasklist.', category: 'info' }
       ]);
 
     });

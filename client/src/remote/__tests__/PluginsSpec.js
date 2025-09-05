@@ -172,7 +172,7 @@ describe('plugins', function() {
       // then
       expect(() => {
         global.getModelerDirectory();
-      }).to.throw('not implemented in Camunda Modeler >= 3');
+      }).to.throw('not implemented in Flowave Modeler >= 1');
 
     });
 

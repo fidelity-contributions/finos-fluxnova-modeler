@@ -17,7 +17,7 @@ import {
 import EmptyTab from '../EmptyTab';
 import TabsProvider from '../TabsProvider';
 
-import Flags, { DISABLE_DMN, DISABLE_FORM, DISABLE_ZEEBE, DISABLE_PLATFORM } from '../../util/Flags';
+import Flags, { DISABLE_DMN, DISABLE_FORM } from '../../util/Flags';
 
 /* global sinon */
 
@@ -132,7 +132,7 @@ describe('<EmptyTab>', function() {
 
     afterEach(sinon.restore);
 
-    it('should display platform without flag', function() {
+    it('should display platform', function() {
 
       // when
       const {
@@ -147,22 +147,6 @@ describe('<EmptyTab>', function() {
           wrapper => wrapper.text().startsWith('Flowave')
         ).exists()
       ).to.be.true;
-    });
-
-
-    it('should NOT display platform with flag', function() {
-
-      // given
-      sinon.stub(Flags, 'get').withArgs(DISABLE_PLATFORM).returns(true);
-
-      // given
-      const {
-        tree
-      } = createEmptyTab();
-
-      // then
-      expect(tree.find('.welcome-header')).to.have.length(0);
-      expect(tree.find('.welcome-card')).to.have.length(1);
     });
 
   });
