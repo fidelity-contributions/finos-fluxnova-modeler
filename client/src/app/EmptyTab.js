@@ -10,7 +10,6 @@
 
 import React, { PureComponent } from 'react';
 
-import CloudIcon from '../../resources/icons/Cloud.svg';
 import PlatformIcon from '../../resources/icons/Platform.svg';
 
 import * as css from './EmptyTab.less';

@@ -24,7 +24,6 @@ const DEFAULT_OPTIONS = {
   }
 };
 
-const OVERVIEW_ZOOM_SCALE = 0.66;
 
 const VERY_LOW_PRIORITY = 100;
 

@@ -17,7 +17,7 @@ import {
 import EmptyTab from '../EmptyTab';
 import TabsProvider from '../TabsProvider';
 
-import Flags, { DISABLE_DMN, DISABLE_FORM } from '../../util/Flags';
+import Flags, { DISABLE_DMN, DISABLE_FORM, DISABLE_PLATFORM } from '../../util/Flags';
 
 /* global sinon */
 

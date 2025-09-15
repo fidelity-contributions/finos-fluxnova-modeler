@@ -8,7 +8,6 @@
  * except in compliance with the MIT License.
  */
 
-import generateImage from '../generateImage';
 
 import { keys } from 'min-dash';
 
@@ -23,13 +22,10 @@ const expectedImagesByType = {
 
 describe('util - generateImage', function() {
 
-  const svg = require('./diagram.svg'),
-        outOfBoundsSVG = require('./out_of_bounds_diagram.svg'),
-        webhookSVG = require('./webhook.svg');
 
   keys(expectedImagesByType).forEach(function(type) {
 
-    /*it('should export <' + type + '>', async function() {
+    /* it('should export <' + type + '>', async function() {
 
       const image = await generateImage(type, svg);
 
@@ -70,7 +66,3 @@ describe('util - generateImage', function() {
  * 6 characters. If it is generated, image.length returns the actual size
  * of the generated image which is more than 6.
  */
-function expectToBeAnImage(image) {
-  expect(image).to.exist;
-  expect(image.length).to.be.greaterThan(6);
-}
