@@ -651,6 +651,9 @@ export class FormEditor extends CachedComponent {
         components: [],
         type: 'default'
       },
+      propertiesPanel: {
+        getDocumentationRef
+      },
       layout: getInitialFormLayout(layout),
       exporter: {
         name,
@@ -724,4 +727,17 @@ function formOutputFocused() {
     document.body.querySelector('.cfp-collapsible-panel[data-idx="form-output"] .cfp-collapsible-panel-content');
 
   return !!formOutputNode && formOutputNode.contains(document.activeElement);
+}
+
+function getDocumentationRef(field) {
+
+  if (!field) {
+    return;
+  }
+
+  if (field.type === 'default') {
+    return 'https://docs.fluxnova.finos.org';
+  }
+
+  return `https://docs.fluxnova.finos.org/modeler/forms/form-element-library/forms-element-library-${field.type}`;
 }
