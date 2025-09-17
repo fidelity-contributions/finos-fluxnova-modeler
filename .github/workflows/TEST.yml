@@ -22,7 +22,7 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: 20
+        node-version: 22
         cache: 'npm'
     - name: Install npm dependencies
       run: npm install
@@ -30,3 +30,27 @@ jobs:
       run: |
         npm install puppeteer
         npm run test
+
+    - name: Build distro (Linux)
+      if: ${{ runner.OS == 'Linux' }}
+      env:
+        ELECTRON_GET_USE_PROXY: true
+      run: npm run build -- --linux
+
+    - name: Build distro (MacOS)
+      if: ${{ runner.os == 'macOS' }}
+      env:
+        ELECTRON_GET_USE_PROXY: true
+      run: npm run build -- --mac
+      
+    - name: Build distro (Windows)
+      if: ${{ runner.os == 'Windows' }}
+      env:
+        ELECTRON_GET_USE_PROXY: true
+      run: npm run build -- --win
+
+    - name: Upload build artifacts ${{ matrix.os }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-artifacts-${{ matrix.os }}
+        path: dist
