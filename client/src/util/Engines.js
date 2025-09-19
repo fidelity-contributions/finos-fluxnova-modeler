@@ -27,8 +27,8 @@ export const ENGINE_PROFILES = [
   },
   {
     executionPlatform: ENGINES.FLOWAVE,
-    executionPlatformVersions: [ '0.0.1' ],
-    latestStable: '0.0.1'
+    executionPlatformVersions: [ '1.0.0' ],
+    latestStable: '1.0.0'
   }
 ];
 

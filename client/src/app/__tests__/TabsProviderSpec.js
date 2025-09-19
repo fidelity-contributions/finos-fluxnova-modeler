@@ -245,7 +245,7 @@ describe('TabsProvider', function() {
 
         // given
         Flags.init({
-          [FLOWAVE_ENGINE_VERSION]: '0.0.1'
+          [FLOWAVE_ENGINE_VERSION]: '1.0.0'
         });
         const tabsProvider = new TabsProvider();
 
@@ -253,7 +253,7 @@ describe('TabsProvider', function() {
         const { file: { contents } } = tabsProvider.createTab('bpmn');
 
         // then
-        expect(contents).to.include('modeler:executionPlatformVersion="0.0.1"');
+        expect(contents).to.include('modeler:executionPlatformVersion="1.0.0"');
       });
 
 
@@ -261,7 +261,7 @@ describe('TabsProvider', function() {
 
         // given
         Flags.init({
-          [FLOWAVE_ENGINE_VERSION]: '0.0.1'
+          [FLOWAVE_ENGINE_VERSION]: '1.0.0'
         });
         const tabsProvider = new TabsProvider();
 
@@ -269,7 +269,7 @@ describe('TabsProvider', function() {
         const { file: { contents } } = tabsProvider.createTab('dmn');
 
         // then
-        expect(contents).to.include('modeler:executionPlatformVersion="0.0.1"');
+        expect(contents).to.include('modeler:executionPlatformVersion="1.0.0"');
       });
 
 
@@ -277,7 +277,7 @@ describe('TabsProvider', function() {
 
         // given
         Flags.init({
-          [FLOWAVE_ENGINE_VERSION]: '0.0.1'
+          [FLOWAVE_ENGINE_VERSION]: '1.0.0'
         });
         const tabsProvider = new TabsProvider();
 
@@ -285,7 +285,7 @@ describe('TabsProvider', function() {
         const { file: { contents } } = tabsProvider.createTab('form');
 
         // then
-        expect(contents).to.include('"executionPlatformVersion": "0.0.1"');
+        expect(contents).to.include('"executionPlatformVersion": "1.0.0"');
       });
 
       describe('invalid flag', function() {

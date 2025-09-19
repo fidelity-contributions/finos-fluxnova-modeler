@@ -1,6 +1,6 @@
 {
   "name": "flowave-modeler-client",
-  "version": "0.0.1-dev",
+  "version": "1.0.0",
   "description": "Flowave Modeler client application",
   "private": true,
   "license": "MIT",

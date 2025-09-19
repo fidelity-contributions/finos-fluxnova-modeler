@@ -201,7 +201,7 @@ describe('<EngineProfile>', function() {
       // given
       const inputs =
       [ [ ENGINES.FLOWAVE, '7.23.0', 'Flowave 7.23 (unsupported)' ],
-        [ ENGINES.FLOWAVE, '0.0.1', 'Flowave 0.0' ],
+        [ ENGINES.FLOWAVE, '1.0.0', 'Flowave 1.0' ],
         [ ENGINES.FLOWAVE, '', 'Flowave' ]
       ];
 
