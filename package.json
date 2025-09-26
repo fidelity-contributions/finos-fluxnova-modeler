@@ -47,15 +47,15 @@
     "url": "https://github.com/finos/fluxnova-modeler"
   },
   "devDependencies": {
-    "@electron/notarize": "^2.5.0",
+    "@electron/notarize": "^3.0.1",
     "archiver": "^7.0.1",
     "chai": "^4.5.0",
     "cpx2": "^8.0.0",
     "del": "^8.0.0",
     "del-cli": "^6.0.0",
     "diff2html": "^3.4.48",
-    "electron": "^34.0.0",
-    "electron-builder": "^25.1.8",
+    "electron": "^37.0.0",
+    "electron-builder": "^26.0.12",
     "electron-extension-installer": "^1.2.0",
     "electron-publisher-s3": "^20.17.2",
     "electron-reloader": "^1.2.0",
