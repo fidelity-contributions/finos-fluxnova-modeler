@@ -736,8 +736,8 @@ function getDocumentationRef(field) {
   }
 
   if (field.type === 'default') {
-    return 'https://docs.fluxnova.finos.org';
+    return 'https://docs.fluxnova.finos.org/modeler/forms';
   }
 
-  return `https://docs.fluxnova.finos.org/modeler/forms/form-element-library/forms-element-library-${field.type}`;
+  return `https://docs.fluxnova.finos.org/modeler/forms`;
 }

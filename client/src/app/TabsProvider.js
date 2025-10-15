@@ -63,18 +63,18 @@ import { getDefaultVersion } from './tabs/EngineProfile';
 const BPMN_HELP_MENU = [
   {
     label: 'BPMN 2.0 Tutorial',
-    action: 'https://fluxnova.finos.org/bpmn/'
+    action: 'https://docs.fluxnova.finos.org/modeler/bpmn'
   },
   {
     label: 'BPMN Modeling Reference',
-    action: 'https://fluxnova.finos.org/bpmn/reference/'
+    action: 'https://docs.fluxnova.finos.org/reference/bpmn20'
   }
 ];
 
 const DMN_HELP_MENU = [
   {
     label: 'DMN Tutorial',
-    action: 'https://fluxnova.finos.org/dmn/'
+    action: 'https://docs.fluxnova.finos.org/modeler/dmn'
   }
 ];
 

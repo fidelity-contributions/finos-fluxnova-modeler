@@ -88,10 +88,6 @@ export default class EmptyTab extends PureComponent {
             <p>Introduction to Fluxnova</p>
             <a href="https://docs.fluxnova.finos.org/get-started/quick-start">Getting Started</a>
           </div>
-          <div className="article relative">
-            <p>Migrating from Camunda 7</p>
-            <a href="https://docs.fluxnova.finos.org/modeler">Fluxnova Modeler Docs</a>
-          </div>
           <div className="article">
             <p>About Modeler 1</p>
             <a href="#" onClick={ () => this.props.onAction('emit-event', { type: 'versionInfo.open' }) }>Open &quot;What&apos;s new&quot;</a>
