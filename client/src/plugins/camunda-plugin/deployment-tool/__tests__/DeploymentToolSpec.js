@@ -649,7 +649,7 @@ describe('<DeploymentTool>', function() {
                 handler:actionSpy
               };
 
-        const getVersionSpy = sinon.spy(() => { return { version: '7.14.0' }; });
+        const getVersionSpy = sinon.spy(() => { return { version: '1.0.0' }; });
 
         const {
           instance
@@ -662,8 +662,8 @@ describe('<DeploymentTool>', function() {
         expect(actionSpy).to.have.been.calledOnce;
 
         const deployedTo = actionSpy.args[0][0].payload.deployedTo;
-        expect(deployedTo.executionPlatform).to.eql('Camunda Platform');
-        expect(deployedTo.executionPlatformVersion).to.eql('7.14.0');
+        expect(deployedTo.executionPlatform).to.eql('Fluxnova Platform');
+        expect(deployedTo.executionPlatformVersion).to.eql('1.0.0');
       });
 
 
@@ -794,7 +794,7 @@ describe('<DeploymentTool>', function() {
                 handler:actionSpy
               };
 
-        const getVersionSpy = sinon.spy(() => { return { version: '7.14.0' }; });
+        const getVersionSpy = sinon.spy(() => { return { version: '1.0.0' }; });
 
         const errorThrown = new DeploymentError({ status: 500 });
 
@@ -809,8 +809,8 @@ describe('<DeploymentTool>', function() {
         expect(actionSpy).to.have.been.calledOnce;
 
         const deployedTo = actionSpy.args[0][0].payload.deployedTo;
-        expect(deployedTo.executionPlatform).to.eql('Camunda Platform');
-        expect(deployedTo.executionPlatformVersion).to.eql('7.14.0');
+        expect(deployedTo.executionPlatform).to.eql('Fluxnova Platform');
+        expect(deployedTo.executionPlatformVersion).to.eql('1.0.0');
       });
 
     });

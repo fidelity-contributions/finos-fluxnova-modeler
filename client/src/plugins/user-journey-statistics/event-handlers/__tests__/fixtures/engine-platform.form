@@ -18,6 +18,6 @@
   ],
   "type": "default",
   "id": "Form_0sczxmf",
-  "executionPlatform": "Camunda Platform",
-  "executionPlatformVersion": "7.15"
+  "executionPlatform": "Fluxnova Platform",
+  "executionPlatformVersion": "1.0.0"
 }

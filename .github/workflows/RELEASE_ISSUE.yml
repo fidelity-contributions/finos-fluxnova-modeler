@@ -1,7 +1,8 @@
 name: RELEASE_ISSUE
 on:
-  issues:
-    types: [closed, assigned]
+  workflow_dispatch:
+#  issues:
+#    types: [closed, assigned]
 jobs:
   create_release_issue:
     runs-on: ubuntu-latest

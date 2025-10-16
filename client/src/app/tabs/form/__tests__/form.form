@@ -34,5 +34,6 @@
       "type": "button"
     }
   ],
-  "type": "default"
+  "type": "default",
+  "executionPlatform": "Fluxnova Platform"
 }

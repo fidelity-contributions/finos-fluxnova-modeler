@@ -44,12 +44,8 @@ export function ReleaseInfo(props) {
     <div className={ css.ReleaseInfo }>
       <ul className="dashed">
         <li>
-          <h4>Support for upcoming Camunda 8 features</h4>
-          You can now model an Ad-hoc subprocess and define its active elements. <a href="https://docs.camunda.io/docs/next/components/modeler/bpmn/ad-hoc/?utm_source=modeler&utm_medium=referral">Learn more.</a>
-        </li>
-        <li>
-          <h4>Support for latest Camunda 8 FEEL built-ins</h4>
-          The FEEL expression editor now supports the latest built-in functions. <a href="https://docs.camunda.io/docs/components/modeler/feel/builtin-functions/feel-built-in-functions-introduction/">Learn more.</a>
+          <h4>Initial Release</h4>
+          Welcome to the initial release. <a href={ 'https://docs.fluxnova.finos.org/get-started/quick-start' }>Learn More.</a>
         </li>
         <li>
           <h4>Bug fixes and more</h4>

@@ -11,6 +11,7 @@
 import {
   Parser
 } from 'saxen';
+import { isString } from 'min-dash';
 
 
 /**
@@ -122,8 +123,21 @@ export function replaceUsages(xml, usages, ns) {
   }, xml);
 }
 
+export function is(contents, ns, executionPlatform) {
+  return isNamespace(contents, ns, executionPlatform) || isExecutionPlatformInForm(contents, executionPlatform);
+}
+
 
 // helpers /////////////////
+
+function isExecutionPlatformInForm(contents, executionPlatform) {
+  return contents.executionPlatform === executionPlatform;
+}
+
+function isNamespace(contents, ns, executionPlatform) {
+  const executionPlatformAttribute = `modeler:executionPlatform="${executionPlatform}"`;
+  return isString(contents) && (contents.includes(ns) || contents.trim().includes(executionPlatformAttribute));
+}
 
 function escape(pattern) {
   return pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

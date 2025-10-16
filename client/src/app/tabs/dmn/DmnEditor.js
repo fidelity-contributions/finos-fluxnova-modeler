@@ -67,6 +67,9 @@ import { EngineProfile, toSemver } from '../EngineProfile';
 import EngineProfileHelper from '../EngineProfileHelper';
 
 import { ENGINES } from '../../../util/Engines';
+import {
+  convertDmnToFluxnovaIfRequired
+} from '../util/fluxnovaConversion';
 
 const EXPORT_AS = [ 'png', 'jpeg', 'svg' ];
 
@@ -76,7 +79,7 @@ const NAMESPACE_URL_DMN11 = 'http://www.omg.org/spec/DMN/20151101/dmn.xsd',
 const CONFIG_KEY = 'editor.askDmnMigration';
 
 export const DEFAULT_ENGINE_PROFILE = {
-  executionPlatform: ENGINES.PLATFORM,
+  executionPlatform: ENGINES.FLUXNOVA,
   executionPlatformVersion: undefined
 };
 
@@ -556,17 +559,23 @@ export class DmnEditor extends CachedComponent {
       modeler
     } = this.getCached();
 
+    const {
+      onContentUpdated,
+      onAction
+    } = this.props;
+
     this.setState({
       importing: true
     });
 
-    const importedXML = await this.handleMigration(xml);
+    let importedXML = await this.handleMigration(xml);
 
     if (!importedXML) {
-      this.props.onAction('close-tab');
-
+      onAction('close-tab');
       return;
     }
+
+    importedXML = await convertDmnToFluxnovaIfRequired(importedXML, onAction, onContentUpdated);
 
     return modeler.importXML(importedXML).then(
       this.ifMounted(({ warnings }) => this.handleImport(null, warnings)),
@@ -1052,7 +1061,7 @@ function getMigrationDialog() {
     defaultId: 1,
     message: 'Would you like to migrate your diagram to DMN 1.3?',
     detail: [
-      'Only DMN 1.3 diagrams can be opened with Camunda Modeler v4.0.0 or later.',
+      'Only DMN 1.3 diagrams can be opened with Fluxnova Modeler v1.0.0 or later.',
     ].join('\n'),
     checkboxChecked: true,
     checkboxLabel: 'Do not ask again.'

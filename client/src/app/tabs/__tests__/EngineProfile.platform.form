@@ -1,6 +1,6 @@
 {
   "type": "default",
   "components": [],
-  "executionPlatform": "Camunda Platform",
-  "executionPlatformVersion": "7.16.0"
+  "executionPlatform": "Fluxnova Platform",
+  "executionPlatformVersion": "1.0.0"
 }

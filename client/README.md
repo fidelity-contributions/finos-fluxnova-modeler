@@ -1,1 +1,1 @@
-# camunda-modeler-client
+# fluxnova-modeler-client

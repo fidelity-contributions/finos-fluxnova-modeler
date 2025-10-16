@@ -18,7 +18,6 @@ const {
 
 const MenuBuilder = require('../menu-builder');
 
-
 class MacMenuBuilder extends MenuBuilder {
   constructor(options) {
     super(options);
@@ -30,12 +29,6 @@ class MacMenuBuilder extends MenuBuilder {
         label: 'About ' + this.options.appName,
         role: 'about'
       },
-      ... (app.flags && !app.flags.get('disable-remote-interaction')) ? [
-        {
-          label: 'Check for Updates',
-          click: () => app.emit('menu:action', 'emit-event', { type: 'updateChecks.execute' })
-        }
-      ] : [],
       {
         type: 'separator'
       }, {
@@ -85,15 +78,6 @@ class MacMenuBuilder extends MenuBuilder {
     const fullScreenEntry = submenuTemplate.find(({ label }) => label === 'Fullscreen');
 
     fullScreenEntry.accelerator = 'Ctrl+Cmd+F';
-
-    return submenuTemplate;
-  }
-
-  getHelpSubmenuTemplate() {
-    let submenuTemplate = super.getHelpSubmenuTemplate();
-
-    // remove check updates entry to avoid duplication with app menu
-    submenuTemplate = submenuTemplate.filter(({ label }) => label !== 'Check for Updates');
 
     return submenuTemplate;
   }

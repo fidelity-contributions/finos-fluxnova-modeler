@@ -46,7 +46,6 @@ import diagram11XML from './diagram11.dmn';
 
 import engineProfileXML from '../../__tests__/EngineProfile.cloud.dmn';
 import noEngineProfileXML from '../../__tests__/EngineProfile.vanilla.dmn';
-import unknownEngineProfileXML from '../../__tests__/EngineProfile.unknown.dmn';
 import missingPatchEngineProfileXML from '../../__tests__/EngineProfile.missing-patch.cloud.dmn';
 import patchEngineProfileXML from '../../__tests__/EngineProfile.patch.cloud.dmn';
 import namespaceEngineProfileXML from '../../__tests__/EngineProfile.namespace.dmn';
@@ -2162,24 +2161,6 @@ describe('<DmnEditor>', function() {
       executionPlatform: 'Camunda Cloud',
       executionPlatformVersion: '8.0.1'
     }));
-
-
-    it('should open unknown engine profile as Camunda Cloud', async function() {
-
-      // given
-      const onImportSpy = spy();
-
-      // when
-      const { instance } = await renderEditor(unknownEngineProfileXML, { onImport: onImportSpy });
-
-      // then
-      expect(onImportSpy).to.have.been.calledOnce;
-
-      expect(instance.getCached().engineProfile).to.eql({
-        executionPlatform: 'Camunda Cloud',
-        executionPlatformVersion: '7.15.0'
-      });
-    });
 
   });
 

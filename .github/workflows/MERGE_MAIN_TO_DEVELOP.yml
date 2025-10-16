@@ -1,8 +1,9 @@
 name: MERGE_MAIN_TO_DEVELOP
 on:
-  push:
-    branches:
-    - "main"
+  workflow_dispatch:
+# push:
+#    branches:
+#    - "main"
 
 jobs:
   merge_main_to_develop:

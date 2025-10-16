@@ -14,7 +14,7 @@ import {
 
 import {
   getAllElementsByType
-} from '../parse';
+} from '../xmlConversion';
 
 import {
   getExtensionElements

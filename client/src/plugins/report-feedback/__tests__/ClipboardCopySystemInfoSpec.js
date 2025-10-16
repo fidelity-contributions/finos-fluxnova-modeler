@@ -193,7 +193,7 @@ describe('<ClipboardCopySystemInfo>', function() {
 
       // then
       const clipboardText = writeTextSpy.args[0][0].text;
-      expect(clipboardText).to.contain(' * Execution Platform: BPMN - Camunda 7');
+      expect(clipboardText).to.contain(' * Execution Platform: BPMN - Fluxnova');
     });
 
 
@@ -233,7 +233,7 @@ describe('<ClipboardCopySystemInfo>', function() {
 
       // then
       const clipboardText = writeTextSpy.args[0][0].text;
-      expect(clipboardText).to.contain(' * Execution Platform: DMN - Camunda 7');
+      expect(clipboardText).to.contain(' * Execution Platform: DMN - Fluxnova');
     });
 
 
@@ -273,7 +273,7 @@ describe('<ClipboardCopySystemInfo>', function() {
 
       // then
       const clipboardText = writeTextSpy.args[0][0].text;
-      expect(clipboardText).to.contain(' * Execution Platform: Form - Camunda 7');
+      expect(clipboardText).to.contain(' * Execution Platform: Form - Fluxnova');
     });
 
 

@@ -44,11 +44,6 @@ import generateImage from '../../util/generateImage';
 
 import applyDefaultTemplates from '../bpmn-shared/modeler/features/apply-default-templates/applyDefaultTemplates';
 
-import {
-  findUsages as findNamespaceUsages,
-  replaceUsages as replaceNamespaceUsages
-} from '../util/namespace';
-
 import configureModeler from '../bpmn-shared/util/configure';
 
 import Metadata from '../../../util/Metadata';
@@ -65,18 +60,14 @@ import {
 } from '../../../util/Engines';
 
 import { getPlatformTemplates } from '../../../util/elementTemplates';
-
-const NAMESPACE_URL_ACTIVITI = 'http://activiti.org/bpmn';
-
-const NAMESPACE_CAMUNDA = {
-  uri: 'http://camunda.org/schema/1.0/bpmn',
-  prefix: 'camunda'
-};
+import {
+  convertBpmnToFluxnovaIfRequired,
+} from '../util/fluxnovaConversion';
 
 const EXPORT_AS = [ 'png', 'jpeg', 'svg' ];
 
 export const DEFAULT_ENGINE_PROFILE = {
-  executionPlatform: ENGINES.PLATFORM
+  executionPlatform: ENGINES.FLUXNOVA
 };
 
 const LOW_PRIORITY = 500;
@@ -323,36 +314,6 @@ export class BpmnEditor extends CachedComponent {
     onError(error);
   };
 
-  handleNamespace = async (xml) => {
-    const used = findNamespaceUsages(xml, NAMESPACE_URL_ACTIVITI);
-
-    if (!used) {
-      return xml;
-    }
-
-    const shouldConvert = await this.shouldConvert();
-
-    if (!shouldConvert) {
-      return xml;
-    }
-
-    const {
-      onContentUpdated
-    } = this.props;
-
-    const convertedXML = await replaceNamespaceUsages(xml, used, NAMESPACE_CAMUNDA);
-
-    onContentUpdated(convertedXML);
-
-    return convertedXML;
-  };
-
-  async shouldConvert() {
-    const { button } = await this.props.onAction('show-dialog', getNamespaceDialog());
-
-    return button === 'yes';
-  }
-
   handleImport = (error, warnings) => {
     const {
       isNew,
@@ -581,11 +542,14 @@ export class BpmnEditor extends CachedComponent {
 
     const modeler = this.getModeler();
 
-    const importedXML = await this.handleNamespace(xml);
-
-
-    let error = null, warnings = null;
+    let error = null, warnings = null, importedXML = xml;
     try {
+      const {
+        onContentUpdated,
+        onAction
+      } = this.props;
+
+      importedXML = await convertBpmnToFluxnovaIfRequired(importedXML, onAction, onContentUpdated);
 
       const result = await modeler.importXML(importedXML);
       warnings = result.warnings;
@@ -913,23 +877,6 @@ export class BpmnEditor extends CachedComponent {
 export default WithCache(WithCachedState(BpmnEditor));
 
 // helpers //////////
-
-function getNamespaceDialog() {
-  return {
-    type: 'warning',
-    title: 'Deprecated <activiti> namespace detected',
-    buttons: [
-      { id: 'cancel', label: 'Cancel' },
-      { id: 'yes', label: 'Yes' }
-    ],
-    message: 'Would you like to convert your diagram to the <camunda> namespace?',
-    detail: [
-      'This will allow you to maintain execution related properties.',
-      '',
-      '<camunda> namespace support works from Camunda BPM versions 7.4.0, 7.3.3, 7.2.6 onwards.'
-    ].join('\n')
-  };
-}
 
 function isCacheStateChanged(prevProps, props) {
   return prevProps.cachedState !== props.cachedState;

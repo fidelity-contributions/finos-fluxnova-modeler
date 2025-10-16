@@ -62,14 +62,14 @@ const clientLog = Log('client');
 bootstrapLogging();
 bootstrapEPIPESuppression();
 
-const name = app.name = 'Camunda Modeler';
+const name = app.name = 'Fluxnova Modeler';
 const version = app.version = require('../package').version;
 const MINIMUM_SIZE = {
   width: 780,
   height: 580
 };
 
-var DEFAULT_USER_PATH = path.join(app.getPath('appData'), 'camunda-modeler');
+var DEFAULT_USER_PATH = path.join(app.getPath('appData'), 'fluxnova-modeler');
 
 bootstrapLog.info(`starting ${ name } v${ version }`);
 

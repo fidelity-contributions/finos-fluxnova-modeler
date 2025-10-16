@@ -1,7 +1,8 @@
 name: NIGHTLY
 on:
-  schedule:
-    - cron: '0 18 * * *'
+  workflow_dispatch:
+#  schedule:
+#    - cron: '0 18 * * *'
 jobs:
   build_nightly:
     name: Build nightly
@@ -29,7 +30,7 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: 20
+        node-version: 22
         cache: 'npm'
     - name: Install dependencies
       run: npm ci

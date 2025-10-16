@@ -31,9 +31,10 @@ import {
 import BpmnModeler from 'test/mocks/bpmn-js/Modeler';
 
 import diagramXML from './diagram.bpmn';
-import activitiXML from './activiti.bpmn';
-import activitiConvertedXML from './activitiConverted.bpmn';
-
+import existingVanillaXML from './existing.vanilla.bpmn';
+import existingC7XML from './existing.c7.bpmn';
+import existingC8XML from './existing.c8.bpmn';
+import existingFluxnovaModel from './existing.fluxnova.bpmn';
 import engineProfileXML from '../../__tests__/EngineProfile.platform.bpmn';
 import noEngineProfileXML from '../../__tests__/EngineProfile.vanilla.bpmn';
 import unknownEngineProfileXML from '../../__tests__/EngineProfile.unknown.bpmn';
@@ -55,13 +56,22 @@ import {
 import { SlotFillRoot } from '../../../slot-fill';
 
 import Flags, { ENABLE_NEW_CONTEXT_PAD } from '../../../../util/Flags';
+import { ENGINES, getLatestStable } from '../../../../util/Engines';
 
 const { spy } = sinon;
 
+let onAction;
 
 describe('<BpmnEditor>', function() {
 
+  beforeEach(function() {
+    onAction = sinon.stub().resolves({
+      button: '0'
+    });
+  });
+
   it('should render', async function() {
+
     const {
       instance
     } = await renderEditor(diagramXML);
@@ -239,7 +249,7 @@ describe('<BpmnEditor>', function() {
           return [];
         },
         onError: onErrorSpy,
-        onAction: noop
+        onAction: onAction
       };
 
       // then
@@ -380,13 +390,10 @@ describe('<BpmnEditor>', function() {
     describe('behavior', function() {
 
       let modeler,
-          onActionSpy,
           wrapper;
 
       beforeEach(async function() {
         modeler = new BpmnModeler();
-
-        onActionSpy = spy();
 
         const cache = new Cache();
 
@@ -397,40 +404,37 @@ describe('<BpmnEditor>', function() {
           __destroy: () => {}
         });
 
-
         ({ wrapper } = await renderEditor(diagramXML, {
           id: 'editor',
-          cache,
-          onAction: onActionSpy
-        }));
+          cache
+        }, onAction));
       });
 
 
       it('should lint on import', async function() {
 
         // then
-        expect(onActionSpy).to.have.been.calledOnce;
-        expect(onActionSpy).to.have.been.calledWithMatch('lint-tab');
+        expect(onAction).to.have.been.calledWithMatch('lint-tab');
       });
 
 
       it('should lint on change', async function() {
 
-        onActionSpy.resetHistory();
+        onAction.resetHistory();
 
         // when
         modeler._emit('commandStack.changed');
 
         // then
-        expect(onActionSpy).to.have.been.calledOnce;
-        expect(onActionSpy).to.have.been.calledWithMatch('lint-tab');
+        expect(onAction).to.have.been.calledOnce;
+        expect(onAction).to.have.been.calledWithMatch('lint-tab');
       });
 
 
       it('should subscribe on mount and unsubscribe on unmount',
         async function() {
 
-          onActionSpy.resetHistory();
+          onAction.resetHistory();
 
           // when
           wrapper.unmount();
@@ -439,8 +443,8 @@ describe('<BpmnEditor>', function() {
           modeler._emit('commandStack.changed');
 
           // then
-          expect(onActionSpy).to.have.been.calledOnce;
-          expect(onActionSpy).to.have.been.calledWithMatch('lint-tab');
+          expect(onAction).to.have.been.calledOnce;
+          expect(onAction).to.have.been.calledWithMatch('lint-tab');
         }
       );
 
@@ -838,77 +842,117 @@ describe('<BpmnEditor>', function() {
   });
 
 
-  describe('#handleNamespace', function() {
+  describe('fluxnova conversion', function() {
 
-    it('should replace namespace', async function() {
+    describe('should convert', function() {
 
-      // given
-      const onContentUpdated = sinon.spy();
-      const onAction = sinon.stub().resolves({
-        button: 'yes'
+      const latestStable = getLatestStable(ENGINES.FLUXNOVA);
+
+      it('existing model to fluxnova', async function() {
+
+        // given
+        const onContentUpdated = sinon.spy();
+
+        // when
+        await renderEditor(existingVanillaXML, {
+          onContentUpdated
+        }, onAction);
+
+        // then
+        expect(onContentUpdated).to.be.calledOnce;
+
+        const convertedXML = onContentUpdated.getCall(0).args[0];
+        expect(convertedXML).to.contain('xmlns:modeler="http://fluxnova.finos.org/schema/modeler/1.0"');
+        expect(convertedXML).to.contain('xmlns:fluxnova="http://fluxnova.finos.org/schema/1.0/bpmn"');
+        expect(convertedXML).to.contain('modeler:executionPlatform="Fluxnova Platform"');
+        expect(convertedXML).to.contain(`modeler:executionPlatformVersion="${latestStable}`);
+
+        expect(convertedXML).not.to.contain('xmlns:modeler="http://camunda.org/schema/modeler/1.0"');
+        expect(convertedXML).not.to.contain('xmlns:camunda="http://camunda.org/schema/1.0/bpmn"');
+
       });
 
-      // when
-      await renderEditor(activitiXML, {
-        onAction,
-        onContentUpdated
+      it('existing model that uses camunda extended attributes to fluxnova', async function() {
+
+        // given
+        const onContentUpdated = sinon.spy();
+
+        // when
+        await renderEditor(existingC7XML, {
+          onContentUpdated
+        }, onAction);
+
+        // then
+        expect(onContentUpdated).to.be.calledOnce;
+        const convertedXML = onContentUpdated.getCall(0).args[0];
+        expect(convertedXML).to.contain('xmlns:modeler="http://fluxnova.finos.org/schema/modeler/1.0"');
+        expect(convertedXML).to.contain('xmlns:fluxnova="http://fluxnova.finos.org/schema/1.0/bpmn"');
+        expect(convertedXML).to.contain('modeler:executionPlatform="Fluxnova Platform"');
+        expect(convertedXML).to.contain(`modeler:executionPlatformVersion="${latestStable}`);
+        expect(convertedXML).to.contain('xmlns:camunda="http://camunda.org/schema/1.0/bpmn"');
+
+        expect(convertedXML).not.to.contain('xmlns:modeler="http://camunda.org/schema/modeler/1.0"');
+
       });
 
-      // then
-      expect(onContentUpdated).to.be.calledOnce;
-      expect(onContentUpdated).to.be.calledWith(activitiConvertedXML);
     });
 
+    describe('should not convert', function() {
 
-    it('should not convert the diagram if declined', async function() {
+      it('when model is already fluxnova', async function() {
 
-      // given
-      const onContentUpdated = sinon.spy();
-      const onAction = sinon.stub().resolves('cancel');
+        // given
+        const onContentUpdated = sinon.spy();
 
-      // when
-      await renderEditor(activitiXML, {
-        onAction,
-        onContentUpdated
+        // when
+        await renderEditor(existingFluxnovaModel, {
+          onContentUpdated
+        }, onAction);
+
+        // then
+        expect(onContentUpdated).not.to.be.called;
+
       });
 
-      // then
-      expect(onContentUpdated).to.not.have.been.called;
-    });
+      it('when conversion declined', async function() {
 
+        // given
+        const onContentUpdated = sinon.spy();
 
-    it('should not ask for permission if diagram does not have seeked namespace', async function() {
+        onAction = sinon.stub().resolves({
+          button: '1'
+        });
 
-      // given
-      const onContentUpdated = sinon.spy();
-      const onAction = sinon.spy();
+        // when
+        await renderEditor(existingVanillaXML, {
+          onContentUpdated
+        }, onAction);
 
-      // when
-      await renderEditor(diagramXML, {
-        onAction,
-        onContentUpdated
+        // then
+        expect(onContentUpdated).not.to.be.called;
+
       });
 
-      // then
-      expect(onContentUpdated).to.not.have.been.called;
-      expect(onAction).to.not.have.been.calledWith('show-dialog');
-    });
+      it('when camunda 8 model', async function() {
 
+        // given
+        const onContentUpdated = sinon.spy();
 
-    it('should not fail import for broken diagrams', async function() {
+        onAction = sinon.stub().resolves({
+          button: '2'
+        });
 
-      // given
-      const onContentUpdated = sinon.spy();
-      const onAction = sinon.stub().resolves('yes');
+        // when
+        await renderEditor(existingC8XML, {
+          onContentUpdated
+        }, onAction);
 
-      // when
-      await renderEditor('broken-diagram', {
-        onAction,
-        onContentUpdated
+        // then
+        expect(onContentUpdated).not.to.be.called;
+        expect(onAction).to.be.calledWith('close-tab');
+
       });
 
-      // then
-      expect(onContentUpdated).to.have.not.been.called;
     });
 
   });
@@ -1271,7 +1315,7 @@ describe('<BpmnEditor>', function() {
 
       const { instance } = await renderEditor('export-error', {
         onError: errorSpy
-      });
+      }, onAction);
 
       // make sure editor is dirty
       const commandStack = instance.getModeler().get('commandStack');
@@ -1300,7 +1344,7 @@ describe('<BpmnEditor>', function() {
 
       const { instance } = await renderEditor('export-as-error', {
         onError: errorSpy
-      });
+      }, onAction);
 
       // when
       let err;
@@ -1323,6 +1367,12 @@ describe('<BpmnEditor>', function() {
   describe('import', function() {
 
     afterEach(sinon.restore);
+
+    beforeEach(function() {
+      onAction = sinon.stub().resolves({
+        button: '0'
+      });
+    });
 
 
     it('should import without errors and warnings', async function() {
@@ -1358,7 +1408,7 @@ describe('<BpmnEditor>', function() {
       // when
       await renderEditor('import-warnings', {
         onImport: onImportSpy
-      });
+      }, onAction);
 
       // then
       expect(onImportSpy).to.have.been.calledOnce;
@@ -1378,7 +1428,7 @@ describe('<BpmnEditor>', function() {
       // when
       await renderEditor('import-error', {
         onImport: onImportSpy
-      });
+      }, onAction);
 
       // then
       expect(onImportSpy).to.have.been.calledOnce;
@@ -1944,9 +1994,7 @@ describe('<BpmnEditor>', function() {
     it('should notify when modeler configures', async function() {
 
       // when
-      await renderEditor(diagramXML, {
-        onAction: recordActions
-      });
+      await renderEditor(diagramXML, {}, recordActions);
 
       // then
       const modelerConfigureEvent = getEvent(emittedEvents, 'bpmn.modeler.configure');
@@ -1965,9 +2013,7 @@ describe('<BpmnEditor>', function() {
       // when
       const {
         instance
-      } = await renderEditor(diagramXML, {
-        onAction: recordActions
-      });
+      } = await renderEditor(diagramXML, {}, recordActions);
 
       // then
       const modeler = instance.getModeler();
@@ -2004,36 +2050,36 @@ describe('<BpmnEditor>', function() {
 
 
     it('should show engine profile (no engine profile)', expectEngineProfile(noEngineProfileXML, {
-      executionPlatform: 'Camunda Platform',
+      executionPlatform: 'Fluxnova Platform',
       executionPlatformVersion: undefined
     }));
 
 
     it('should show engine profile (with namespace)', expectEngineProfile(namespaceEngineProfileXML, {
-      executionPlatform: 'Camunda Platform',
+      executionPlatform: 'Fluxnova Platform',
       executionPlatformVersion: undefined
     }));
 
 
     it('should show engine profile (Camunda 7.16.0)', expectEngineProfile(engineProfileXML, {
-      executionPlatform: 'Camunda Platform',
-      executionPlatformVersion: '7.16.0'
+      executionPlatform: 'Fluxnova Platform',
+      executionPlatformVersion: '1.0.0'
     }));
 
 
-    it('should show engine profile (Camunda 7.16)', expectEngineProfile(missingPatchEngineProfileXML, {
-      executionPlatform: 'Camunda Platform',
-      executionPlatformVersion: '7.16.0'
+    it('should show engine profile (Fluxnova 1.0)', expectEngineProfile(missingPatchEngineProfileXML, {
+      executionPlatform: 'Fluxnova Platform',
+      executionPlatformVersion: '1.0.0'
     }));
 
 
-    it('should show engine profile (Camunda 7.16.1)', expectEngineProfile(patchEngineProfileXML, {
-      executionPlatform: 'Camunda Platform',
-      executionPlatformVersion: '7.16.1'
+    it('should show engine profile (Fluxnova 1.0.1)', expectEngineProfile(patchEngineProfileXML, {
+      executionPlatform: 'Fluxnova Platform',
+      executionPlatformVersion: '1.0.1'
     }));
 
 
-    it('should open as Camunda Cloud if unknown execution profile', async function() {
+    it('should open as Fluxnova Platform if unknown execution profile', async function() {
 
       // given
       const onImportSpy = spy();
@@ -2046,7 +2092,7 @@ describe('<BpmnEditor>', function() {
       // then
       expect(onImportSpy).to.have.been.calledOnce;
       expect(instance.getCached().engineProfile).to.be.eql({
-        executionPlatform: 'Camunda Cloud',
+        executionPlatform: 'Fluxnova Platform',
         executionPlatformVersion: '7.15.0',
       });
     });
@@ -2108,7 +2154,7 @@ const defaultLayout = {
   }
 };
 
-function renderEditor(xml, options = {}) {
+function renderEditor(xml, options = {}, onActionStub = onAction) {
   const {
     cache = new Cache(),
     getConfig = noop,
@@ -2117,7 +2163,6 @@ function renderEditor(xml, options = {}) {
     isNew = true,
     layout = defaultLayout,
     linting = [],
-    onAction = noop,
     onChanged = noop,
     onContentUpdated = noop,
     onError = noop,
@@ -2150,7 +2195,7 @@ function renderEditor(xml, options = {}) {
         isNew={ isNew }
         layout={ layout }
         linting={ linting }
-        onAction={ onAction }
+        onAction={ onActionStub }
         onChanged={ onChanged }
         onContentUpdated={ onContentUpdated }
         onError={ onError }

@@ -33,7 +33,6 @@ process.env.CHROME_BIN = require('puppeteer').executablePath();
 
 // configures browsers to run test against
 // any of [ 'ChromeHeadless', 'Chrome', 'Firefox', 'IE', 'PhantomJS' ]
-var browsers = (process.env.TEST_BROWSERS || 'ChromeHeadless').split(/,/g);
 
 var suite = 'test/suite.js';
 
@@ -69,8 +68,13 @@ module.exports = function(karma) {
       ]
     },
 
-    browsers: browsers,
-
+    browsers: [ 'ChromeHeadlessNoSandbox' ],
+    customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: [ '--no-sandbox' ]
+      }
+    },
     browserNoActivityTimeout: 30000,
 
     singleRun: true,

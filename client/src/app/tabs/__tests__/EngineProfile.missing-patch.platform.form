@@ -1,6 +1,10 @@
 {
-  "type": "default",
-  "components": [],
-  "executionPlatform": "Camunda Platform",
-  "executionPlatformVersion": "7.16"
+	"type": "default",
+	"components": [],
+	"executionPlatform": "Fluxnova Platform",
+	"executionPlatformVersion": "1.0.0",
+	"exporter": {
+		"name": "Fluxnova Modeler",
+		"version": "5.33.0-dev"
+	}
 }

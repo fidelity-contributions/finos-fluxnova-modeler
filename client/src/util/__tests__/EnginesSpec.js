@@ -27,9 +27,11 @@ describe('util/Engines', function() {
       };
     }
 
-    it('Platform', verifyLatestStable(ENGINES.PLATFORM, '7.22.0'));
+    it('Camunda Platform', verifyLatestStable(ENGINES.PLATFORM, '7.22.0'));
 
-    it('Cloud', verifyLatestStable(ENGINES.CLOUD, '8.6.0'));
+    it('Fluxnova Platform', verifyLatestStable(ENGINES.FLUXNOVA, '1.0.0'));
+
+    it('Camunda Cloud', verifyLatestStable(ENGINES.CLOUD, '8.6.0'));
 
   });
 

@@ -13,13 +13,13 @@ import TabsProvider from '../TabsProvider';
 import Flags, {
   DISABLE_DMN,
   DISABLE_ZEEBE,
-  DISABLE_PLATFORM,
   DISABLE_CMMN,
   CLOUD_ENGINE_VERSION,
   PLATFORM_ENGINE_VERSION,
   DISABLE_HTTL_HINT,
   DEFAULT_HTTL,
-  DISABLE_RPA
+  DISABLE_RPA,
+  FLUXNOVA_ENGINE_VERSION
 } from '../../util/Flags';
 
 import {
@@ -101,7 +101,7 @@ describe('TabsProvider', function() {
   });
 
 
-  it('should export BPMN, CMMN and DMN as JPEG, PNG and SVG', function() {
+  it('should export BPMN and DMN as JPEG, PNG and SVG', function() {
 
     // given
     Flags.init({
@@ -130,10 +130,7 @@ describe('TabsProvider', function() {
 
     // then
     expect(tabsProvider.getProvider('bpmn').exports).to.eql(expected);
-    expect(tabsProvider.getProvider('cloud-bpmn').exports).to.eql(expected);
-    expect(tabsProvider.getProvider('cmmn').exports).to.eql(expected);
     expect(tabsProvider.getProvider('dmn').exports).to.eql(expected);
-    expect(tabsProvider.getProvider('cloud-dmn').exports).to.eql(expected);
     expect(tabsProvider.getProvider('form').exports).to.eql({});
   });
 
@@ -164,17 +161,9 @@ describe('TabsProvider', function() {
 
     verifyExists('bpmn');
 
-    verifyExists('cloud-bpmn');
-
-    verifyExists('cmmn');
-
     verifyExists('dmn');
 
-    verifyExists('cloud-dmn');
-
     verifyExists('form');
-
-    verifyExists('cloud-form');
 
 
     it('for an empty file of known type (BPMN)', function() {
@@ -190,7 +179,6 @@ describe('TabsProvider', function() {
       const tab = tabsProvider.createTabForFile(file);
 
       // then
-      expect(tab.type).to.eql('cloud-bpmn');
       expect(tab.file.contents).to.exist;
       expect(tab.file.contents).to.have.lengthOf.above(0);
     });
@@ -209,7 +197,6 @@ describe('TabsProvider', function() {
       const tab = tabsProvider.createTabForFile(file);
 
       // then
-      expect(tab.type).to.eql('cloud-dmn');
       expect(tab.file.contents).to.exist;
       expect(tab.file.contents).to.have.lengthOf.above(0);
     });
@@ -224,25 +211,10 @@ describe('TabsProvider', function() {
 
       const tabsProvider = new TabsProvider();
 
-      const expectedPlatformVersion = getLatestStablePlatformVersion(ENGINES.PLATFORM);
+      const expectedPlatformVersion = getLatestStablePlatformVersion(ENGINES.FLUXNOVA);
 
       // when
       const { file: { contents } } = tabsProvider.createTab('bpmn');
-
-      // then
-      expect(contents).to.include(`modeler:executionPlatformVersion="${ expectedPlatformVersion }"`);
-    });
-
-
-    it('should replace version placeholder with actual latest version (Cloud BPMN)', function() {
-
-      // given
-      const tabsProvider = new TabsProvider();
-
-      const expectedPlatformVersion = getLatestStablePlatformVersion(ENGINES.CLOUD);
-
-      // when
-      const { file: { contents } } = tabsProvider.createTab('cloud-bpmn');
 
       // then
       expect(contents).to.include(`modeler:executionPlatformVersion="${ expectedPlatformVersion }"`);
@@ -254,25 +226,10 @@ describe('TabsProvider', function() {
       // given
       const tabsProvider = new TabsProvider();
 
-      const expectedPlatformVersion = getLatestStablePlatformVersion(ENGINES.PLATFORM);
+      const expectedPlatformVersion = getLatestStablePlatformVersion(ENGINES.FLUXNOVA);
 
       // when
       const { file: { contents } } = tabsProvider.createTab('dmn');
-
-      // then
-      expect(contents).to.include(`modeler:executionPlatformVersion="${ expectedPlatformVersion }"`);
-    });
-
-
-    it('should replace version placeholder with actual latest version (Cloud DMN)', function() {
-
-      // given
-      const tabsProvider = new TabsProvider();
-
-      const expectedPlatformVersion = getLatestStablePlatformVersion(ENGINES.CLOUD);
-
-      // when
-      const { file: { contents } } = tabsProvider.createTab('cloud-dmn');
 
       // then
       expect(contents).to.include(`modeler:executionPlatformVersion="${ expectedPlatformVersion }"`);
@@ -288,7 +245,7 @@ describe('TabsProvider', function() {
 
         // given
         Flags.init({
-          [PLATFORM_ENGINE_VERSION]: '7.18.0'
+          [FLUXNOVA_ENGINE_VERSION]: '0.0.1'
         });
         const tabsProvider = new TabsProvider();
 
@@ -296,23 +253,7 @@ describe('TabsProvider', function() {
         const { file: { contents } } = tabsProvider.createTab('bpmn');
 
         // then
-        expect(contents).to.include('modeler:executionPlatformVersion="7.18.0"');
-      });
-
-
-      it('should replace version placeholder with version from flag (Cloud BPMN)', function() {
-
-        // given
-        Flags.init({
-          [CLOUD_ENGINE_VERSION]: '8.0.0'
-        });
-        const tabsProvider = new TabsProvider();
-
-        // when
-        const { file: { contents } } = tabsProvider.createTab('cloud-bpmn');
-
-        // then
-        expect(contents).to.include('modeler:executionPlatformVersion="8.0.0"');
+        expect(contents).to.include('modeler:executionPlatformVersion="1.0.0"');
       });
 
 
@@ -320,7 +261,7 @@ describe('TabsProvider', function() {
 
         // given
         Flags.init({
-          [PLATFORM_ENGINE_VERSION]: '7.18.0'
+          [FLUXNOVA_ENGINE_VERSION]: '0.0.1'
         });
         const tabsProvider = new TabsProvider();
 
@@ -328,23 +269,7 @@ describe('TabsProvider', function() {
         const { file: { contents } } = tabsProvider.createTab('dmn');
 
         // then
-        expect(contents).to.include('modeler:executionPlatformVersion="7.18.0"');
-      });
-
-
-      it('should replace version placeholder with version from flag (Cloud DMN)', function() {
-
-        // given
-        Flags.init({
-          [CLOUD_ENGINE_VERSION]: '8.0.0'
-        });
-        const tabsProvider = new TabsProvider();
-
-        // when
-        const { file: { contents } } = tabsProvider.createTab('cloud-dmn');
-
-        // then
-        expect(contents).to.include('modeler:executionPlatformVersion="8.0.0"');
+        expect(contents).to.include('modeler:executionPlatformVersion="1.0.0"');
       });
 
 
@@ -352,7 +277,7 @@ describe('TabsProvider', function() {
 
         // given
         Flags.init({
-          [PLATFORM_ENGINE_VERSION]: '7.18.0'
+          [FLUXNOVA_ENGINE_VERSION]: '0.0.1'
         });
         const tabsProvider = new TabsProvider();
 
@@ -360,25 +285,8 @@ describe('TabsProvider', function() {
         const { file: { contents } } = tabsProvider.createTab('form');
 
         // then
-        expect(contents).to.include('"executionPlatformVersion": "7.18.0"');
+        expect(contents).to.include('"executionPlatformVersion": "1.0.0"');
       });
-
-
-      it('should replace version placeholder with version from flag (Cloud FORM)', function() {
-
-        // given
-        Flags.init({
-          [CLOUD_ENGINE_VERSION]: '8.0.0'
-        });
-        const tabsProvider = new TabsProvider();
-
-        // when
-        const { file: { contents } } = tabsProvider.createTab('cloud-form');
-
-        // then
-        expect(contents).to.include('"executionPlatformVersion": "8.0.0"');
-      });
-
 
       describe('invalid flag', function() {
 
@@ -395,25 +303,10 @@ describe('TabsProvider', function() {
           // given
           const tabsProvider = new TabsProvider();
 
-          const expectedPlatformVersion = getLatestStablePlatformVersion(ENGINES.PLATFORM);
+          const expectedPlatformVersion = getLatestStablePlatformVersion(ENGINES.FLUXNOVA);
 
           // when
           const { file: { contents } } = tabsProvider.createTab('bpmn');
-
-          // then
-          expect(contents).to.include(`modeler:executionPlatformVersion="${ expectedPlatformVersion }"`);
-        });
-
-
-        it('should replace version placeholder with actual latest version (Cloud BPMN)', function() {
-
-          // given
-          const tabsProvider = new TabsProvider();
-
-          const expectedPlatformVersion = getLatestStablePlatformVersion(ENGINES.CLOUD);
-
-          // when
-          const { file: { contents } } = tabsProvider.createTab('cloud-bpmn');
 
           // then
           expect(contents).to.include(`modeler:executionPlatformVersion="${ expectedPlatformVersion }"`);
@@ -425,25 +318,10 @@ describe('TabsProvider', function() {
           // given
           const tabsProvider = new TabsProvider();
 
-          const expectedPlatformVersion = getLatestStablePlatformVersion(ENGINES.PLATFORM);
+          const expectedPlatformVersion = getLatestStablePlatformVersion(ENGINES.FLUXNOVA);
 
           // when
           const { file: { contents } } = tabsProvider.createTab('dmn');
-
-          // then
-          expect(contents).to.include(`modeler:executionPlatformVersion="${ expectedPlatformVersion }"`);
-        });
-
-
-        it('should replace version placeholder with actual latest version (Cloud DMN)', function() {
-
-          // given
-          const tabsProvider = new TabsProvider();
-
-          const expectedPlatformVersion = getLatestStablePlatformVersion(ENGINES.CLOUD);
-
-          // when
-          const { file: { contents } } = tabsProvider.createTab('cloud-dmn');
 
           // then
           expect(contents).to.include(`modeler:executionPlatformVersion="${ expectedPlatformVersion }"`);
@@ -455,44 +333,10 @@ describe('TabsProvider', function() {
           // given
           const tabsProvider = new TabsProvider();
 
-          const expectedPlatformVersion = getLatestStablePlatformVersion(ENGINES.PLATFORM);
+          const expectedPlatformVersion = getLatestStablePlatformVersion(ENGINES.FLUXNOVA);
 
           // when
           const { file: { contents } } = tabsProvider.createTab('form');
-
-          // then
-          expect(contents).to.include(`"executionPlatformVersion": "${ expectedPlatformVersion }"`);
-        });
-
-
-        it('should replace version placeholder with actual latest version (Cloud FORM)', function() {
-
-          // given
-          const tabsProvider = new TabsProvider();
-
-          const expectedPlatformVersion = getLatestStablePlatformVersion(ENGINES.CLOUD);
-
-          // when
-          const { file: { contents } } = tabsProvider.createTab('cloud-form');
-
-          // then
-          expect(contents).to.include(`"executionPlatformVersion": "${ expectedPlatformVersion }"`);
-        });
-
-
-        it('should replace version placeholder with actual latest version (RPA)', function() {
-
-          Flags.init({
-            [DISABLE_RPA]: false
-          });
-
-          // given
-          const tabsProvider = new TabsProvider();
-
-          const expectedPlatformVersion = getLatestStablePlatformVersion(ENGINES.CLOUD);
-
-          // when
-          const { file: { contents } } = tabsProvider.createTab('rpa');
 
           // then
           expect(contents).to.include(`"executionPlatformVersion": "${ expectedPlatformVersion }"`);
@@ -576,12 +420,7 @@ describe('TabsProvider', function() {
 
     // then
     expect(tabsProvider.createTab('bpmn')).to.exist;
-    expect(tabsProvider.createTab('cloud-bpmn')).to.exist;
-    expect(tabsProvider.createTab('cmmn')).to.exist;
     expect(tabsProvider.createTab('dmn')).to.exist;
-    expect(tabsProvider.createTab('cloud-dmn')).to.exist;
-    expect(tabsProvider.createTab('form')).to.exist;
-    expect(tabsProvider.createTab('rpa')).to.exist;
   });
 
 
@@ -594,12 +433,7 @@ describe('TabsProvider', function() {
 
       // then
       expect(await tabsProvider.getTabComponent('bpmn')).to.exist;
-      expect(await tabsProvider.getTabComponent('cloud-bpmn')).to.exist;
-      expect(await tabsProvider.getTabComponent('cmmn')).to.exist;
       expect(await tabsProvider.getTabComponent('dmn')).to.exist;
-      expect(await tabsProvider.getTabComponent('cloud-dmn')).to.exist;
-      expect(await tabsProvider.getTabComponent('form')).to.exist;
-
       expect(await tabsProvider.getTabComponent('empty')).to.exist;
     }
   );
@@ -623,7 +457,6 @@ describe('TabsProvider', function() {
       // then
       expect(tab.name).to.eql(file.name);
       expect(tab.title).to.eql(file.path);
-      expect(tab.type).to.eql('cloud-bpmn');
     });
 
 
@@ -643,7 +476,6 @@ describe('TabsProvider', function() {
       // then
       expect(tab.name).to.eql(file.name);
       expect(tab.title).to.eql(file.path);
-      expect(tab.type).to.eql('cloud-bpmn');
     });
 
 
@@ -686,52 +518,6 @@ describe('TabsProvider', function() {
       expect(tab.name).to.eql(file.name);
       expect(tab.title).to.eql(file.path);
       expect(tab.type).to.eql('dmn');
-    });
-
-
-    it('should take cloud-bpmn first for known bpmn file', function() {
-
-      // given
-      Flags.init({});
-
-      const tabsProvider = new TabsProvider();
-
-      const file = {
-        name: 'foo.xml',
-        path: '/a/foo.xml',
-        contents: require('./TabsProviderSpec.cloud.bpmn')
-      };
-
-      // when
-      const tab = tabsProvider.createTabForFile(file);
-
-      // then
-      expect(tab.name).to.eql(file.name);
-      expect(tab.title).to.eql(file.path);
-      expect(tab.type).to.eql('cloud-bpmn');
-    });
-
-
-    it('should take cloud-dmn first for known dmn file', function() {
-
-      // given
-      Flags.init({});
-
-      const tabsProvider = new TabsProvider();
-
-      const file = {
-        name: 'foo.xml',
-        path: '/a/foo.xml',
-        contents: require('./TabsProviderSpec.cloud.dmn')
-      };
-
-      // when
-      const tab = tabsProvider.createTabForFile(file);
-
-      // then
-      expect(tab.name).to.eql(file.name);
-      expect(tab.title).to.eql(file.path);
-      expect(tab.type).to.eql('cloud-dmn');
     });
 
 
@@ -830,29 +616,6 @@ describe('TabsProvider', function() {
     });
 
 
-    it('should take cloud-form for forms with Cloud as defined engine', function() {
-
-      // given
-      Flags.init({});
-
-      const tabsProvider = new TabsProvider();
-
-      const file = {
-        name: 'foo.form',
-        path: '/a/foo.form',
-        contents: require('./TabsProviderSpec.cloud.form')
-      };
-
-      // when
-      const tab = tabsProvider.createTabForFile(file);
-
-      // then
-      expect(tab.name).to.eql(file.name);
-      expect(tab.title).to.eql(file.path);
-      expect(tab.type).to.eql('cloud-form');
-    });
-
-
     it('should take form for forms with Platform as defined engine', function() {
 
       // given
@@ -893,11 +656,7 @@ describe('TabsProvider', function() {
 
     // then
     expect(providers['bpmn']).to.exist;
-    expect(providers['cloud-bpmn']).to.exist;
-    expect(providers['cmmn']).to.exist;
     expect(providers['dmn']).to.exist;
-    expect(providers['cloud-dmn']).to.exist;
-    expect(providers['rpa']).to.exist;
     expect(providers['empty']).to.exist;
   });
 
@@ -932,25 +691,7 @@ describe('TabsProvider', function() {
       const providerNames = tabsProvider.getProviderNames();
 
       // then
-      expect(providerNames).to.eql([ 'BPMN', 'CMMN', 'DMN', 'FORM', 'RPA' ]);
-
-    });
-
-
-    it('should return cloud provider names only', function() {
-
-      // given
-      Flags.init({
-        [DISABLE_PLATFORM]: true,
-        [DISABLE_RPA]: false
-      });
-      const tabsProvider = new TabsProvider();
-
-      // when
-      const providerNames = tabsProvider.getProviderNames();
-
-      // then
-      expect(providerNames).to.eql([ 'BPMN', 'DMN', 'FORM', 'RPA' ]);
+      expect(providerNames).to.eql([ 'BPMN', 'DMN', 'FORM' ]);
 
     });
 
@@ -1008,7 +749,6 @@ describe('TabsProvider', function() {
   describe('#getLinter', function() {
 
     [
-      'cmmn',
       'dmn'
     ].forEach((type) => {
 
@@ -1033,7 +773,6 @@ describe('TabsProvider', function() {
 
     [
       'bpmn',
-      'cloud-bpmn',
       'form'
     ].forEach((type) => {
 
@@ -1053,70 +792,6 @@ describe('TabsProvider', function() {
         expect(linter).to.exist;
       });
 
-    });
-
-
-    it('cloud-bpmn should configure element template plugin', async function() {
-
-      // given
-      const tabsProvider = new TabsProvider().getProvider('cloud-bpmn');
-      const templates = [
-        {
-          '$schema': 'https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json',
-          'name': 'empty',
-          'id': 'constraints.empty',
-          'appliesTo': [
-            'bpmn:Task'
-          ],
-          'properties': []
-        }
-      ];
-      const getConfig = () => templates ;
-
-      const tabMock = { file: 'foo' };
-
-      // when
-      const linter = await tabsProvider.getLinter(
-        [],
-        tabMock,
-        getConfig
-      );
-
-      // then
-      const plugins = linter.getPlugins();
-
-      expect(linter).to.exist;
-      expect(plugins).to.have.length(1);
-
-      const rules = plugins[0].config.rules;
-      expect(rules['element-templates/validate']).to.exist;
-      expect(rules['element-templates/validate'][1].templates).to.eql(templates);
-    });
-
-
-    it('cloud-bpmn plugins', async function() {
-
-      // given
-      const plugin = {
-        config: {},
-        resolver: {
-          resolveConfig() {},
-          resolveRule() {}
-        }
-      };
-
-      const tabsProvider = new TabsProvider().getProvider('cloud-bpmn');
-
-      // when
-      const linter = await tabsProvider.getLinter(
-        [ plugin ],
-        {},
-        () => {}
-      );
-
-      // then
-      expect(linter).to.exist;
-      expect(linter.getPlugins()).to.have.length(2);
     });
 
 
@@ -1162,36 +837,6 @@ describe('TabsProvider', function() {
       // then
       expect(tabsProvider.hasProvider('dmn')).to.be.false;
       expect(tabsProvider.hasProvider('cloud-dmn')).to.be.false;
-    });
-
-
-    it('should disable CMMN', function() {
-
-      // given
-      Flags.init({
-        [DISABLE_CMMN]: true
-      });
-
-      // when
-      const tabsProvider = new TabsProvider();
-
-      // then
-      expect(tabsProvider.hasProvider('cmmn')).to.be.false;
-    });
-
-
-    it('should enable CMMN', function() {
-
-      // given
-      Flags.init({
-        [DISABLE_CMMN]: false
-      });
-
-      // when
-      const tabsProvider = new TabsProvider();
-
-      // then
-      expect(tabsProvider.hasProvider('cmmn')).to.be.true;
     });
 
 
@@ -1246,7 +891,7 @@ describe('TabsProvider', function() {
       const { file: { contents } } = tabsProvider.createTab('bpmn');
 
       // then
-      expect(contents).to.not.include('historyTimeToLive');
+      expect(contents).to.include('historyTimeToLive="30"');
 
     });
 
@@ -1255,7 +900,7 @@ describe('TabsProvider', function() {
 
       // given
       Flags.init({
-        [DEFAULT_HTTL]: '30'
+        [DEFAULT_HTTL]: '40'
       });
       const tabsProvider = new TabsProvider();
 
@@ -1263,7 +908,7 @@ describe('TabsProvider', function() {
       const { file: { contents } } = tabsProvider.createTab('bpmn');
 
       // then
-      expect(contents).to.include('historyTimeToLive="30"');
+      expect(contents).to.include('historyTimeToLive="40"');
     });
 
   });
@@ -1284,12 +929,8 @@ describe('TabsProvider', function() {
 
     [
       'bpmn',
-      'cloud-bpmn',
       'dmn',
-      'cloud-dmn',
       'form',
-      'cloud-form',
-      'rpa'
     ].forEach((type) => {
 
       it(`should have icon <${type}>`, function() {
@@ -1303,16 +944,5 @@ describe('TabsProvider', function() {
 
     });
 
-
-    it('should NOT have icon', function() {
-
-      // when
-      const icon = tabsProvider.getTabIcon('cmmn');
-
-      // then
-      expect(icon).to.not.exist;
-    });
-
   });
-
 });

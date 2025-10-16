@@ -59,38 +59,38 @@ const platforms = [
 const expectedFiles = {
   win: [
     {
-      name: 'camunda-modeler-${version}-win-${arch}.zip',
+      name: 'fluxnova-modeler-${version}-win-${arch}.zip',
       archs,
       contents: [
-        'Camunda Modeler.exe',
+        'Fluxnova Modeler.exe',
         'support/register_fileassoc.bat',
-        'LICENSE.camunda-modeler.txt',
-        'THIRD_PARTY_NOTICES.camunda-modeler.txt',
+        'LICENSE.fluxnova-modeler.txt',
+        'THIRD_PARTY_NOTICES.fluxnova-modeler.txt',
         'VERSION'
       ]
     }
   ],
   linux: [
     {
-      name: 'camunda-modeler-${version}-linux-${arch}.tar.gz',
+      name: 'fluxnova-modeler-${version}-linux-${arch}.tar.gz',
       archs: [ 'x64' ],
       contents: [
-        'camunda-modeler-${version}-linux-${arch}/camunda-modeler',
-        'camunda-modeler-${version}-linux-${arch}/support/xdg_register.sh',
-        'camunda-modeler-${version}-linux-${arch}/VERSION'
+        'fluxnova-modeler-${version}-linux-${arch}/fluxnova-modeler',
+        'fluxnova-modeler-${version}-linux-${arch}/support/xdg_register.sh',
+        'fluxnova-modeler-${version}-linux-${arch}/VERSION'
       ]
     }
   ],
   mac: [
     {
-      name: 'camunda-modeler-${version}-mac-${arch}.dmg',
+      name: 'fluxnova-modeler-${version}-mac-${arch}.dmg',
       archs: [ 'x64', 'arm64' ]
     },
     {
-      name: 'camunda-modeler-${version}-mac-${arch}.zip',
+      name: 'fluxnova-modeler-${version}-mac-${arch}.zip',
       archs: [ 'x64', 'arm64' ],
       contents: [
-        'Camunda Modeler.app/Contents/Info.plist'
+        'Fluxnova Modeler.app/Contents/Info.plist'
       ]
     }
   ]

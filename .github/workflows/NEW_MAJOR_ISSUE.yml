@@ -1,10 +1,14 @@
 name: NEW_MAJOR_ISSUE
+permissions:
+  contents: read
 on:
-  schedule:
-    # Before the April and October releases
-    - cron: '0 8 15 MAR,SEP *'
+  workflow_dispatch:  
+#  pull_request:
+#    types: [closed]
+#    branches: [main, release]
 jobs:
   create_issue:
+    if: github.event.pull_request.merged == true
     name: Create issue
     runs-on: ubuntu-latest
     steps:

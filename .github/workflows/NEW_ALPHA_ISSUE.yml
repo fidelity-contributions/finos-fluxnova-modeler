@@ -1,8 +1,9 @@
 name: NEW_ALPHA_ISSUE
 on:
-  schedule:
+  workflow_dispatch:
+#  schedule:
     # After the April and October releases
-    - cron: '0 8 15 APR,OCT *'
+#    - cron: '0 8 15 APR,OCT *'
 jobs:
   create_issue:
     name: Create issue

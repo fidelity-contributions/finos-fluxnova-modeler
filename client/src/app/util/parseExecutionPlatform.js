@@ -18,7 +18,7 @@ import {
   Parser
 } from 'saxen';
 
-const MODELER_NAMESPACE = 'http://camunda.org/schema/modeler/1.0';
+const MODELER_NAMESPACE = 'http://fluxnova.finos.org/schema/modeler/1.0';
 
 /**
  * Find execution platform details if available.
@@ -79,6 +79,7 @@ function isDefinitions(elementName) {
 function getExecutionPlatformDetailsFromAttrs(attrs) {
 
   const prefix = getModelerNamespacePrefix(attrs);
+
 
   // return null if namespace is missing
   if (prefix === null) {

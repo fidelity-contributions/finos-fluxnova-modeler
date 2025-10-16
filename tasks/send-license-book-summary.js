@@ -223,7 +223,7 @@ function getDraftEmail(summary, changesSummary) {
 function getMessageText(summary, changesSummary) {
   let message = `${summary}
 
-Third party notices: https://github.com/camunda/camunda-modeler/blob/${CURRENT_VERSION}/THIRD_PARTY_NOTICES
+Third party notices: https://github.com/finos/fluxnova-modeler/blob/${CURRENT_VERSION}/THIRD_PARTY_NOTICES
   `;
 
   if (changesSummary) {

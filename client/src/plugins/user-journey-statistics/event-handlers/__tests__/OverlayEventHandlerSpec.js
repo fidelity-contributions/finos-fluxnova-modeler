@@ -19,8 +19,6 @@ import emptyDMN from './fixtures/empty.dmn';
 import engineProfileXML from './fixtures/engine-profile.bpmn';
 import engineProfileDMN from './fixtures/engine-platform.dmn';
 
-import engineProfileCloudXML from './fixtures/engine-cloud.bpmn';
-import engineProfileCloudDMN from './fixtures/engine-cloud.dmn';
 
 describe('<OverlayEventHandler>', function() {
 
@@ -465,31 +463,8 @@ describe('<OverlayEventHandler>', function() {
           const { executionPlatform, executionPlatformVersion } = track.getCall(0).args[1];
 
           // then
-          expect(executionPlatform).to.eql('Camunda Platform');
-          expect(executionPlatformVersion).to.eql('7.15.0');
-
-        });
-
-
-        it('cloud bpmn', async function() {
-
-          // given
-          const tab = createTab({
-            type: 'cloud-bpmn',
-            file: {
-              contents: engineProfileCloudXML
-            }
-          });
-
-          const handleOverlayAction = subscribe.getCall(0).args[1];
-
-          // when
-          await handleOverlayAction({ tab });
-
-          const { executionPlatform } = track.getCall(0).args[1];
-
-          // then
-          expect(executionPlatform).to.eql('Camunda Cloud');
+          expect(executionPlatform).to.eql('Fluxnova Platform');
+          expect(executionPlatformVersion).to.eql('1.0.0');
 
         });
 
@@ -512,32 +487,10 @@ describe('<OverlayEventHandler>', function() {
           const { executionPlatform, executionPlatformVersion } = track.getCall(0).args[1];
 
           // then
-          expect(executionPlatform).to.eql('Camunda Platform');
-          expect(executionPlatformVersion).to.eql('7.16.0');
+          expect(executionPlatform).to.eql('Fluxnova Platform');
+          expect(executionPlatformVersion).to.eql('1.0.0');
 
 
-        });
-
-
-        it('cloud dmn', async function() {
-
-          // given
-          const tab = createTab({
-            type: 'cloud-dmn',
-            file: {
-              contents: engineProfileCloudDMN
-            }
-          });
-
-          const handleOverlayAction = subscribe.getCall(0).args[1];
-
-          // when
-          await handleOverlayAction({ tab });
-
-          const { executionPlatform } = track.getCall(0).args[1];
-
-          // then
-          expect(executionPlatform).to.eql('Camunda Cloud');
         });
 
       });
@@ -562,7 +515,7 @@ describe('<OverlayEventHandler>', function() {
           const { executionPlatform } = track.getCall(0).args[1];
 
           // then
-          expect(executionPlatform).to.eql('Camunda Platform');
+          expect(executionPlatform).to.eql('Fluxnova Platform');
         });
 
 
@@ -584,7 +537,7 @@ describe('<OverlayEventHandler>', function() {
           const { executionPlatform } = track.getCall(0).args[1];
 
           // then
-          expect(executionPlatform).to.eql('Camunda Platform');
+          expect(executionPlatform).to.eql('Fluxnova Platform');
         });
 
       });

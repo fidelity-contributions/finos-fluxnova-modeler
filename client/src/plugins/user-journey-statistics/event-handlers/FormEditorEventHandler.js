@@ -10,7 +10,7 @@
 
 import {
   getEngineProfile
-} from '../../../util/parse';
+} from '../../../util/xmlConversion';
 
 export const LAYOUT_CHANGED_EVENT_NAME = 'formEditor:layoutChanged';
 export const INPUT_DATA_CHANGED_EVENT_NAME = 'formEditor:inputDataChanged';

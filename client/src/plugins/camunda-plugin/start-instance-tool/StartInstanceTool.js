@@ -112,7 +112,7 @@ export default class StartInstanceTool extends PureComponent {
       action
     } = await deployService.getDeployConfigurationFromUserInput(tab, deployConfig, {
       title: 'Start Process Instance - Step 1 of 2',
-      intro: 'Specify deployment details to deploy this diagram to Camunda Platform.',
+      intro: 'Specify deployment details to deploy this diagram to Fluxnova Platform.',
       primaryAction: 'Next',
       anchor: this.anchorRef
     });
@@ -463,7 +463,7 @@ export default class StartInstanceTool extends PureComponent {
         context: 'startInstanceTool',
         deployedTo: {
           executionPlatformVersion: version,
-          executionPlatform: ENGINES.PLATFORM
+          executionPlatform: ENGINES.FLUXNOVA
         }
       }
     });
@@ -497,7 +497,7 @@ export default class StartInstanceTool extends PureComponent {
 
     // If we retrieved the executionPlatformVersion, include it in event
     const deployedTo = (version &&
-       { executionPlatformVersion: version, executionPlatform: ENGINES.PLATFORM }) || undefined;
+       { executionPlatformVersion: version, executionPlatform: ENGINES.FLUXNOVA }) || undefined;
 
     // notify interested parties
     triggerAction('emit-event', {

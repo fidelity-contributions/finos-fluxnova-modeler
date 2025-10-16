@@ -39,8 +39,8 @@ describe('util - parseExecutionPlatform', function() {
 
     // then
     expect(meta).to.exist;
-    expect(meta).to.have.property('executionPlatform').equal('Camunda Platform');
-    expect(meta).to.have.property('executionPlatformVersion').equal('7.15.0');
+    expect(meta).to.have.property('executionPlatform').equal('Fluxnova Platform');
+    expect(meta).to.have.property('executionPlatformVersion').equal('1.0.0');
   });
 
 
@@ -67,7 +67,7 @@ describe('util - parseExecutionPlatform', function() {
 
     // then
     expect(meta).to.exist;
-    expect(meta).to.have.property('executionPlatform').equal('Camunda Platform');
+    expect(meta).to.have.property('executionPlatform').equal('Fluxnova Platform');
     expect(meta).to.have.property('executionPlatformVersion').equal(null);
   });
 
@@ -83,8 +83,8 @@ describe('util - parseExecutionPlatform', function() {
 
       // then
       expect(meta).to.exist;
-      expect(meta).to.have.property('executionPlatform').equal('Camunda Platform');
-      expect(meta).to.have.property('executionPlatformVersion').equal('7.15.0');
+      expect(meta).to.have.property('executionPlatform').equal('Fluxnova Platform');
+      expect(meta).to.have.property('executionPlatformVersion').equal('1.0.0');
     }
   );
 
@@ -100,8 +100,8 @@ describe('util - parseExecutionPlatform', function() {
 
       // then
       expect(meta).to.exist;
-      expect(meta).to.have.property('executionPlatform').equal('Camunda Platform');
-      expect(meta).to.have.property('executionPlatformVersion').equal('7.15.0');
+      expect(meta).to.have.property('executionPlatform').equal('Fluxnova Platform');
+      expect(meta).to.have.property('executionPlatformVersion').equal('1.0.0');
     }
   );
 
@@ -116,8 +116,8 @@ describe('util - parseExecutionPlatform', function() {
 
     // then
     expect(meta).to.exist;
-    expect(meta).to.have.property('executionPlatform').equal('Camunda Platform');
-    expect(meta).to.have.property('executionPlatformVersion').equal('7.15.0');
+    expect(meta).to.have.property('executionPlatform').equal('Fluxnova Platform');
+    expect(meta).to.have.property('executionPlatformVersion').equal('1.0.0');
   });
 
 

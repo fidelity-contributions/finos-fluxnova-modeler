@@ -34,6 +34,8 @@ import {
 import { FormPlayground as FormPlaygroundMock } from 'test/mocks/form-js';
 
 import schema from './form.form';
+import existingC7Form from './existing.c7.form';
+import existingC8Form from './existing.c8.form';
 
 import engineProfileSchema from '../../__tests__/EngineProfile.platform.form';
 import noEngineProfile from '../../__tests__/EngineProfile.vanilla.form';
@@ -42,11 +44,15 @@ import missingPatchEngineProfile from '../../__tests__/EngineProfile.missing-pat
 import patchEngineProfile from '../../__tests__/EngineProfile.patch.platform.form';
 
 import { SlotFillRoot } from '../../../slot-fill';
+import { ENGINES, getLatestStable } from '../../../../util/Engines';
+
 
 const { spy } = sinon;
 
 
 describe('<FormEditor>', function() {
+
+  const latestStable = getLatestStable(ENGINES.FLUXNOVA);
 
   it('should render', async function() {
     const { instance } = await renderEditor(schema);
@@ -118,9 +124,13 @@ describe('<FormEditor>', function() {
     // when
     const exportedSchema = instance.getXML();
 
+    // need to strip out carriage return characters for windows runner
+    const strippedExportedSchema = exportedSchema.replace(/[\r]/g, '');
+    const strippedSchema = schema.replace(/[\r]/g, '');
+
     // then
     expect(exportedSchema).to.exist;
-    expect(exportedSchema).to.eql(schema);
+    expect(strippedExportedSchema).to.eql(strippedSchema);
   });
 
 
@@ -483,7 +493,7 @@ describe('<FormEditor>', function() {
       });
 
       // when
-      await renderEditor('{ "importError": true }', {
+      await renderEditor('{ "executionPlatform":"Fluxnova Platform", "importError": true }', {
         onImport: onImportSpy
       });
 
@@ -541,8 +551,12 @@ describe('<FormEditor>', function() {
       // given
       const { instance } = await renderEditor(schema);
 
+      // need to strip out carriage return characters for windows runner
+      const strippedInstanceJson = instance.getCached().lastSchema.replace(/[\r]/g, '');
+      const strippedSchema = schema.replace(/[\r]/g, '');
+
       // assume
-      expect(instance.getCached().lastSchema).to.equal(schema);
+      expect(strippedInstanceJson).to.equal(strippedSchema);
 
       // when
       await instance.importSchema('{ "importError": true }');
@@ -630,8 +644,12 @@ describe('<FormEditor>', function() {
     function expectEngineProfile(schema, engineProfile) {
       return async function() {
 
+        let onAction = sinon.stub().resolves({
+          button: '0'
+        });
+
         // when
-        const { instance, wrapper } = await renderEditor(schema);
+        const { instance, wrapper } = await renderEditor(schema, { onAction });
 
         wrapper.update();
 
@@ -644,26 +662,26 @@ describe('<FormEditor>', function() {
 
 
     it('should show engine profile (no engine profile)', expectEngineProfile(noEngineProfile, {
-      executionPlatform: 'Camunda Platform',
-      executionPlatformVersion: undefined
+      executionPlatform: 'Fluxnova Platform',
+      executionPlatformVersion: latestStable
     }));
 
 
-    it('should show engine profile (Camunda 7.16.0)', expectEngineProfile(engineProfileSchema, {
-      executionPlatform: 'Camunda Platform',
-      executionPlatformVersion: '7.16.0'
+    it('should show engine profile (Fluxnova 1.0.0)', expectEngineProfile(engineProfileSchema, {
+      executionPlatform: 'Fluxnova Platform',
+      executionPlatformVersion: '1.0.0'
     }));
 
 
-    it('should show engine profile (Camunda 7.16)', expectEngineProfile(missingPatchEngineProfile, {
-      executionPlatform: 'Camunda Platform',
-      executionPlatformVersion: '7.16.0'
+    it('should show engine profile (Fluxnova 1.0)', expectEngineProfile(missingPatchEngineProfile, {
+      executionPlatform: 'Fluxnova Platform',
+      executionPlatformVersion: '1.0.0'
     }));
 
 
-    it('should show engine profile (Camunda 7.16.1)', expectEngineProfile(patchEngineProfile, {
-      executionPlatform: 'Camunda Platform',
-      executionPlatformVersion: '7.16.1'
+    it('should show engine profile (Fluxnova 1.0.1)', expectEngineProfile(patchEngineProfile, {
+      executionPlatform: 'Fluxnova Platform',
+      executionPlatformVersion: '1.0.1'
     }));
 
 
@@ -678,42 +696,47 @@ describe('<FormEditor>', function() {
       expect(wrapper.find('EngineProfile').exists()).to.be.true;
 
       expect(instance.getCached().engineProfile).to.eql({
-        executionPlatform: 'Camunda Platform',
-        executionPlatformVersion: '7.16.0'
+        executionPlatform: 'Fluxnova Platform',
+        executionPlatformVersion: '1.0.0'
       });
 
       // when
       const schema = instance.getCached().form.getSchema();
 
-      schema.executionPlatform = 'Camunda Platform';
-      schema.executionPlatformVersion = '7.15.0';
+      schema.executionPlatform = 'Fluxnova Platform';
+      schema.executionPlatformVersion = '1.1.0';
 
       instance.handleChanged();
 
       // then
       expect(instance.getCached().engineProfile).to.eql({
-        executionPlatform: 'Camunda Platform',
-        executionPlatformVersion: '7.15.0'
+        executionPlatform: 'Fluxnova Platform',
+        executionPlatformVersion: '1.1.0'
       });
     });
 
 
-    it('should open unknown execution profile form as Camunda Cloud', async function() {
+    it('should open unknown execution profile form as Fluxnova Platform', async function() {
 
       // given
       const onImportSpy = spy();
 
+      let onAction = sinon.stub().resolves({
+        button: '0'
+      });
+
       // when
       const { instance } = await renderEditor(unknownEngineProfileSchema, {
-        onImport: onImportSpy
+        onImport: onImportSpy,
+        onAction
       });
 
       // then
       expect(onImportSpy).to.have.been.calledOnce;
 
       expect(instance.getCached().engineProfile).to.eql({
-        executionPlatform: 'Camunda Cloud',
-        executionPlatformVersion: '7.16.0'
+        executionPlatform: 'Fluxnova Platform',
+        executionPlatformVersion: latestStable
       });
     });
 
@@ -1299,6 +1322,102 @@ describe('<FormEditor>', function() {
       const inputDataChangedEvent = getEvent(emittedEvents, 'form.modeler.inputDataChanged');
 
       expect(inputDataChangedEvent).to.not.exist;
+    });
+
+  });
+
+  describe('fluxnova conversion', function() {
+
+    describe('should convert', function() {
+
+      it('existing form to fluxnova', async function() {
+
+        // given
+        const onAction = sinon.stub().resolves({
+          button: '0'
+        });
+
+        // when
+        const { instance } = await renderEditor(existingC7Form, {
+          onAction: onAction
+        });
+
+        // then
+        expect(onAction).not.to.be.calledWith('close-tab');
+
+        const {
+          form
+        } = instance.getCached();
+
+        expect(form).to.exist;
+
+        const schema = form.getSchema();
+
+        expect(schema.executionPlatform).to.be.eql('Fluxnova Platform');
+        expect(schema.executionPlatformVersion).to.be.eql(latestStable);
+
+      });
+
+    });
+
+    describe('should not convert', function() {
+
+      it('when model is already fluxnova', async function() {
+
+        //  given
+        const onAction = spy();
+
+        // when
+        const { instance } = await renderEditor(schema, {
+          onAction: onAction
+        });
+
+        // then
+        expect(onAction).not.to.be.calledWith('close-tab');
+        expect(onAction).not.to.be.calledWith('show-dialog');
+
+        const {
+          form
+        } = instance.getCached();
+
+        expect(form).to.exist;
+
+      });
+
+      it('when conversion declined', async function() {
+
+        // given
+        const onAction = sinon.stub().resolves({
+          button: '1'
+        });
+
+        // when
+        await renderEditor(existingC7Form, {
+          onAction: onAction
+        });
+
+        // then
+        expect(onAction).to.be.calledWith('close-tab');
+
+      });
+
+      it('when camunda 8 form', async function() {
+
+        // given
+        const onAction = sinon.stub().resolves({
+          button: '2'
+        });
+
+        // when
+        await renderEditor(existingC8Form, {
+          onAction: onAction
+        });
+
+        // then
+        expect(onAction).to.be.calledWith('close-tab');
+
+      });
+
     });
 
   });

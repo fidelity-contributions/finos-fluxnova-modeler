@@ -588,11 +588,7 @@ class MenuBuilder {
     const topPart = [
       {
         label: 'Documentation',
-        click: () => browserOpen('https://docs.camunda.io/docs/components/modeler/desktop-modeler/')
-      },
-      {
-        label: 'User Forum',
-        click: () => browserOpen('https://forum.camunda.io/c/bpmn-modeling/')
+        click: () => browserOpen('https://docs.fluxnova.finos.org/modeler/')
       },
       {
         label: 'Keyboard Shortcuts',
@@ -601,7 +597,7 @@ class MenuBuilder {
       getSeparatorTemplate(),
       {
         label: 'Search Feature Requests',
-        click: () => browserOpen('https://github.com/camunda/camunda-modeler/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement')
+        click: () => browserOpen('https://github.com/finos/fluxnova-modeler/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement')
       },
       {
         label: 'Report Issue',
@@ -612,10 +608,6 @@ class MenuBuilder {
         {
           label: 'Privacy Preferences',
           click: () => app.emit('menu:action', 'emit-event', { type: 'show-privacy-preferences' })
-        },
-        {
-          label: 'Check for Updates',
-          click: () => app.emit('menu:action', 'emit-event', { type: 'updateChecks.execute' })
         },
       ] : [],
       getSeparatorTemplate()
@@ -641,11 +633,6 @@ class MenuBuilder {
     }, []);
 
     const bottomPart = [
-      {
-        label: 'FEEL Reference',
-        click: () => browserOpen('https://docs.camunda.io/docs/components/modeler/feel/what-is-feel/')
-      },
-      getSeparatorTemplate(),
       {
         label: 'Version ' + app.version,
         enabled: false

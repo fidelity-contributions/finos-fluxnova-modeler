@@ -117,7 +117,7 @@ describe('<FormEditorEventHandler>', function() {
     });
 
 
-    it('should send engine profile - C7', async function() {
+    it('should send engine profile - Fluxnova', async function() {
 
       // given
       const tab = createTab({
@@ -135,8 +135,8 @@ describe('<FormEditorEventHandler>', function() {
       // then
       expect(track).to.have.been.calledWith(LAYOUT_CHANGED_EVENT_NAME, {
         layout: undefined,
-        executionPlatform: 'Camunda Platform',
-        executionPlatformVersion: '7.15'
+        executionPlatform: 'Fluxnova Platform',
+        executionPlatformVersion: '1.0.0'
       });
     });
 
@@ -194,8 +194,8 @@ describe('<FormEditorEventHandler>', function() {
 
       // then
       expect(track).to.have.been.calledWith(INPUT_DATA_CHANGED_EVENT_NAME, {
-        executionPlatform: 'Camunda Platform',
-        executionPlatformVersion: '7.15'
+        executionPlatform: 'Fluxnova Platform',
+        executionPlatformVersion: '1.0.0'
       });
     });
 
@@ -252,8 +252,8 @@ describe('<FormEditorEventHandler>', function() {
 
       // then
       expect(track).to.have.been.calledWith(PREVIEW_CHANGED_EVENT_NAME, {
-        executionPlatform: 'Camunda Platform',
-        executionPlatformVersion: '7.15'
+        executionPlatform: 'Fluxnova Platform',
+        executionPlatformVersion: '1.0.0'
       });
     });
 

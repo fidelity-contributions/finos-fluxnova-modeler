@@ -1,8 +1,9 @@
 name: CREATE_NEW_MILESTONE
 
 on:
-  milestone:
-    types: ['closed']
+  workflow_dispatch:
+#  milestone:
+#    types: ['closed']
 
 jobs:
   create_milestone:

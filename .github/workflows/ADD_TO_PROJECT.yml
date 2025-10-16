@@ -1,15 +1,16 @@
 name: ADD_TO_PROJECT
 
 on:
-  issues:
-    types:
-      - opened
-      - transferred
-      - labeled
-  pull_request:
-    types:
-      - opened
-      - labeled
+  workflow_dispatch:
+#  issues:
+#    types:
+#      - opened
+#      - transferred
+#      - labeled
+#  pull_request:
+#    types:
+#      - opened
+#      - labeled
 
 jobs:
   exec:

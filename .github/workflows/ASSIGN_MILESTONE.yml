@@ -1,10 +1,11 @@
 name: ASSIGN_MILESTONE
 
 on:
-  issues:
-    types: ['closed']
-  pull_request:
-    types: ['closed']
+  workflow_dispatch:
+#  issues:
+#    types: ['closed']
+#  pull_request:
+#    types: ['closed']
 
 jobs:
   check_permissions:
@@ -15,7 +16,7 @@ jobs:
     steps:
       - name: Check Permissions
         id: checkPermissions
-        env: 
+        env:
           GH_TOKEN: ${{ github.token }}
         run: |
           PERMISSION=$(gh api \
@@ -28,13 +29,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Assign Milestone
     needs: check_permissions
-    if: | 
-      needs.check_permissions.outputs.permission == 'admin' || 
+    if: |
+      needs.check_permissions.outputs.permission == 'admin' ||
       needs.check_permissions.outputs.permission == 'write'
     steps:
       - name: Get current Milestone
         id: getMilestone
-        env: 
+        env:
           GH_TOKEN: ${{ github.token }}
         run: |
           # Fetch the list of milestones for the repository
@@ -43,7 +44,7 @@ jobs:
             /repos/${{ github.repository }}/milestones \
             --jq '[.[] | select(.title | startswith("M")) | .number ][0]'
           )
-          
+
           echo "MILESTONE_NUMBER=$MILESTONE" >> $GITHUB_OUTPUT
       - name: Assign Issue
         if: |

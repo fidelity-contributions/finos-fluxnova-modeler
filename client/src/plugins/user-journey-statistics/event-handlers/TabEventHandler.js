@@ -11,7 +11,7 @@
 import {
   getEngineProfile,
   parseFormFieldCounts
-} from '../../../util/parse';
+} from '../../../util/xmlConversion';
 
 import { getTemplateIds } from '../util';
 

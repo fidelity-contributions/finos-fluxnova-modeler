@@ -174,13 +174,14 @@ describe('<EngineProfile>', function() {
 
       // given
       const inputs =
-      [ [ ENGINES.CLOUD, '1.0', 'Zeebe 1.0' ],
-        [ ENGINES.CLOUD, '1.2', 'Zeebe 1.2' ],
+      [ [ ENGINES.CLOUD, '1.0', '1.0' ],
+        [ ENGINES.CLOUD, '1.2', '1.2' ],
         [ ENGINES.CLOUD, '8.0', '8.0' ],
         [ ENGINES.CLOUD, '8.1', '8.1' ],
         [ ENGINES.CLOUD, '8.100', '8.100 (alpha)' ],
         [ ENGINES.PLATFORM, '7.14', '7.14' ],
         [ ENGINES.PLATFORM, '7.500', '7.500 (alpha)' ],
+        [ ENGINES.FLUXNOVA, '0.0', '0.0' ],
         [ undefined, '10.0', '10.0' ],
       ];
 
@@ -199,14 +200,10 @@ describe('<EngineProfile>', function() {
 
       // given
       const inputs =
-      [ [ ENGINES.PLATFORM, '7.0', 'Camunda 7.0 (unsupported)' ],
-        [ ENGINES.PLATFORM, '7.15', 'Camunda 7.15' ],
-        [ ENGINES.PLATFORM, '7.500', 'Camunda 7.500 (unsupported)' ],
-        [ ENGINES.PLATFORM, '', 'Camunda 7' ],
-        [ ENGINES.CLOUD, '1.3', 'Camunda 8 (Zeebe 1.3)' ],
-        [ ENGINES.CLOUD, '8.1', 'Camunda 8.1' ],
-        [ ENGINES.CLOUD, '8.100', 'Camunda 8.100 (unsupported)' ],
-        [ ENGINES.CLOUD, '', 'Camunda 8' ] ];
+      [ [ ENGINES.FLUXNOVA, '7.23.0', 'Fluxnova 7.23 (unsupported)' ],
+        [ ENGINES.FLUXNOVA, '1.0.0', 'Fluxnova 1.0' ],
+        [ ENGINES.FLUXNOVA, '', 'Fluxnova' ]
+      ];
 
       // then
       inputs.forEach((input) => {
@@ -234,7 +231,8 @@ describe('<EngineProfile>', function() {
       wrapper.find('button').simulate('click');
 
       // then
-      expectPlatformHelp(wrapper);
+      // todo: Uncomment once documentation available (https://github.com/finos/fluxnova-modeler/issues/8)
+      // expectPlatformHelp(wrapper);
     });
 
 
@@ -250,7 +248,8 @@ describe('<EngineProfile>', function() {
       wrapper.find('button').simulate('click');
 
       // then
-      expectPlatformHelp(wrapper);
+      // todo: Uncomment once documentation available (https://github.com/finos/fluxnova-modeler/issues/8)
+      // expectPlatformHelp(wrapper);
     });
 
   });
@@ -304,7 +303,8 @@ describe('<EngineProfile>', function() {
       wrapper.find('button').simulate('click');
 
       // then
-      expectPlatformHelp(wrapper);
+      // todo: Uncomment once documentation available (https://github.com/finos/fluxnova-modeler/issues/8)
+      // expectPlatformHelp(wrapper);
     });
 
 
@@ -320,7 +320,8 @@ describe('<EngineProfile>', function() {
       wrapper.find('button').simulate('click');
 
       // then
-      expectPlatformHelp(wrapper);
+      // todo: Uncomment once documentation available (https://github.com/finos/fluxnova-modeler/issues/8)
+      // expectPlatformHelp(wrapper);
     });
 
   });
@@ -373,7 +374,8 @@ describe('<EngineProfile>', function() {
       wrapper.find('button').simulate('click');
 
       // then
-      expectPlatformHelp(wrapper);
+      // todo: Uncomment once documentation available (https://github.com/finos/fluxnova-modeler/issues/8)
+      // expectPlatformHelp(wrapper);
     });
 
 
@@ -389,7 +391,8 @@ describe('<EngineProfile>', function() {
       wrapper.find('button').simulate('click');
 
       // then
-      expectPlatformHelp(wrapper);
+      // todo: Uncomment once documentation available (https://github.com/finos/fluxnova-modeler/issues/8)
+      // expectPlatformHelp(wrapper);
     });
 
   });
@@ -443,9 +446,10 @@ function expectCloudHelp(wrapper) {
   expectHelpText(wrapper, 'https://docs.camunda.io/?utm_source=modeler&utm_medium=referral');
 }
 
-function expectPlatformHelp(wrapper) {
-  expectHelpText(wrapper, 'https://docs.camunda.org/manual/latest/');
-}
+// todo: Uncomment once documentation available (https://github.com/finos/fluxnova-modeler/issues/8)
+// function expectPlatformHelp(wrapper) {
+//   expectHelpText(wrapper, 'https://docs.fluxnova.finos.org/manual/latest/');
+// }
 
 function selectVersion(wrapper, version) {
 

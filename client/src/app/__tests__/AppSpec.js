@@ -49,6 +49,22 @@ const { spy } = sinon;
 
 const noop = () => {};
 
+const sampleBpmn = `
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:fluxnova="http://fluxnova.org/schema/1.0/bpmn" id="Definitions_1abliy8" targetNamespace="http://bpmn.io/schema/bpmn" xmlns:modeler="http://fluxnova.org/schema/modeler/1.0" exporter="Fluxnova Modeler" exporterVersion="5.33.0-dev" modeler:executionPlatform="Fluxnova Platform" modeler:executionPlatformVersion="1.0.0">
+  <bpmn:process id="Process_1fzcalt" isExecutable="true" >
+    <bpmn:startEvent id="StartEvent_1" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1fzcalt">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
+`;
+
 
 describe('<App>', function() {
 
@@ -3149,7 +3165,7 @@ describe('<App>', function() {
 
       const files = [
         '/dev/null/',
-        './CamundaModeler',
+        './FluxnovaModeler',
         './diagram.bpmn'
       ];
 
@@ -3455,6 +3471,32 @@ describe('<App>', function() {
       await app.triggerAction('save');
 
       // then
+      expect(triggerActionSpy).to.have.been.calledWith('lint-tab');
+    });
+
+    it('should lint tab after save (bpmn)', async function() {
+
+      // given
+      const { app } = createApp();
+
+      const openedTabs = await app.openFiles([
+        createFile('1.bpmn', {
+          contents: sampleBpmn,
+          type: 'bpmn'
+        })
+      ]);
+
+      const currentTab = openedTabs[ 0 ];
+
+      const triggerActionSpy = sinon.spy(app, 'triggerAction');
+
+      // when
+      await app.triggerAction('save');
+
+      // then
+      const lintingState = app.getLintingState(currentTab);
+
+      expect(lintingState).to.exist;
       expect(triggerActionSpy).to.have.been.calledWith('lint-tab');
     });
 

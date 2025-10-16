@@ -44,14 +44,16 @@ import EngineProfileHelper from '../EngineProfileHelper';
 import { ENGINES } from '../../../util/Engines';
 
 import { FormPreviewToggle } from './FormPreviewToggle';
+import { convertFormToFluxnovaIfRequired } from '../util/fluxnovaConversion';
 
 const LOW_PRIORITY = 500;
 
 export const DEFAULT_ENGINE_PROFILE = {
-  executionPlatform: ENGINES.PLATFORM
+  executionPlatform: ENGINES.FLUXNOVA
 };
 
 const FORM_LAYOUT_KEY = 'formEditor';
+const FORM_JSON_SPACING = '  ';
 
 const DEFAULT_LAYOUT = {
   'form-preview': { open: false },
@@ -149,14 +151,14 @@ export class FormEditor extends CachedComponent {
     }
   }
 
-  checkImport(prevProps) {
+  async checkImport(prevProps) {
     if (!this.isImportNeeded(prevProps)) {
       return;
     }
 
     const { xml: schema } = this.props;
 
-    this.importSchema(schema);
+    await this.importSchema(schema);
   }
 
   isImportNeeded(prevProps = {}) {
@@ -187,10 +189,12 @@ export class FormEditor extends CachedComponent {
     const { form } = this.getCached();
 
     let error = null,
-        warnings = null;
+        warnings = null,
+        schemaJSON;
 
     try {
-      const schemaJSON = JSON.parse(schema);
+      schemaJSON = JSON.parse(schema);
+      schemaJSON = await convertFormToFluxnovaIfRequired(schemaJSON, this.props.onAction);
 
       /*
        * Note @pinussilvestrus:
@@ -199,6 +203,7 @@ export class FormEditor extends CachedComponent {
        * In the meanwhile, simply use editor import,
        * the playground is handling the orchestration
        */
+
       const result = await form.getEditor().importSchema(schemaJSON);
 
       if (result) {
@@ -213,16 +218,16 @@ export class FormEditor extends CachedComponent {
     }
 
     if (this._isMounted) {
-      this.handleImport(error, warnings);
+      const form = JSON.stringify(schemaJSON, null, FORM_JSON_SPACING);
+      await this.handleImport(error, warnings, form);
     }
   }
 
-  handleImport(error, warnings) {
+  async handleImport(error, warnings, schema) {
     const { form } = this.getCached();
 
     const {
       onImport,
-      xml: schema
     } = this.props;
 
     const editor = form.getEditor();
@@ -646,6 +651,9 @@ export class FormEditor extends CachedComponent {
         components: [],
         type: 'default'
       },
+      propertiesPanel: {
+        getDocumentationRef
+      },
       layout: getInitialFormLayout(layout),
       exporter: {
         name,
@@ -719,4 +727,17 @@ function formOutputFocused() {
     document.body.querySelector('.cfp-collapsible-panel[data-idx="form-output"] .cfp-collapsible-panel-content');
 
   return !!formOutputNode && formOutputNode.contains(document.activeElement);
+}
+
+function getDocumentationRef(field) {
+
+  if (!field) {
+    return;
+  }
+
+  if (field.type === 'default') {
+    return 'https://docs.fluxnova.finos.org/modeler/forms';
+  }
+
+  return `https://docs.fluxnova.finos.org/modeler/forms`;
 }

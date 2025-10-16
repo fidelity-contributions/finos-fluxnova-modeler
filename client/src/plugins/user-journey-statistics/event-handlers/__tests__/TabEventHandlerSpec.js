@@ -21,15 +21,11 @@ import emptyForm from './fixtures/empty.form';
 
 import engineProfileXML from './fixtures/engine-profile.bpmn';
 
-import engineProfileCloudXML from './fixtures/engine-cloud.bpmn';
-
 import engineProfilePlatform from './fixtures/engine-platform.form';
 
 import engineProfileCloud from './fixtures/engine-cloud.form';
 
 import engineProfilePlatformDMN from './fixtures/engine-platform.dmn';
-
-import engineProfileCloudDMN from './fixtures/engine-cloud.dmn';
 
 import nestedForm from './fixtures/nested.form';
 
@@ -203,31 +199,8 @@ describe('<TabEventHandler>', function() {
           const { executionPlatform, executionPlatformVersion } = track.getCall(0).args[1];
 
           // then
-          expect(executionPlatform).to.eql('Camunda Platform');
-          expect(executionPlatformVersion).to.eql('7.15.0');
-        });
-
-
-        it('cloud bpmn', async function() {
-
-          // given
-          const tab = createTab({
-            type: 'cloud-bpmn',
-            file: {
-              contents: engineProfileCloudXML
-            }
-          });
-
-          // when
-          const bpmnCallback = subscribe.getCall(0).args[1];
-
-          await bpmnCallback({ tab });
-
-          const { executionPlatform, executionPlatformVersion } = track.getCall(0).args[1];
-
-          // then
-          expect(executionPlatform).to.eql('Camunda Cloud');
-          expect(executionPlatformVersion).to.eql('1.1');
+          expect(executionPlatform).to.eql('Fluxnova Platform');
+          expect(executionPlatformVersion).to.eql('1.0.0');
         });
 
 
@@ -249,31 +222,8 @@ describe('<TabEventHandler>', function() {
           const { executionPlatform, executionPlatformVersion } = track.getCall(0).args[1];
 
           // then
-          expect(executionPlatform).to.eql('Camunda Platform');
-          expect(executionPlatformVersion).to.eql('7.16.0');
-        });
-
-
-        it('cloud dmn', async function() {
-
-          // given
-          const tab = createTab({
-            type: 'dmn',
-            file: {
-              contents: engineProfileCloudDMN
-            }
-          });
-
-          // when
-          const dmnCallback = subscribe.getCall(1).args[1];
-
-          await dmnCallback({ tab });
-
-          const { executionPlatform, executionPlatformVersion } = track.getCall(0).args[1];
-
-          // then
-          expect(executionPlatform).to.eql('Camunda Cloud');
-          expect(executionPlatformVersion).to.eql('8.0.0');
+          expect(executionPlatform).to.eql('Fluxnova Platform');
+          expect(executionPlatformVersion).to.eql('1.0.0');
         });
 
 
@@ -295,31 +245,8 @@ describe('<TabEventHandler>', function() {
           const { executionPlatform, executionPlatformVersion } = track.getCall(0).args[1];
 
           // then
-          expect(executionPlatform).to.eql('Camunda Platform');
-          expect(executionPlatformVersion).to.eql('7.15');
-        });
-
-
-        it('cloud form ', async function() {
-
-          // given
-          const tab = createTab({
-            type: 'form',
-            file: {
-              contents: engineProfileCloud
-            }
-          });
-
-          // when
-          const bpmnCallback = subscribe.getCall(2).args[1];
-
-          await bpmnCallback({ tab });
-
-          const { executionPlatform, executionPlatformVersion } = track.getCall(0).args[1];
-
-          // then
-          expect(executionPlatform).to.eql('Camunda Cloud');
-          expect(executionPlatformVersion).to.eql('1.1');
+          expect(executionPlatform).to.eql('Fluxnova Platform');
+          expect(executionPlatformVersion).to.eql('1.0.0');
         });
 
       });
@@ -345,7 +272,7 @@ describe('<TabEventHandler>', function() {
           const { executionPlatform } = track.getCall(0).args[1];
 
           // then
-          expect(executionPlatform).to.eql('Camunda Platform');
+          expect(executionPlatform).to.eql('Fluxnova Platform');
         });
 
 
@@ -367,7 +294,7 @@ describe('<TabEventHandler>', function() {
           const { executionPlatform } = track.getCall(0).args[1];
 
           // then
-          expect(executionPlatform).to.eql('Camunda Platform');
+          expect(executionPlatform).to.eql('Fluxnova Platform');
         });
 
 
@@ -389,7 +316,7 @@ describe('<TabEventHandler>', function() {
           const { executionPlatform } = track.getCall(0).args[1];
 
           // then
-          expect(executionPlatform).to.eql('Camunda Platform');
+          expect(executionPlatform).to.eql('Fluxnova Platform');
         });
 
       });
@@ -415,8 +342,8 @@ describe('<TabEventHandler>', function() {
           const { executionPlatform, executionPlatformVersion } = track.getCall(0).args[1];
 
           // then
-          expect(executionPlatform).to.eql('Camunda Platform');
-          expect(executionPlatformVersion).to.eql('7.15.0');
+          expect(executionPlatform).to.eql('Fluxnova Platform');
+          expect(executionPlatformVersion).to.eql('1.0.0');
 
         });
 
@@ -439,8 +366,8 @@ describe('<TabEventHandler>', function() {
           const { executionPlatform, executionPlatformVersion } = track.getCall(0).args[1];
 
           // then
-          expect(executionPlatform).to.eql('Camunda Platform');
-          expect(executionPlatformVersion).to.eql('7.16.0');
+          expect(executionPlatform).to.eql('Fluxnova Platform');
+          expect(executionPlatformVersion).to.eql('1.0.0');
 
         });
 
@@ -463,8 +390,8 @@ describe('<TabEventHandler>', function() {
           const { executionPlatform, executionPlatformVersion } = track.getCall(0).args[1];
 
           // then
-          expect(executionPlatform).to.eql('Camunda Platform');
-          expect(executionPlatformVersion).to.eql('7.15');
+          expect(executionPlatform).to.eql('Fluxnova Platform');
+          expect(executionPlatformVersion).to.eql('1.0.0');
 
         });
 

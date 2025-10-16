@@ -43,7 +43,7 @@ export default class ConnectorTemplates extends PureComponent {
       if (warnings.length) {
         displayNotification({
           type: 'warning',
-          title: 'Camunda Connector templates updated with warnings',
+          title: 'Fluxnova Connector templates updated with warnings',
           content: warnings.map((warning, index) => (
             <Fragment key={ index }>
               { warning }
@@ -59,7 +59,7 @@ export default class ConnectorTemplates extends PureComponent {
 
       displayNotification({
         type: 'success',
-        title: hasNew ? 'Camunda Connector templates updated' : 'Camunda Connector templates up to date',
+        title: hasNew ? 'Fluxnova Connector templates updated' : 'Fluxnova Connector templates up to date',
         content: <a href={ DOCUMENTATION_URL }>Learn more</a>
       });
     });
@@ -67,7 +67,7 @@ export default class ConnectorTemplates extends PureComponent {
     getGlobal('backend').on('client:connector-templates-update-error', (_, message) => {
       displayNotification({
         type: 'error',
-        title: 'Error updating Camunda Connector templates',
+        title: 'Error updating Fluxnova Connector templates',
         content: <Fragment>
           <span>{ message }</span>
           <br />

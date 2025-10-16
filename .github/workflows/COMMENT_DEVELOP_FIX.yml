@@ -1,10 +1,13 @@
 name: COMMENT_DEVELOP_FIX
 on:
-  pull_request:
-    types:
-      - opened
-    branches:
-      - develop
+  workflow_dispatch:
+#  push:
+#    branches:
+#      - main
+#  pull_request:
+#    types:
+#      - opened
+
 permissions:
   pull-requests: write
 jobs:

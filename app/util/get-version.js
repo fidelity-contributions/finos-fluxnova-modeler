@@ -10,49 +10,44 @@
 
 'use strict';
 
-var semver = require('semver');
-
-var IS_DEV = process.env.NODE_ENV !== 'production';
-var BUILD_NAME = process.env.BUILD_NAME;
-var IS_NIGHTLY = process.env.NIGHTLY;
-
-var pkg = require('../package.json');
-
 /**
  * Get the semantic version of the application.
  *
- * @param {Object} pkg
- * @param {Object} options
- * @param {boolean} [options.nightly]
- * @param {boolean} [options.increment]
- * @param {string} [options.buildName]
  *
  * @return {string} actual app version
  */
-module.exports = function getVersion() {
-  var appVersion = pkg.version;
-  var increment = IS_NIGHTLY || IS_DEV;
+function getVersion() {
+  const pkg = require('../package.json');
+  const baseVersion = pkg.version;
 
-  if (increment) {
-    appVersion = semver.inc(appVersion, 'minor');
-  }
+  const IS_CI = !!process.env.IS_CI;
+  const IS_NIGHTLY = !!process.env.NIGHTLY;
 
-  if (IS_NIGHTLY) {
-    appVersion = `${appVersion}-nightly.${today()}`;
-  } else if (BUILD_NAME) {
-    appVersion = `${appVersion}-${BUILD_NAME}`;
-  } else if (IS_DEV) {
-    appVersion = `${appVersion}-dev`;
-  }
-
-  return appVersion;
-};
-
-function pad(n) {
-  if (n < 10) {
-    return '0' + n;
+  if (IS_CI) {
+    return getBuildArtifactName(baseVersion);
+  } else if (IS_NIGHTLY) {
+    return `${baseVersion}-nightly.${today()}`;
   } else {
-    return n;
+    return `${baseVersion}-dev`;
+  }
+}
+
+function getBuildArtifactName(baseVersion) {
+  const BUILD_REF = process.env.BUILD_REF;
+  const BUILD_NUMBER = process.env.BUILD_NUMBER;
+  const branchType = BUILD_REF.split('/')[0];
+  switch (branchType) {
+
+
+  case 'main':
+    return baseVersion;
+  case 'develop':
+    return `${baseVersion}-b${BUILD_NUMBER}`;
+  case 'release':
+    return `${baseVersion}-rc${BUILD_NUMBER}`;
+  default:
+    return `${baseVersion}-${BUILD_REF.replace(/[^0-9A-Za-z-]/g, '-')}-b${BUILD_NUMBER}`;
+
   }
 }
 
@@ -65,3 +60,17 @@ function today() {
     pad(d.getDate())
   ].join('');
 }
+
+function pad(n) {
+  if (n < 10) {
+    return '0' + n;
+  } else {
+    return n;
+  }
+}
+
+if (require.main === module) {
+  console.log(getVersion());
+}
+
+module.exports = getVersion;

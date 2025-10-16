@@ -15,9 +15,8 @@ import classnames from 'classnames';
 import semverCompare from 'semver-compare';
 
 
-import Flags, {
-  PLATFORM_ENGINE_VERSION,
-  CLOUD_ENGINE_VERSION
+import {
+  FLUXNOVA_ENGINE_VERSION
 } from '../../util/Flags';
 
 import {
@@ -30,11 +29,9 @@ import { Fill } from '../slot-fill';
 import { ENGINES, ENGINE_LABELS, ENGINE_PROFILES, getLatestStable } from '../../util/Engines';
 
 const HELP_LINKS = {
-  [ ENGINES.PLATFORM ]: 'https://docs.camunda.org/manual/latest/',
+  [ ENGINES.FLUXNOVA ]: 'https://docs.fluxnova.finos.org/manual/latest/',
   [ ENGINES.CLOUD ]: 'https://docs.camunda.io/?utm_source=modeler&utm_medium=referral'
 };
-
-const DONWLOAD_PAGE = 'https://camunda.com/download/modeler/';
 
 export function EngineProfile(props) {
   const {
@@ -261,12 +258,6 @@ function UnknownVersionHint(props) {
         This diagram uses an unsupported { displayLabel } version.
         As a result, some features might not work as expected.
       </p>
-
-      <p>
-        To use the latest features, please <a href={ DONWLOAD_PAGE }>
-          check for an updated modeler version
-        </a>.
-      </p>
     </div>
   );
 }
@@ -284,16 +275,14 @@ export function getStatusBarLabel(engineProfile) {
 
   if (!executionPlatformVersion) {
     return `${ENGINE_LABELS[executionPlatform]}`;
-  } else if (executionPlatformVersion.startsWith('1.')) {
-    return `${ENGINE_LABELS[executionPlatform]} (Zeebe ${toSemverMinor(executionPlatformVersion)})`;
   } else {
-    return `Camunda ${toDisplayVersion(engineProfile)}`;
+    return `Fluxnova ${toDisplayVersion(engineProfile)}`;
   }
 }
 
 export function getAnnotatedVersion(version, platform) {
   if (version.startsWith('1.')) {
-    return 'Zeebe ' + version;
+    return version;
   }
 
   if (platform && isAlpha(version, platform)) {
@@ -304,7 +293,7 @@ export function getAnnotatedVersion(version, platform) {
 }
 
 export function getDefaultVersion(engine) {
-  const flagVersion = getFlagVersion(engine);
+  const flagVersion = getFlagVersion();
 
   const versions = getVersions(engine);
   if (isKnownVersion(versions, flagVersion)) {
@@ -314,12 +303,8 @@ export function getDefaultVersion(engine) {
   return getLatestStable(engine);
 }
 
-function getFlagVersion(engine) {
-  if (engine === ENGINES.PLATFORM) {
-    return Flags.get(PLATFORM_ENGINE_VERSION);
-  } else if (engine === ENGINES.CLOUD) {
-    return Flags.get(CLOUD_ENGINE_VERSION);
-  }
+function getFlagVersion() {
+  return FLUXNOVA_ENGINE_VERSION;
 }
 
 function getVersions(engine) {

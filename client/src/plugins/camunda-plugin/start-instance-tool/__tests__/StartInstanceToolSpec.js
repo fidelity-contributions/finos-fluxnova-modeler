@@ -310,7 +310,7 @@ describe('<StartInstanceTool>', function() {
       // then
       expect(deployedTo).to.exist;
       expect(deployedTo.executionPlatformVersion).to.be.null;
-      expect(deployedTo.executionPlatform).to.equal('Camunda Platform');
+      expect(deployedTo.executionPlatform).to.equal('Fluxnova Platform');
     });
 
 
@@ -429,7 +429,7 @@ describe('<StartInstanceTool>', function() {
         const activeTab = createTab({ name: 'foo.bpmn' });
 
         const actionSpy = sinon.spy(),
-              getVersionSpy = sinon.spy(() => { return { version: '7.14.0' }; }),
+              getVersionSpy = sinon.spy(() => { return { version: '1.0.0' }; }),
               actionTriggered = {
                 emitEvent: 'emit-event',
                 type: 'deployment.done',
@@ -452,8 +452,8 @@ describe('<StartInstanceTool>', function() {
 
         const deployedTo = actionSpy.args[0][0].payload.deployedTo;
         expect(deployedTo).to.exist;
-        expect(deployedTo.executionPlatformVersion).to.equal('7.14.0');
-        expect(deployedTo.executionPlatform).to.equal('Camunda Platform');
+        expect(deployedTo.executionPlatformVersion).to.equal('1.0.0');
+        expect(deployedTo.executionPlatform).to.equal('Fluxnova Platform');
       });
 
 
@@ -535,8 +535,8 @@ describe('<StartInstanceTool>', function() {
 
         const deployedTo = actionSpy.args[0][0].payload.deployedTo;
         expect(deployedTo).to.exist;
-        expect(deployedTo.executionPlatformVersion).to.equal('7.15.0');
-        expect(deployedTo.executionPlatform).to.equal('Camunda Platform');
+        expect(deployedTo.executionPlatformVersion).to.equal('1.0.0');
+        expect(deployedTo.executionPlatform).to.equal('Fluxnova Platform');
       });
 
 
@@ -1309,7 +1309,7 @@ function createStartInstanceTool({
       };
     },
     getVersion: () => {
-      return { version: '7.15.0' };
+      return { version: '1.0.0' };
     },
     ...props.deployService
   });

@@ -3,73 +3,73 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Classes]
 
 [HKEY_CURRENT_USER\Software\Classes\.bpmn]
-@="CamundaModeler.BPMN"
+@="FluxnovaModeler.BPMN"
 
 [HKEY_CURRENT_USER\Software\Classes\.cmmn]
-@="CamundaModeler.CMMN"
+@="FluxnovaModeler.CMMN"
 
 [HKEY_CURRENT_USER\Software\Classes\.dmn]
-@="CamundaModeler.DMN"
+@="FluxnovaModeler.DMN"
 
 [HKEY_CURRENT_USER\Software\Classes\.form]
-@="CamundaModeler.FORM"
+@="FluxnovaModeler.FORM"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.BPMN]
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.BPMN]
 @="BPMN file"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.BPMN\DefaultIcon]
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.BPMN\DefaultIcon]
 @="__CWD__,0"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.BPMN\shell]
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.BPMN\shell]
 @="open"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.BPMN\shell\open]
-@="Open with Camunda Modeler"
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.BPMN\shell\open]
+@="Open with Fluxnova Modeler"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.BPMN\shell\open\command]
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.BPMN\shell\open\command]
 @="__CWD__ \"%1\""
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.CMMN]
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.CMMN]
 @="CMMN file"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.CMMN\DefaultIcon]
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.CMMN\DefaultIcon]
 @="__CWD__,0"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.CMMN\shell]
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.CMMN\shell]
 @="open"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.CMMN\shell\open]
-@="Open with Camunda Modeler"
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.CMMN\shell\open]
+@="Open with Fluxnova Modeler"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.CMMN\shell\open\command]
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.CMMN\shell\open\command]
 @="__CWD__ \"%1\""
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.DMN]
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.DMN]
 @="DMN file"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.DMN\DefaultIcon]
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.DMN\DefaultIcon]
 @="__CWD__,0"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.DMN\shell]
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.DMN\shell]
 @="open"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.DMN\shell\open]
-@="Open with Camunda Modeler"
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.DMN\shell\open]
+@="Open with Fluxnova Modeler"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.DMN\shell\open\command]
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.DMN\shell\open\command]
 @="__CWD__ \"%1\""
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.FORM]
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.FORM]
 @="FORM file"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.FORM\DefaultIcon]
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.FORM\DefaultIcon]
 @="__CWD__,0"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.FORM\shell]
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.FORM\shell]
 @="open"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.FORM\shell\open]
-@="Open with Camunda Modeler"
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.FORM\shell\open]
+@="Open with Fluxnova Modeler"
 
-[HKEY_CURRENT_USER\Software\Classes\CamundaModeler.FORM\shell\open\command]
+[HKEY_CURRENT_USER\Software\Classes\FluxnovaModeler.FORM\shell\open\command]
 @="__CWD__ \"%1\""

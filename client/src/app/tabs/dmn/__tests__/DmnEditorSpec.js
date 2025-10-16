@@ -55,6 +55,11 @@ import {
   DEFAULT_LAYOUT
 } from '../OverviewContainer';
 
+import existingFluxnovaXML from './existing.fluxnova.dmn';
+import existingC7XML from './existing.c7.dmn';
+import existingC8XML from '../../__tests__/EngineProfile.cloud.dmn';
+import { ENGINES, getLatestStable } from '../../../../util/Engines';
+
 const { spy } = sinon;
 
 
@@ -2117,6 +2122,110 @@ describe('<DmnEditor>', function() {
 
   });
 
+  describe('fluxnova conversion', function() {
+
+    let onAction;
+
+    beforeEach(function() {
+      onAction = spy((action) => {
+        if (action === 'show-dialog') {
+          return { button: '0' };
+        }
+      });
+    });
+
+    describe('should convert', function() {
+
+      it('existing model to fluxnova', async function() {
+
+        // given
+        const onContentUpdated = sinon.spy();
+        const latestStable = getLatestStable(ENGINES.FLUXNOVA);
+
+        // when
+        await renderEditor(existingC7XML, {
+          onAction: onAction,
+          onContentUpdated: onContentUpdated
+        });
+
+
+        // then
+        expect(onContentUpdated).to.be.calledOnce;
+        const convertedXML = onContentUpdated.getCall(0).args[0];
+        expect(convertedXML).to.contain('namespace="http://fluxnova.finos.org/schema/1.0/dmn"');
+        expect(convertedXML).to.contain('modeler:executionPlatform="Fluxnova Platform"');
+        expect(convertedXML).to.contain(`modeler:executionPlatformVersion="${latestStable}"`);
+
+        expect(convertedXML).not.to.contain('namespace="http://camunda.org/schema/1.0/dmn"');
+        expect(convertedXML).not.to.contain('modeler:executionPlatform="Camunda Platform"');
+        expect(convertedXML).to.contain('xmlns:camunda="http://camunda.org/schema/1.0/dmn"');
+
+      });
+    });
+
+    describe('should not convert', function() {
+
+      it('when model is already fluxnova', async function() {
+
+        // given
+        const onContentUpdated = sinon.spy();
+
+        // when
+        await renderEditor(existingFluxnovaXML, {
+          onAction: onAction,
+          onContentUpdated: onContentUpdated
+        });
+
+        // then
+        expect(onContentUpdated).not.to.be.called;
+
+      });
+
+      it('when conversion declined', async function() {
+
+        // given
+        const onContentUpdated = sinon.spy();
+
+        onAction = spy((action) => {
+          if (action === 'show-dialog') {
+            return { button: '1' };
+          }
+        });
+
+        await renderEditor(existingC7XML, {
+          onAction: onAction,
+          onContentUpdated: onContentUpdated
+        });
+
+        // then
+        expect(onContentUpdated).not.to.be.called;
+
+      });
+
+      it('when camunda 8 model', async function() {
+
+        // given
+        const onContentUpdated = sinon.spy();
+
+        onAction = sinon.stub().resolves({
+          button: '2'
+        });
+
+        // when
+        await renderEditor(existingC8XML, {
+          onAction: onAction,
+          onContentUpdated: onContentUpdated
+        });
+
+        // then
+        expect(onContentUpdated).not.to.be.called;
+        expect(onAction).to.be.calledWith('close-tab');
+
+      });
+
+    });
+
+  });
 
   describe('engine profile', function() {
 
@@ -2136,36 +2245,36 @@ describe('<DmnEditor>', function() {
 
 
     it('should show engine profile (no engine profile)', expectEngineProfile(noEngineProfileXML, {
-      executionPlatform: 'Camunda Platform',
+      executionPlatform: 'Fluxnova Platform',
       executionPlatformVersion: undefined
     }));
 
 
     it('should show engine profile (with namespace)', expectEngineProfile(namespaceEngineProfileXML, {
-      executionPlatform: 'Camunda Platform',
+      executionPlatform: 'Fluxnova Platform',
       executionPlatformVersion: undefined
     }));
 
 
-    it('should show engine profile (Camunda 7.16.0)', expectEngineProfile(engineProfileXML, {
-      executionPlatform: 'Camunda Platform',
-      executionPlatformVersion: '7.16.0'
+    it('should show engine profile (Fluxnova 1.0.0)', expectEngineProfile(engineProfileXML, {
+      executionPlatform: 'Fluxnova Platform',
+      executionPlatformVersion: '1.0.0'
     }));
 
 
-    it('should show engine profile (Camunda 7.16)', expectEngineProfile(missingPatchEngineProfileXML, {
-      executionPlatform: 'Camunda Platform',
-      executionPlatformVersion: '7.16.0'
+    it('should show engine profile (Fluxnova 1.0)', expectEngineProfile(missingPatchEngineProfileXML, {
+      executionPlatform: 'Fluxnova Platform',
+      executionPlatformVersion: '1.0.0'
     }));
 
 
-    it('should show engine profile (Camunda 7.16.1)', expectEngineProfile(patchEngineProfileXML, {
-      executionPlatform: 'Camunda Platform',
-      executionPlatformVersion: '7.16.1'
+    it('should show engine profile (Fluxnova 1.0.1)', expectEngineProfile(patchEngineProfileXML, {
+      executionPlatform: 'Fluxnova Platform',
+      executionPlatformVersion: '1.0.1'
     }));
 
 
-    it('should open unknown engine profile as Camunda Cloud', async function() {
+    it('should open unknown engine profile as Fluxnova', async function() {
 
       // given
       const onImportSpy = spy();
@@ -2177,7 +2286,7 @@ describe('<DmnEditor>', function() {
       expect(onImportSpy).to.have.been.calledOnce;
 
       expect(instance.getCached().engineProfile).to.eql({
-        executionPlatform: 'Camunda Cloud',
+        executionPlatform: 'Fluxnova Platform',
         executionPlatformVersion: '7.15.0'
       });
     });
