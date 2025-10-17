@@ -739,5 +739,5 @@ function getDocumentationRef(field) {
     return 'https://docs.fluxnova.finos.org/modeler/forms';
   }
 
-  return `https://docs.fluxnova.finos.org/modeler/forms`;
+  return 'https://docs.fluxnova.finos.org/modeler/forms';
 }
