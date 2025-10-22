@@ -2,9 +2,11 @@ const getVersion = require('../get-version');
 
 const { expect } = require('chai');
 const sinon = require('sinon');
+let baseVersion = require('../../package.json').version;
 
-describe('GetVersion', function() {
-  let origEnv, clock;
+describe('Check getVersion() function with and witout passing a parameter', function() {
+  let origEnv, clock, version;
+  baseVersion = baseVersion.split('-')[0];
 
   beforeEach(function() {
     origEnv = { ...process.env };
@@ -23,8 +25,11 @@ describe('GetVersion', function() {
     process.env.BUILD_REF = 'main';
     process.env.BUILD_NUMBER = '123';
 
-    const version = getVersion();
+    version = getVersion('1.0.0');
     expect(version).to.eql('1.0.0');
+
+    version = getVersion();
+    expect(version).to.eql(baseVersion);
   });
 
   it('should retrieve version for a "develop" branch build', function() {
@@ -32,8 +37,11 @@ describe('GetVersion', function() {
     process.env.BUILD_REF = 'develop';
     process.env.BUILD_NUMBER = '123';
 
-    const version = getVersion();
+    version = getVersion('1.0.0');
     expect(version).to.eql('1.0.0-b123');
+
+    version = getVersion();
+    expect(version).to.eql(baseVersion + '-b123');
   });
 
   it('should retrieve version for a "release" branch build', function() {
@@ -41,8 +49,11 @@ describe('GetVersion', function() {
     process.env.BUILD_REF = 'release';
     process.env.BUILD_NUMBER = '123';
 
-    const version = getVersion();
+    version = getVersion('1.0.0');
     expect(version).to.eql('1.0.0-rc123');
+
+    version = getVersion();
+    expect(version).to.eql(baseVersion + '-rc123');
   });
 
   it('should retrieve version for a feature branch build', function() {
@@ -50,16 +61,22 @@ describe('GetVersion', function() {
     process.env.BUILD_REF = 'feature/my-first-feature';
     process.env.BUILD_NUMBER = '123';
 
-    const version = getVersion();
+    version = getVersion('1.0.0');
     expect(version).to.eql('1.0.0-feature-my-first-feature-b123');
+
+    version = getVersion();
+    expect(version).to.eql(baseVersion + '-feature-my-first-feature-b123');
   });
 
   it('should retrieve default version', function() {
     process.env.IS_CI = false;
     process.env.NIGHTLY = false;
 
-    const version = getVersion();
+    version = getVersion('1.0.0');
     expect(version).to.eql('1.0.0-dev');
+
+    version = getVersion();
+    expect(version).to.eql(baseVersion + '-dev');
   });
 
   it('should retrieve version for a nightly build', function() {
@@ -71,7 +88,10 @@ describe('GetVersion', function() {
     // advance the clock to the expected date
     clock.setSystemTime(expectedDate);
 
-    const version = getVersion();
+    version = getVersion('1.0.0');
     expect(version).to.eql('1.0.0-nightly.20251231');
+
+    version = getVersion();
+    expect(version).to.eql(baseVersion + '-nightly.20251231');
   });
 });
