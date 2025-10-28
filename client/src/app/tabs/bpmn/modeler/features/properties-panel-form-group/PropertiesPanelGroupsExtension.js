@@ -53,8 +53,8 @@ function isUserAssignmentGroup(group) {
   const entries = group.entries || [];
   return entries.some(
     (entry) =>
-      entry?.property?.binding?.name.startsWith("camunda:user-assignment") ||
-      group.id === "CamundaPlatform__UserAssignment"
+      entry?.property?.binding?.name.startsWith('camunda:user-assignment') ||
+      group.id === 'CamundaPlatform__UserAssignment'
   );
 }
 
