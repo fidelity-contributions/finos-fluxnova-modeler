@@ -24,7 +24,7 @@ describe('GetVersion', function() {
     process.env.BUILD_NUMBER = '123';
 
     const version = getVersion();
-    expect(version).to.eql('1.0.0');
+    expect(version).to.eql('1.1.0');
   });
 
   it('should retrieve version for a "develop" branch build', function() {
@@ -33,7 +33,7 @@ describe('GetVersion', function() {
     process.env.BUILD_NUMBER = '123';
 
     const version = getVersion();
-    expect(version).to.eql('1.0.0-b123');
+    expect(version).to.eql('1.1.0-b123');
   });
 
   it('should retrieve version for a "release" branch build', function() {
@@ -42,7 +42,7 @@ describe('GetVersion', function() {
     process.env.BUILD_NUMBER = '123';
 
     const version = getVersion();
-    expect(version).to.eql('1.0.0-rc123');
+    expect(version).to.eql('1.1.0-rc123');
   });
 
   it('should retrieve version for a feature branch build', function() {
@@ -51,7 +51,7 @@ describe('GetVersion', function() {
     process.env.BUILD_NUMBER = '123';
 
     const version = getVersion();
-    expect(version).to.eql('1.0.0-feature-my-first-feature-b123');
+    expect(version).to.eql('1.1.0-feature-my-first-feature-b123');
   });
 
   it('should retrieve default version', function() {
@@ -59,7 +59,7 @@ describe('GetVersion', function() {
     process.env.NIGHTLY = false;
 
     const version = getVersion();
-    expect(version).to.eql('1.0.0-dev');
+    expect(version).to.eql('1.1.0-dev');
   });
 
   it('should retrieve version for a nightly build', function() {
@@ -72,6 +72,14 @@ describe('GetVersion', function() {
     clock.setSystemTime(expectedDate);
 
     const version = getVersion();
-    expect(version).to.eql('1.0.0-nightly.20251231');
+    expect(version).to.eql('1.1.0-nightly.20251231');
+  });
+
+  it('should retrieve version for a tag build', function() {
+    process.env.IS_CI = true;
+    process.env.BUILD_REF = 'v1.1.0';
+
+    const version = getVersion();
+    expect(version).to.eql('v1.1.0');
   });
 });

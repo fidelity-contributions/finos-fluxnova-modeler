@@ -15,6 +15,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        fetch-tags: true
     - name: Get tag
       id: tag
       run: |
@@ -51,8 +54,10 @@ jobs:
     - name: Build release (Linux)
       if: ${{ runner.OS == 'Linux' }}
       env:
+        BUILD_REF: ${{ github.ref_name }}
         CSC_LINK: "${{ secrets.CSC_LINK }}"
         CSC_KEY_PASSWORD: "${{ secrets.CSC_KEY_PASSWORD }}"
+        IS_CI: true
         MIXPANEL_TOKEN: "${{ secrets.MIXPANEL_PROJECT_TOKEN }}"
         MIXPANEL_STAGE: "prod"
         SENTRY_AUTH_TOKEN: "${{ secrets.SENTRY_AUTH_TOKEN }}"
@@ -68,9 +73,11 @@ jobs:
       env:
         APPLE_DEVELOPER_ID: "${{ secrets.APPLE_DEVELOPER_ID }}"
         APPLE_DEVELOPER_ID_PASSWORD: "${{ secrets.APPLE_DEVELOPER_ID_PASSWORD }}"
+        BUILD_REF: ${{ github.ref_name }}
         APPLE_TEAM_ID: "${{ secrets.APPLE_TEAM_ID }}"
         CSC_LINK: "${{ secrets.CSC_LINK }}"
         CSC_KEY_PASSWORD: "${{ secrets.CSC_KEY_PASSWORD }}"
+        IS_CI: true
         MIXPANEL_TOKEN: "${{ secrets.MIXPANEL_PROJECT_TOKEN }}"
         MIXPANEL_STAGE: "prod"
         SENTRY_AUTH_TOKEN: "${{ secrets.SENTRY_AUTH_TOKEN }}"
@@ -84,8 +91,10 @@ jobs:
     - name: Build release (Windows)
       if: ${{ runner.os == 'Windows' }}
       env:
+        BUILD_REF: ${{ github.ref_name }}
         CSC_LINK: "${{ secrets.WIN_CSC_LINK }}"
         CSC_KEY_PASSWORD: "${{ secrets.WIN_CSC_KEY_PASSWORD }}"
+        IS_CI: true
         MIXPANEL_TOKEN: "${{ secrets.MIXPANEL_PROJECT_TOKEN }}"
         MIXPANEL_STAGE: "prod"
         SENTRY_AUTH_TOKEN: "${{ secrets.SENTRY_AUTH_TOKEN }}"
