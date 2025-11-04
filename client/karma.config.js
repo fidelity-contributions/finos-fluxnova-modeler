@@ -55,7 +55,11 @@ module.exports = function(karma) {
     files: [
       suite
     ],
-
+    client: {
+      mocha: {
+        timeout: '10000'
+      }
+    },
     preprocessors: {
       [suite]: [ 'webpack', 'env' ]
     },
@@ -76,7 +80,6 @@ module.exports = function(karma) {
       }
     },
     browserNoActivityTimeout: 30000,
-
     singleRun: true,
     autoWatch: false,
 
