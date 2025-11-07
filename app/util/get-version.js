@@ -17,8 +17,7 @@
  * @return {string} actual app version
  */
 function getVersion() {
-  const pkg = require('../package.json');
-  const baseVersion = pkg.version;
+  const baseVersion = require('../package.json').version.split('-')[0];
 
   const IS_CI = !!process.env.IS_CI;
   const IS_NIGHTLY = !!process.env.NIGHTLY;
@@ -36,9 +35,13 @@ function getBuildArtifactName(baseVersion) {
   const BUILD_REF = process.env.BUILD_REF;
   const BUILD_NUMBER = process.env.BUILD_NUMBER;
   const branchType = BUILD_REF.split('/')[0];
+
+  // Pushed tag (e.g. v1.1.0)
+  if (/v(\d\.){2}\d/.test(branchType)) {
+    return `v${baseVersion}`;
+  }
+
   switch (branchType) {
-
-
   case 'main':
     return baseVersion;
   case 'develop':
@@ -47,7 +50,6 @@ function getBuildArtifactName(baseVersion) {
     return `${baseVersion}-rc${BUILD_NUMBER}`;
   default:
     return `${baseVersion}-${BUILD_REF.replace(/[^0-9A-Za-z-]/g, '-')}-b${BUILD_NUMBER}`;
-
   }
 }
 

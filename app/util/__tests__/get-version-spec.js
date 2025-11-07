@@ -6,6 +6,17 @@ const sinon = require('sinon');
 describe('GetVersion', function() {
   let origEnv, clock;
 
+  const Module = require('module');
+  const sandbox = sinon.createSandbox();
+
+  this.beforeAll(function() {
+    sandbox.stub(Module.prototype, 'require').returns({ version:'1.0.0' });
+  });
+
+  this.afterAll(function() {
+    sandbox.restore();
+  });
+
   beforeEach(function() {
     origEnv = { ...process.env };
 
@@ -73,5 +84,13 @@ describe('GetVersion', function() {
 
     const version = getVersion();
     expect(version).to.eql('1.0.0-nightly.20251231');
+  });
+
+  it('should retrieve version for a tag build', function() {
+    process.env.IS_CI = true;
+    process.env.BUILD_REF = 'v1.0.0';
+
+    const version = getVersion();
+    expect(version).to.eql('v1.0.0');
   });
 });
