@@ -16,6 +16,7 @@ import completeDirectEditingModule from './features/complete-direct-editing';
 import globalClipboardModule from './features/global-clipboard';
 import handToolOnSpaceModule from './features/hand-tool-on-space';
 import propertiesPanelKeyboardBindingsModule from './features/properties-panel-keyboard-bindings';
+import propPanelExtensionModule from './features/properties-panel-extension';
 import bpmnFormExtensionProviderModule from './features/properties-panel-form-group';
 import lintingAnnotationsModule from '@camunda/linting/modeler';
 
@@ -77,6 +78,7 @@ const extensionModules = [
   handToolOnSpaceModule,
   propertiesPanelKeyboardBindingsModule,
   bpmnFormExtensionProviderModule,
+  propPanelExtensionModule,
   lintingAnnotationsModule,
   bpmnJSTracking,
   contextPadTracking,
