@@ -9,6 +9,7 @@ All notable changes to the [Fluxnova Modeler](https://github.com/finos/fluxnova-
 ## 1.1.1
 
 - Fixed issue with broken Monitoring link
+- Updated puppeteer dependency from 24.0.0 to 24.28.0
 
 ## 1.1.0
 
