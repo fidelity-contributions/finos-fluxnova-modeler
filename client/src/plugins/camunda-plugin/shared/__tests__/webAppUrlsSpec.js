@@ -32,13 +32,13 @@ describe('<webAppUrls>', function() {
     it('should return specific Cockpit link', async function() {
 
       // given
-      stubGetCockpitUrl().returns('http://localhost:18080/camunda/app/cockpit/default/#/');
+      stubGetCockpitUrl().returns('http://localhost:18080/camunda/app/monitoring/default/#/');
 
       // when
       const cockpitUrl = await determineCockpitUrl('http://localhost:18080/camunda/rest');
 
       // then
-      expect(cockpitUrl).to.be.equal('http://localhost:18080/camunda/app/cockpit/default/#/');
+      expect(cockpitUrl).to.be.equal('http://localhost:18080/camunda/app/monitoring/default/#/');
     });
 
 
@@ -51,7 +51,7 @@ describe('<webAppUrls>', function() {
       const cockpitUrl = await determineCockpitUrl('http://localhost:8080/camunda/rest');
 
       // then
-      expect(cockpitUrl).to.be.equal('http://localhost:8080/app/cockpit/default/#/');
+      expect(cockpitUrl).to.be.equal('http://localhost:8080/app/monitoring/default/#/');
     });
 
 
@@ -64,7 +64,7 @@ describe('<webAppUrls>', function() {
       const cockpitUrl = await determineCockpitUrl('http://localhost:8080/camunda/rest');
 
       // then
-      expect(cockpitUrl).to.be.equal('http://localhost:8080/app/cockpit/default/#/');
+      expect(cockpitUrl).to.be.equal('http://localhost:8080/app/monitoring/default/#/');
     });
   });
 
@@ -85,7 +85,7 @@ describe('<webAppUrls>', function() {
       const cockpitUrl = await determineCockpitUrl(engineRestUrl);
 
       // then
-      expect(cockpitUrl).to.be.equal('http://localhost:8080/app/cockpit/default/#/');
+      expect(cockpitUrl).to.be.equal('http://localhost:8080/app/monitoring/default/#/');
     });
 
 
@@ -98,7 +98,7 @@ describe('<webAppUrls>', function() {
       const cockpitUrl = await determineCockpitUrl(engineRestUrl);
 
       // then
-      expect(cockpitUrl).to.be.equal('http://localhost:8080/fluxnova/app/cockpit/default/#/');
+      expect(cockpitUrl).to.be.equal('http://localhost:8080/fluxnova/app/monitoring/default/#/');
     });
 
 
@@ -111,7 +111,7 @@ describe('<webAppUrls>', function() {
       const cockpitUrl = await determineCockpitUrl(engineRestUrl);
 
       // then
-      expect(cockpitUrl).to.be.equal('http://customized-camunda.bpmn.io/app/cockpit/default/#/');
+      expect(cockpitUrl).to.be.equal('http://customized-camunda.bpmn.io/app/monitoring/default/#/');
     });
   });
 });
