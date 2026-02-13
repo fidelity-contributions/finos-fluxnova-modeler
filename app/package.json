@@ -10,6 +10,9 @@
     "url": "https://fluxnova.finos.org"
   },
   "license": "MIT",
+  "scripts": {
+    "test": "nyc --reporter lcov --exclude \"./test/**\" --exclude \"./**/__tests__\" mocha --require ./test/expect \"./**/*-spec.js\""
+  },
   "dependencies": {
     "@camunda8/sdk": "^8.6.25",
     "@sentry/integrations": "^7.113.0",
