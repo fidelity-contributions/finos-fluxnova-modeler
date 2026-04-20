@@ -42,10 +42,14 @@ export async function getDmnDefinitionsForConversion(xml) {
 
 export async function getBpmnDefinitions(xml, diagramType, modelerModdle = FluxnovaModelerModdle) {
 
-  const extensions = {
-    modeler: modelerModdle,
-    fluxnova: FluxnovaBpmnModdle
-  };
+  const extensions = {};
+
+  // Conversion path passes modelerModdle = null and should not force custom
+  // namespace registration. Runtime/editor paths use the default moddle.
+  if (modelerModdle) {
+    extensions.modeler = modelerModdle;
+    extensions.fluxnova = FluxnovaBpmnModdle;
+  }
 
   if (diagramType === 'bpmn') {
     extensions.camunda = CamundaBpmnModdle;
@@ -165,7 +169,6 @@ export function parseFormFieldCounts(contents) {
 export async function toBpmnXml(definitions) {
   const extensions = {
     camunda: CamundaBpmnModdle,
-    modeler: FluxnovaModelerModdle,
     fluxnova: FluxnovaBpmnModdle
   };
 
