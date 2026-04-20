@@ -17,6 +17,7 @@ import CamundaBpmnModdle from 'camunda-bpmn-moddle/resources/camunda';
 import CamundaDmnModdle from 'camunda-dmn-moddle/resources/camunda';
 import ZeebeBpmnModdle from 'zeebe-bpmn-moddle/resources/zeebe';
 import FluxnovaModelerModdle from '../moddle/fluxnova-bpmn-modeler-moddle';
+import FluxnovaBpmnModdle from '../moddle/fluxnova-bpmn-moddle';
 
 import { selfAndAllFlowElements } from './elementsUtil';
 import parseExecutionPlatform from '../app/util/parseExecutionPlatform';
@@ -42,7 +43,8 @@ export async function getDmnDefinitionsForConversion(xml) {
 export async function getBpmnDefinitions(xml, diagramType, modelerModdle = FluxnovaModelerModdle) {
 
   const extensions = {
-    modeler: modelerModdle
+    modeler: modelerModdle,
+    fluxnova: FluxnovaBpmnModdle
   };
 
   if (diagramType === 'bpmn') {
@@ -162,7 +164,9 @@ export function parseFormFieldCounts(contents) {
 
 export async function toBpmnXml(definitions) {
   const extensions = {
-    camunda: CamundaBpmnModdle
+    camunda: CamundaBpmnModdle,
+    modeler: FluxnovaModelerModdle,
+    fluxnova: FluxnovaBpmnModdle
   };
 
   const moddle = new BpmnModdle(extensions);

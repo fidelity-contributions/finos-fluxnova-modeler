@@ -29,6 +29,8 @@ import popupMenuTracking from 'bpmn-js-tracking/lib/features/popup-menu';
 import paletteTracking from 'bpmn-js-tracking/lib/features/palette';
 
 import { BpmnImprovedCanvasModule } from './features/improved-canvas';
+import FluxnovaBpmnModdle from '../../../../moddle/fluxnova-bpmn-moddle';
+import FluxnovaModelerModdle from '../../../../moddle/fluxnova-bpmn-modeler-moddle';
 
 import Flags, {
   DISABLE_ADJUST_ORIGIN,
@@ -60,7 +62,11 @@ export default class PlatformBpmnModeler extends BpmnModeler {
     super({
       ...otherOptions,
       additionalModules,
-      moddleExtensions,
+      moddleExtensions: {
+        fluxnova: FluxnovaBpmnModdle,
+        modeler: FluxnovaModelerModdle,
+        ...moddleExtensions
+      },
       disableAdjustOrigin: Flags.get(DISABLE_ADJUST_ORIGIN),
       canvas: {
         autoFocus: true

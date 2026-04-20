@@ -1,0 +1,45 @@
+{
+  "name": "Fluxnova",
+  "uri": "http://fluxnova.finos.org/schema/1.0/bpmn",
+  "prefix": "fluxnova",
+  "xml": {
+    "tagAlias": "lowerCase"
+  },
+  "associations": [],
+  "types": [
+    {
+      "name": "Properties",
+      "superClass": ["Element"],
+      "meta": {
+        "allowedIn": ["*"]
+      },
+      "properties": [
+        {
+          "name": "values",
+          "type": "Property",
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "Property",
+      "superClass": ["Element"],
+      "meta": {
+        "allowedIn": ["*"]
+      },
+      "properties": [
+        {
+          "name": "name",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "value",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    }
+  ],
+  "enumerations": []
+}
