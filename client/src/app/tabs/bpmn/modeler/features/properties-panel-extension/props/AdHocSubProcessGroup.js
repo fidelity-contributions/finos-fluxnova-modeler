@@ -29,7 +29,3 @@ export function createAdHocSubProcessGroups(element) {
 
   return [ activeTasksGroup, completionGroup ];
 }
-
-export function createAdHocSubProcessGroup(element) {
-  return createAdHocSubProcessGroups(element)[0] || null;
-}
