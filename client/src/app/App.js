@@ -532,11 +532,14 @@ export class App extends PureComponent {
       await this.showTab(nextActive);
     }
 
-    this.setState({
-      tabs: newTabs,
-      openedTabs: newOpenedTabs
-    }, () => {
-      this.props.cache.destroy(tab.id);
+    return new Promise((resolve) => {
+      this.setState({
+        tabs: newTabs,
+        openedTabs: newOpenedTabs
+      }, () => {
+        this.props.cache.destroy(tab.id);
+        resolve();
+      });
     });
   }
 
@@ -697,7 +700,7 @@ export class App extends PureComponent {
     // open the tab for the desired file or, if not found,
     // the last opened tab
     if (activateFile !== false) {
-      const activeTab = activateFile && this.findOpenTab(activateFile) || openedTabs[openedTabs.length - 1];
+      const activeTab = activateFile && openedTabs.find(t => t.file && t.file.path === activateFile.path) || openedTabs[openedTabs.length - 1];
 
       if (activeTab) {
         await this.selectTab(activeTab);

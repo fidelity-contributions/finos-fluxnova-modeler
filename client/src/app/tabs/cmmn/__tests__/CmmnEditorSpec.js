@@ -10,7 +10,7 @@
 
 /* global sinon */
 
-import { fireEvent } from '@testing-library/react';
+import { waitFor, fireEvent } from '@testing-library/react';
 
 import {
   Cache,
@@ -787,9 +787,10 @@ describe('<CmmnEditor>', function() {
       await instance.getXML();
 
       // then
-      const dirty = instance.isDirty();
-
-      expect(dirty).to.be.false;
+      await waitFor(() => {
+        const dirty = instance.isDirty();
+        expect(dirty).to.be.false;
+      });
     });
 
   });

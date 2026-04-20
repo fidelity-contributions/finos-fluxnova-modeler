@@ -12,7 +12,7 @@
 
 import React, { createRef } from 'react';
 
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 
 import { MultiSheetTab } from '../MultiSheetTab';
 
@@ -241,7 +241,7 @@ describe('<MultiSheetTab>', function() {
     });
 
 
-    it('should open fallback on error', function() {
+    it('should open fallback on error', async function() {
 
       // given
       const {
@@ -252,11 +252,10 @@ describe('<MultiSheetTab>', function() {
       instance.handleImport(new Error('error'));
 
       // then
-      const {
-        activeSheet
-      } = instance.getCached();
-
-      expect(activeSheet.id).to.equal('fallback');
+      await waitFor(() => {
+        const { activeSheet } = instance.getCached();
+        expect(activeSheet.id).to.equal('fallback');
+      });
     });
 
   });
@@ -264,7 +263,7 @@ describe('<MultiSheetTab>', function() {
 
   describe('#openFallback', function() {
 
-    it('should open fallback', function() {
+    it('should open fallback', async function() {
 
       // given
       const {
@@ -275,15 +274,14 @@ describe('<MultiSheetTab>', function() {
       instance.openFallback();
 
       // then
-      const {
-        activeSheet
-      } = instance.getCached();
-
-      expect(activeSheet.id).to.equal('fallback');
+      await waitFor(() => {
+        const { activeSheet } = instance.getCached();
+        expect(activeSheet.id).to.equal('fallback');
+      });
     });
 
 
-    it('should open fallback on error during first mount', function() {
+    it('should open fallback on error during first mount', async function() {
 
       // given
       class BrokenEditor extends DefaultEditor {
@@ -311,11 +309,10 @@ describe('<MultiSheetTab>', function() {
       const { instance } = renderTab({ providers });
 
       // then
-      const {
-        activeSheet
-      } = instance.getCached();
-
-      expect(activeSheet.id).to.equal('fallback');
+      await waitFor(() => {
+        const { activeSheet } = instance.getCached();
+        expect(activeSheet.id).to.equal('fallback');
+      });
     });
 
   });
@@ -473,7 +470,9 @@ describe('<MultiSheetTab>', function() {
       await instance.switchSheet(sheets[1]);
 
       // then
-      expect(instance.isDirty()).to.be.true;
+      await waitFor(() => {
+        expect(instance.isDirty()).to.be.true;
+      });
     });
 
 
@@ -483,7 +482,9 @@ describe('<MultiSheetTab>', function() {
       await instance.handleContentUpdated(`${INITIAL_XML}-bar`);
 
       // then
-      expect(instance.isDirty()).to.be.true;
+      await waitFor(() => {
+        expect(instance.isDirty()).to.be.true;
+      });
     });
 
 
