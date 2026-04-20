@@ -6,19 +6,30 @@ import {
 } from './AdHocSubProcessProps';
 
 
-export function createAdHocSubProcessGroup(element) {
+export function createAdHocSubProcessGroups(element) {
   if (!is(element, 'bpmn:AdHocSubProcess')) {
-    return null;
+    return [];
   }
 
-  const group = {
-    id: 'ad_hoc_subprocess',
-    label: 'Ad Hoc Subprocess',
+  const activeTasksGroup = {
+    id: 'ad_hoc_subprocess_active_tasks',
+    label: 'Active Tasks',
     entries: [
-      ...ActiveTasksCollectionProps({ element }),
+      ...ActiveTasksCollectionProps({ element })
+    ]
+  };
+
+  const completionGroup = {
+    id: 'ad_hoc_subprocess_completion',
+    label: 'Completion',
+    entries: [
       ...CompletionProps({ element })
     ]
   };
 
-  return group;
+  return [ activeTasksGroup, completionGroup ];
+}
+
+export function createAdHocSubProcessGroup(element) {
+  return createAdHocSubProcessGroups(element)[0] || null;
 }

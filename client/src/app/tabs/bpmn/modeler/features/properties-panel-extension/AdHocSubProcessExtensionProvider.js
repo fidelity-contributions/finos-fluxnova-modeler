@@ -1,23 +1,24 @@
-import { createAdHocSubProcessGroup as defaultAdHocSubProcessGroup } from './props/AdHocSubProcessGroup';
+import { createAdHocSubProcessGroups as defaultAdHocSubProcessGroups } from './props/AdHocSubProcessGroup';
 
 
 export default class AdHocSubProcessExtensionProvider {
 
-  constructor(propertiesPanel, createAdHocSubProcessGroup = defaultAdHocSubProcessGroup) {
+  constructor(propertiesPanel, createAdHocSubProcessGroups = defaultAdHocSubProcessGroups) {
     propertiesPanel.registerProvider(100, this);
-    this.createAdHocSubProcessGroup = createAdHocSubProcessGroup;
+    this.createAdHocSubProcessGroups = createAdHocSubProcessGroups;
   }
 
   getGroups(element) {
     return groups => {
 
-      const extendedAdHocGroup = groupExists(groups, 'ad_hoc_subprocess');
+      const hasActiveTasksGroup = groupExists(groups, 'ad_hoc_subprocess_active_tasks') !== -1;
+      const hasCompletionGroup = groupExists(groups, 'ad_hoc_subprocess_completion') !== -1;
 
       groups = groups.slice();
 
-      if (extendedAdHocGroup === -1) {
-        const adHocSubProcessGroup = this.createAdHocSubProcessGroup(element);
-        if (adHocSubProcessGroup) {
+      if (!hasActiveTasksGroup && !hasCompletionGroup) {
+        const adHocSubProcessGroups = this.createAdHocSubProcessGroups(element);
+        if (adHocSubProcessGroups.length) {
           let adjacentIndex = groups.length - 2;
           groups.forEach((group, index) => {
             if (isAdjacentGroup(group)) {
@@ -25,7 +26,7 @@ export default class AdHocSubProcessExtensionProvider {
             }
           });
 
-          groups.splice(adjacentIndex, 0, adHocSubProcessGroup);
+          groups.splice(adjacentIndex, 0, ...adHocSubProcessGroups);
         }
       }
 
