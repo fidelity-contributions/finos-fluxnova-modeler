@@ -204,7 +204,7 @@ function CompletionCondition(props) {
       if (!completionCondition) {
         // Create the Expression element
         completionCondition = createElement(
-          'bpmn:Expression',
+          'bpmn:FormalExpression',
           { body: value },
           businessObject,
           bpmnFactory
