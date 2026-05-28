@@ -174,6 +174,11 @@ export function CompletionProps(props) {
       id: 'cancelRemainingInstances',
       component: CancelRemainingInstances,
       isEdited: isCheckboxEntryEdited
+    },
+    {
+      id: 'autoComplete',
+      component: AutoComplete,
+      isEdited: isCheckboxEntryEdited
     }
   ];
 
@@ -287,6 +292,127 @@ function CancelRemainingInstances(props) {
     getValue,
     setValue,
     description: translate('Whether to cancel remaining active tasks when completion condition is met')
+  });
+}
+
+function AutoComplete(props) {
+  const { element } = props;
+
+  const commandStack = useService('commandStack');
+  const translate = useService('translate');
+  const bpmnFactory = useService('bpmnFactory');
+
+  const businessObject = getBusinessObject(element);
+
+  const getValue = () => {
+    const property = getFluxnovaProperty(businessObject, 'autoComplete');
+
+    if (!property) {
+      return true;
+    }
+
+    return property.value !== 'false';
+  };
+
+  const setValue = (value) => {
+    const commands = [];
+
+    let extensionElements = businessObject.get('extensionElements');
+    let fluxnovaProperties = getExtensionElementsList(businessObject, 'fluxnova:Properties')[0];
+    const autoCompleteProperty = fluxnovaProperties?.get('values')?.find((v) => v.name === 'autoComplete');
+
+    if (value === false) {
+      if (!extensionElements) {
+        extensionElements = createElement(
+          'bpmn:ExtensionElements',
+          { values: [] },
+          businessObject,
+          bpmnFactory
+        );
+
+        commands.push({
+          cmd: 'element.updateModdleProperties',
+          context: {
+            element,
+            moddleElement: businessObject,
+            properties: { extensionElements }
+          }
+        });
+      }
+
+      if (!fluxnovaProperties) {
+        fluxnovaProperties = createElement(
+          'fluxnova:Properties',
+          { values: [] },
+          extensionElements,
+          bpmnFactory
+        );
+
+        commands.push({
+          cmd: 'element.updateModdleProperties',
+          context: {
+            element,
+            moddleElement: extensionElements,
+            properties: {
+              values: [ ...extensionElements.get('values'), fluxnovaProperties ]
+            }
+          }
+        });
+      }
+
+      if (autoCompleteProperty) {
+        commands.push({
+          cmd: 'element.updateModdleProperties',
+          context: {
+            element,
+            moddleElement: autoCompleteProperty,
+            properties: { value: 'false' }
+          }
+        });
+      } else {
+        const property = createElement(
+          'fluxnova:Property',
+          { name: 'autoComplete', value: 'false' },
+          fluxnovaProperties,
+          bpmnFactory
+        );
+
+        commands.push({
+          cmd: 'element.updateModdleProperties',
+          context: {
+            element,
+            moddleElement: fluxnovaProperties,
+            properties: {
+              values: [ ...(fluxnovaProperties.get('values') || []), property ]
+            }
+          }
+        });
+      }
+    } else if (autoCompleteProperty) {
+      commands.push({
+        cmd: 'element.updateModdleProperties',
+        context: {
+          element,
+          moddleElement: fluxnovaProperties,
+          properties: {
+            values: without(fluxnovaProperties.get('values'), autoCompleteProperty)
+          }
+        }
+      });
+    }
+
+    if (commands.length) {
+      commandStack.execute('properties-panel.multi-command-executor', commands);
+    }
+  };
+
+  return CheckboxEntry({
+    element,
+    id: 'autoComplete',
+    label: translate('Auto Complete'),
+    getValue,
+    setValue,
+    description: translate('Whether to automatically complete the ad hoc subprocess after initial activities are done')
   });
 }
 

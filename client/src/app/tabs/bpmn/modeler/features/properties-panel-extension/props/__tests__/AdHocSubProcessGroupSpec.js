@@ -85,7 +85,7 @@ describe('AdHocSubProcessGroup', function() {
     expect(hasActiveTasksEntry).to.be.true;
   });
 
-  it('should have completionCondition and cancelRemainingInstances in Completion group', function() {
+  it('should have completionCondition, cancelRemainingInstances and autoComplete in Completion group', function() {
 
     const element = {
       businessObject: {
@@ -100,5 +100,6 @@ describe('AdHocSubProcessGroup', function() {
 
     expect(entryIds).to.include('completionCondition');
     expect(entryIds).to.include('cancelRemainingInstances');
+    expect(entryIds).to.include('autoComplete');
   });
 });

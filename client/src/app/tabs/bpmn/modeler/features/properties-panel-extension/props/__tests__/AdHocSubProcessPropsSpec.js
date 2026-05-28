@@ -75,7 +75,7 @@ describe('AdHocSubProcessProps', function() {
       const props = { element };
       const result = CompletionProps(props);
 
-      expect(result).to.be.an('array').with.lengthOf(2);
+      expect(result).to.be.an('array').with.lengthOf(3);
     });
 
     it('should have completionCondition entry', function() {
@@ -114,6 +114,24 @@ describe('AdHocSubProcessProps', function() {
       expect(cancelEntry.isEdited).to.be.a('function');
     });
 
+    it('should have autoComplete entry', function() {
+      const element = {
+        businessObject: {
+          $type: 'bpmn:AdHocSubProcess',
+          $instanceOf: (type) => type === 'bpmn:AdHocSubProcess'
+        }
+      };
+      const props = { element };
+      const result = CompletionProps(props);
+      const autoCompleteEntry = result.find(entry => entry.id === 'autoComplete');
+
+      expect(autoCompleteEntry).to.exist;
+      expect(autoCompleteEntry).to.have.property('component');
+      expect(autoCompleteEntry.component).to.be.a('function');
+      expect(autoCompleteEntry).to.have.property('isEdited');
+      expect(autoCompleteEntry.isEdited).to.be.a('function');
+    });
+
     it('should return entries in correct order', function() {
       const element = {
         businessObject: {
@@ -127,6 +145,7 @@ describe('AdHocSubProcessProps', function() {
 
       expect(ids[0]).to.equal('completionCondition');
       expect(ids[1]).to.equal('cancelRemainingInstances');
+      expect(ids[2]).to.equal('autoComplete');
     });
   });
 });
