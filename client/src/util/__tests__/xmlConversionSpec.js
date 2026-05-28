@@ -148,18 +148,17 @@ describe('util - xmlConversionSpec', function() {
       expect(autoCompleteProperty).to.not.exist;
     });
 
-    it('should parse autoComplete property when false', async function() {
+    it('should parse autoComplete attribute when false', async function() {
 
       const xmlWithAutoCompleteFalse = '<?xml version="1.0" encoding="UTF-8"?>' +
         '<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"' +
         '                   xmlns:fluxnova="http://fluxnova.finos.org/schema/1.0/bpmn"' +
         '                   id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">' +
         '  <bpmn:process id="Process_1" isExecutable="true">' +
-        '    <bpmn:adHocSubProcess id="AdHocSubProcess_1">' +
+        '    <bpmn:adHocSubProcess id="AdHocSubProcess_1" fluxnova:autoComplete="false">' +
         '      <bpmn:extensionElements>' +
         '        <fluxnova:Properties>' +
         '          <fluxnova:Property name="activeTasksCollection" value="taskA,taskB" />' +
-        '          <fluxnova:Property name="autoComplete" value="false" />' +
         '        </fluxnova:Properties>' +
         '      </bpmn:extensionElements>' +
         '    </bpmn:adHocSubProcess>' +
@@ -169,12 +168,7 @@ describe('util - xmlConversionSpec', function() {
       const definitions = await getBpmnDefinitions(xmlWithAutoCompleteFalse, 'bpmn');
       const adHocSubProcess = definitions.rootElements[0].flowElements[0];
 
-      const extensionElements = adHocSubProcess.extensionElements;
-      const fluxnovaProperties = extensionElements.values.find((v) => v.$type === 'fluxnova:Properties');
-      const autoCompleteProperty = fluxnovaProperties.values.find((p) => p.name === 'autoComplete');
-
-      expect(autoCompleteProperty).to.exist;
-      expect(autoCompleteProperty.value).to.equal('false');
+      expect(adHocSubProcess.autoComplete).to.equal(false);
     });
 
     it('should parse completionCondition only', async function() {
@@ -240,21 +234,20 @@ describe('util - xmlConversionSpec', function() {
 
       expect(xml).to.contain('name="activeTasksCollection"');
       expect(xml).to.contain('value="task1,task2,task3"');
-      expect(xml).to.not.contain('name="autoComplete"');
+      expect(xml).to.not.contain('fluxnova:autoComplete=');
     });
 
-    it('should export autoComplete property when false', async function() {
+    it('should export autoComplete attribute when false', async function() {
 
       const xmlWithAutoCompleteFalse = '<?xml version="1.0" encoding="UTF-8"?>' +
         '<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"' +
         '                   xmlns:fluxnova="http://fluxnova.finos.org/schema/1.0/bpmn"' +
         '                   id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">' +
         '  <bpmn:process id="Process_1" isExecutable="true">' +
-        '    <bpmn:adHocSubProcess id="AdHocSubProcess_1">' +
+        '    <bpmn:adHocSubProcess id="AdHocSubProcess_1" fluxnova:autoComplete="false">' +
         '      <bpmn:extensionElements>' +
         '        <fluxnova:Properties>' +
         '          <fluxnova:Property name="activeTasksCollection" value="taskA,taskB" />' +
-        '          <fluxnova:Property name="autoComplete" value="false" />' +
         '        </fluxnova:Properties>' +
         '      </bpmn:extensionElements>' +
         '    </bpmn:adHocSubProcess>' +
@@ -268,8 +261,8 @@ describe('util - xmlConversionSpec', function() {
       const { rootElement: definitions } = await moddle.fromXML(xmlWithAutoCompleteFalse);
       const { xml } = await moddle.toXML(definitions, { format: true });
 
-      expect(xml).to.contain('name="autoComplete"');
-      expect(xml).to.contain('value="false"');
+      expect(xml).to.contain('fluxnova:autoComplete="false"');
+      expect(xml).to.not.contain('name="autoComplete"');
     });
 
     it('should handle AdHocSubProcess with no Fluxnova properties', async function() {

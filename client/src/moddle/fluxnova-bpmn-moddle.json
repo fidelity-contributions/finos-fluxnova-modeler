@@ -8,6 +8,20 @@
   "associations": [],
   "types": [
     {
+      "name": "AdHocSubProcess",
+      "isAbstract": true,
+      "extends": [
+        "bpmn:AdHocSubProcess"
+      ],
+      "properties": [
+        {
+          "name": "autoComplete",
+          "isAttr": true,
+          "type": "Boolean"
+        }
+      ]
+    },
+    {
       "name": "Properties",
       "superClass": ["Element"],
       "meta": {

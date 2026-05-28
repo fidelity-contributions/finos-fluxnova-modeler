@@ -300,110 +300,23 @@ function AutoComplete(props) {
 
   const commandStack = useService('commandStack');
   const translate = useService('translate');
-  const bpmnFactory = useService('bpmnFactory');
 
   const businessObject = getBusinessObject(element);
 
   const getValue = () => {
-    const property = getFluxnovaProperty(businessObject, 'autoComplete');
-
-    if (!property) {
-      return true;
-    }
-
-    return property.value !== 'false';
+    const value = businessObject.get('autoComplete');
+    return isDefined(value) ? value : true;
   };
 
   const setValue = (value) => {
-    const commands = [];
-
-    let extensionElements = businessObject.get('extensionElements');
-    let fluxnovaProperties = getExtensionElementsList(businessObject, 'fluxnova:Properties')[0];
-    const autoCompleteProperty = fluxnovaProperties?.get('values')?.find((v) => v.name === 'autoComplete');
-
-    if (value === false) {
-      if (!extensionElements) {
-        extensionElements = createElement(
-          'bpmn:ExtensionElements',
-          { values: [] },
-          businessObject,
-          bpmnFactory
-        );
-
-        commands.push({
-          cmd: 'element.updateModdleProperties',
-          context: {
-            element,
-            moddleElement: businessObject,
-            properties: { extensionElements }
-          }
-        });
+    commandStack.execute('element.updateModdleProperties', {
+      element,
+      moddleElement: businessObject,
+      properties: {
+        // default=true, persist only when false
+        autoComplete: value === false ? false : undefined
       }
-
-      if (!fluxnovaProperties) {
-        fluxnovaProperties = createElement(
-          'fluxnova:Properties',
-          { values: [] },
-          extensionElements,
-          bpmnFactory
-        );
-
-        commands.push({
-          cmd: 'element.updateModdleProperties',
-          context: {
-            element,
-            moddleElement: extensionElements,
-            properties: {
-              values: [ ...extensionElements.get('values'), fluxnovaProperties ]
-            }
-          }
-        });
-      }
-
-      if (autoCompleteProperty) {
-        commands.push({
-          cmd: 'element.updateModdleProperties',
-          context: {
-            element,
-            moddleElement: autoCompleteProperty,
-            properties: { value: 'false' }
-          }
-        });
-      } else {
-        const property = createElement(
-          'fluxnova:Property',
-          { name: 'autoComplete', value: 'false' },
-          fluxnovaProperties,
-          bpmnFactory
-        );
-
-        commands.push({
-          cmd: 'element.updateModdleProperties',
-          context: {
-            element,
-            moddleElement: fluxnovaProperties,
-            properties: {
-              values: [ ...(fluxnovaProperties.get('values') || []), property ]
-            }
-          }
-        });
-      }
-    } else if (autoCompleteProperty) {
-      commands.push({
-        cmd: 'element.updateModdleProperties',
-        context: {
-          element,
-          moddleElement: fluxnovaProperties,
-          properties: {
-            values: without(fluxnovaProperties.get('values'), autoCompleteProperty)
-          }
-        }
-      });
-    }
-
-    if (commands.length) {
-      commandStack.execute('properties-panel.multi-command-executor', commands);
-    }
+    });
   };
 
   return CheckboxEntry({
