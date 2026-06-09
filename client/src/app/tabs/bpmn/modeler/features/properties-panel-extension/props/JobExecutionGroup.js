@@ -1,16 +1,16 @@
 import { Group } from '@bpmn-io/properties-panel';
-import { FormProps } from './BpmnFormProps';
+import { JobExecutionProps } from './JobExecutionProps';
 import translate from 'diagram-js/lib/i18n/translate/translate';
 
 
-export function createBpmnFormGroup(element) {
+export function createJobExecutionGroup(element) {
 
   const group = {
-    label: translate('Forms'),
-    id: 'FluxnovaPlatform__Form',
+    id: 'job_execution',
+    label: translate('Job execution'),
     component: Group,
     entries: [
-      ...FormProps({ element })
+      ...JobExecutionProps({ element })
     ]
   };
 
