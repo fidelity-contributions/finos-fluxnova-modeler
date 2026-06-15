@@ -545,6 +545,7 @@ describe('<DmnEditor>', function() {
 
       cache.add('editor', {
         cached: {
+          activeView: { element: undefined, type: 'drd' },
           lastXML: diagramXML,
           modeler: new DmnModeler({
             commandStack: {
