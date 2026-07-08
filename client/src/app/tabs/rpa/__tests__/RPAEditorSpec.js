@@ -135,9 +135,11 @@ describe('<RPAEditor>', function() {
       await instance.getXML();
 
       // then
+      await waitFor(() => {
       const dirty = instance.isDirty();
 
       expect(dirty).to.be.false;
+      });
     });
 
 
