@@ -6,6 +6,10 @@ All notable changes to the [Fluxnova Modeler](https://github.com/finos/fluxnova-
 
 **\_Note:** Yet to be released changes appear here.\_
 
+## 1.3.0
+
+- Add support for restricted variables
+
 ## 1.2.0
 
 - Added retry time cycle functionality for element templates
