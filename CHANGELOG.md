@@ -16,6 +16,7 @@ All notable changes to the [Fluxnova Modeler](https://github.com/finos/fluxnova-
 - Refactored Windows code signing logic to utilize Azure trusted signing
 - Fixed DMN tab state that was always marked as dirty
 - Add support for 3.0.0 execution platform version
+- Add support for restricted variables
 
 ## 1.2.0
 
