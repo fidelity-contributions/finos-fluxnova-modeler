@@ -15,8 +15,9 @@ All notable changes to the [Fluxnova Modeler](https://github.com/finos/fluxnova-
 - Migrated tests to @testing-library/react and removed enzyme dependency
 - Refactored Windows code signing logic to utilize Azure trusted signing
 - Fixed DMN tab state that was always marked as dirty
-- Add support for 3.0.0 execution platform version
-- Add support for restricted variables
+- Added support for 3.0.0 execution platform version
+- Added support for restricted variables
+- Added support for ad-hoc subprocesses
 
 ## 1.2.0
 
