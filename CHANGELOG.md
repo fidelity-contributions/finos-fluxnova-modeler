@@ -6,6 +6,10 @@ All notable changes to the [Fluxnova Modeler](https://github.com/finos/fluxnova-
 
 **\_Note:** Yet to be released changes appear here.\_
 
+## 1.3.1
+
+- Fixed deep links to use correct Fluxnova Monitoring URL path
+
 ## 1.3.0
 
 - Updated react, react-dom, react-test-renderer from 16.14.0 to 18.3.1
