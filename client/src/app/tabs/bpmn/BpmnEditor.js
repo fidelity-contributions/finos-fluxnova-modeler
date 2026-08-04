@@ -475,7 +475,7 @@ export class BpmnEditor extends CachedComponent {
       modeler
     } = this.getCached();
 
-    const engineProfile = engineProfileOverride || cachedEngineProfile;    
+    const engineProfile = engineProfileOverride || cachedEngineProfile;
 
     if (!engineProfile) {
       return;
