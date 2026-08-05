@@ -120,7 +120,7 @@ describe('<App>', function() {
         });
 
         // when
-        app.handleTabChanged()();
+        app.handleTabChanged(app.state.activeTab);
 
         // then
         // 1 - tab render
@@ -1317,7 +1317,7 @@ describe('<App>', function() {
       const onTabChanged = spy(function(tab, oldTab) {
         events.push([ 'tab-changed', tab ]);
 
-        app.handleTabShown(tab)();
+        app.handleTabShown();
       });
 
       const onTabShown = spy(function(tab) {
@@ -2363,7 +2363,7 @@ describe('<App>', function() {
     class CustomEmptyTab extends Component {
 
       componentDidMount() {
-        this.props.onShown();
+        this.props.onShown(this.props.tab);
       }
 
       render() {

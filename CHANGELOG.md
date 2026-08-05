@@ -8,7 +8,9 @@ All notable changes to the [Fluxnova Modeler](https://github.com/finos/fluxnova-
 
 ## 1.3.1
 
-- Fixed deep links to use correct Fluxnova Monitoring URL path
+- Fixed deep links to use correct Fluxnova Monitoring URL path (#108)
+- Hardened React 18 tab update-cycle and callback lifecycle behavior (#113)
+- Fixed BPMN canvas copy/paste (#114)
 
 ## 1.3.0
 
