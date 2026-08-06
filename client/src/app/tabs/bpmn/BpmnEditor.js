@@ -421,7 +421,7 @@ export class BpmnEditor extends CachedComponent {
       moveCanvas: canvasFocused,
       moveToOrigin: canvasFocused,
       moveSelection: canvasFocused && !!selectionLength,
-      paste: !modeler.get('clipboard').isEmpty(),
+      paste: true,
       platform: 'platform',
       propertiesPanel: true,
       redo: canvasFocused && commandStack.canRedo(),
@@ -475,7 +475,7 @@ export class BpmnEditor extends CachedComponent {
       modeler
     } = this.getCached();
 
-    const engineProfile = engineProfileOverride || cachedEngineProfile;    
+    const engineProfile = engineProfileOverride || cachedEngineProfile;
 
     if (!engineProfile) {
       return;
