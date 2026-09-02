@@ -19,9 +19,11 @@ import {
   Slot
 } from '../../slot-fill';
 
-import { EngineProfile, getAnnotatedVersion, getStatusBarLabel, toSemverMinor } from '../EngineProfile';
+import { EngineProfile, getAnnotatedVersion, getDefaultVersion, getStatusBarLabel, toSemverMinor } from '../EngineProfile';
 
 import { ENGINES, ENGINE_PROFILES } from '../../../util/Engines';
+
+import Flags, { FLUXNOVA_ENGINE_VERSION } from '../../../util/Flags';
 
 import { DEFAULT_ENGINE_PROFILE as bpmnEngineProfile } from '../bpmn/BpmnEditor';
 import { DEFAULT_ENGINE_PROFILE as cloudBpmnEngineProfile } from '../cloud-bpmn/BpmnEditor';
@@ -195,6 +197,7 @@ describe('<EngineProfile>', function() {
 
   });
 
+
   describe('#getStatusBarLabel', function() {
 
     it('should return correct annotated versions', function() {
@@ -214,6 +217,38 @@ describe('<EngineProfile>', function() {
         })).to.equal(input[2]);
       });
 
+    });
+
+  });
+
+
+  describe('#getDefaultVersion', function() {
+
+    afterEach(function() {
+      Flags.reset();
+    });
+
+
+    it('should return flag version when <fluxnova-engine-version> is set', function() {
+
+      // given
+      Flags.init({ [FLUXNOVA_ENGINE_VERSION]: '1.0.0' });
+
+      // when
+      const result = getDefaultVersion(ENGINES.FLUXNOVA);
+
+      // then
+      expect(result).to.equal('1.0.0');
+    });
+
+
+    it('should return latest stable when <fluxnova-engine-version> is not set', function() {
+
+      // when
+      const result = getDefaultVersion(ENGINES.FLUXNOVA);
+
+      // then
+      expect(result).to.equal('3.0.0');
     });
 
   });
@@ -427,7 +462,6 @@ function renderEngineProfile(options = {}) {
   );
 }
 
-
 function eachProfile(fn) {
   ENGINE_PROFILES.forEach(({ executionPlatform, executionPlatformVersions }) => {
     [
@@ -467,3 +501,4 @@ function selectVersion(select, version) {
 function expectVersion(select, version) {
   expect(select.value).to.equal(version || '');
 }
+
