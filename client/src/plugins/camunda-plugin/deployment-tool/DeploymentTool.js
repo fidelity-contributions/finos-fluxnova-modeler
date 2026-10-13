@@ -510,7 +510,9 @@ export default class DeploymentTool extends PureComponent {
 
     // since we have deprecated AUTH_TYPES.none, we should correct existing
     // configurations
-    if (endpoint.authType !== AUTH_TYPES.BASIC && endpoint.authType !== AUTH_TYPES.BEARER) {
+    if (endpoint.authType !== AUTH_TYPES.BASIC &&
+        endpoint.authType !== AUTH_TYPES.BEARER &&
+        endpoint.authType !== AUTH_TYPES.OIDC) {
       endpoint.authType = DEFAULT_ENDPOINT.authType;
     }
 

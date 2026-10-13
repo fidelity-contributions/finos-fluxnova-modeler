@@ -82,7 +82,8 @@ export default class DeploymentConfigValidator {
         this.usernameValidator.onExternalError(details, setFieldError);
         this.passwordValidator.onExternalError(details, setFieldError);
       } else if (authType === AUTH_TYPES.OIDC) {
-        this.issuerUrlValidator.onExternalError(details, setFieldError);
+
+        // surfaced via the login status indicator instead of a field error
       } else {
         this.tokenValidator.onExternalError(details, setFieldError);
       }

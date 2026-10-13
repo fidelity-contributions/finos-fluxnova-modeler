@@ -175,6 +175,43 @@ describe('OIDCAPI', function() {
       expect(result.reason).to.eql(ERROR_REASONS.NOT_AUTHENTICATED);
     });
 
+
+    it('should de-duplicate concurrent refresh calls', async function() {
+
+      // given
+      let refreshCalls = 0;
+
+      const oidcAPI = createOIDCAPI({
+        tokenSet: {
+          access_token: 'access-token',
+          refresh_token: 'refresh-token',
+          expires_at: nowInSeconds() - 10
+        },
+        refresh: () => {
+          refreshCalls++;
+
+          return Promise.resolve({
+            access_token: 'refreshed-token',
+            refresh_token: 'refresh-token',
+            expires_at: nowInSeconds() + 3600
+          });
+        }
+      });
+
+      await oidcAPI.login(ENDPOINT);
+
+      // when
+      const [ first, second ] = await Promise.all([
+        oidcAPI.getToken(ENDPOINT),
+        oidcAPI.getToken(ENDPOINT)
+      ]);
+
+      // then
+      expect(refreshCalls).to.eql(1);
+      expect(first.token).to.eql('refreshed-token');
+      expect(second.token).to.eql('refreshed-token');
+    });
+
   });
 
 

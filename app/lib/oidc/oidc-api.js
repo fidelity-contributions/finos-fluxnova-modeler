@@ -37,6 +37,7 @@ class OIDCAPI {
     this._issuers = new Map();
     this._clients = new Map();
     this._tokens = new Map();
+    this._refreshPromises = new Map();
   }
 
   /**
@@ -147,21 +148,35 @@ class OIDCAPI {
       return failure(ERROR_REASONS.NOT_AUTHENTICATED);
     }
 
-    try {
-      const tokenSet = await client.refresh(entry.refreshToken);
-
-      const refreshed = toTokenEntry(tokenSet, entry.refreshToken);
-
-      this._tokens.set(config.key, refreshed);
-
-      return { success: true, token: refreshed.accessToken };
-    } catch (error) {
-      this._logError('OIDC token refresh failed', error);
-
-      this._tokens.delete(config.key);
-
-      return failure(ERROR_REASONS.NOT_AUTHENTICATED);
+    // de-duplicate concurrent refreshes so IdPs enforcing refresh token
+    // rotation don't see the same refresh token used twice
+    if (this._refreshPromises.has(config.key)) {
+      return this._refreshPromises.get(config.key);
     }
+
+    const refreshPromise = (async () => {
+      try {
+        const tokenSet = await client.refresh(entry.refreshToken);
+
+        const refreshed = toTokenEntry(tokenSet, entry.refreshToken);
+
+        this._tokens.set(config.key, refreshed);
+
+        return { success: true, token: refreshed.accessToken };
+      } catch (error) {
+        this._logError('OIDC token refresh failed', error);
+
+        this._tokens.delete(config.key);
+
+        return failure(ERROR_REASONS.NOT_AUTHENTICATED);
+      } finally {
+        this._refreshPromises.delete(config.key);
+      }
+    })();
+
+    this._refreshPromises.set(config.key, refreshPromise);
+
+    return refreshPromise;
   }
 
   /**

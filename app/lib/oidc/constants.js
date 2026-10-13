@@ -9,7 +9,9 @@ module.exports.ERROR_REASONS = {
 
 module.exports.DEFAULT_SCOPE = 'openid profile offline_access';
 
-module.exports.LOOPBACK_HOST = 'localhost';
+// 127.0.0.1 avoids environments where 'localhost' resolves to an IPv6-only
+// loopback address that enterprise proxies/VPNs cannot reach (RFC 8252 §7.3)
+module.exports.LOOPBACK_HOST = '127.0.0.1';
 
 module.exports.CALLBACK_PATH = '/callback';
 

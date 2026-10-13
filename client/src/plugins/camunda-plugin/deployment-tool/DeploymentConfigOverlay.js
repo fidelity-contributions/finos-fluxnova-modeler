@@ -158,7 +158,8 @@ export default class DeploymentConfigOverlay extends React.PureComponent {
 
       if (code === GenericApiErrors.UNAUTHORIZED) {
         this.setState({
-          isAuthNeeded: true
+          isAuthNeeded: true,
+          ...(endpoint.authType === AUTH_TYPES.OIDC && { oidcLoginStatus: 'error' })
         });
       }
 
@@ -222,12 +223,18 @@ export default class DeploymentConfigOverlay extends React.PureComponent {
       oidcLoginStatus: null
     });
 
-    const result = await this.props.validator.loginOIDC(endpoint);
+    let result;
 
-    this.setState({
-      isOIDCLoginPending: false,
-      oidcLoginStatus: result && result.success ? 'success' : 'error'
-    });
+    try {
+      result = await this.props.validator.loginOIDC(endpoint);
+    } catch (error) {
+      result = null;
+    } finally {
+      this.setState({
+        isOIDCLoginPending: false,
+        oidcLoginStatus: result && result.success ? 'success' : 'error'
+      });
+    }
   };
 
   checkAuthStatus = (values) => {
@@ -478,7 +485,7 @@ export default class DeploymentConfigOverlay extends React.PureComponent {
                                   form={ fieldForm }
                                   fieldError={ fieldError }
                                   label="Scope"
-                                  hint="Defaults to 'openid profile'."
+                                  hint="Defaults to 'openid profile offline_access'."
                                 />
                               )}
                             </Field>
@@ -533,7 +540,7 @@ export default class DeploymentConfigOverlay extends React.PureComponent {
                         )}
 
                         {
-                          isAuthNeeded && (
+                          isAuthNeeded && form.values.endpoint.authType !== AUTH_TYPES.OIDC && (
                             <Field name="endpoint.rememberCredentials">
                               {({ field, form: fieldForm }) => (
                                 <ToggleSwitch
