@@ -670,6 +670,16 @@ describe('<DeploymentConfigOverlay>', function() {
 
   describe('OIDC login', function() {
 
+    let fetch;
+
+    beforeEach(function() {
+      fetch = sinon.stub(window, 'fetch').rejects(new TypeError('Failed to fetch'));
+    });
+
+    afterEach(function() {
+      fetch.restore();
+    });
+
     function getOIDCConfiguration() {
       return {
         deployment: {
@@ -685,15 +695,24 @@ describe('<DeploymentConfigOverlay>', function() {
       };
     }
 
+    // EndpointURLValidator holds the original validateConnectionWithoutCredentials,
+    // which calls validateConnection, so that is what must be stubbed
+    function createOIDCValidator(overrides = {}) {
+      const unauthorized = () => Promise.resolve({ code: GenericApiErrors.UNAUTHORIZED });
+
+      return new MockValidator({
+        validateConnection: unauthorized,
+        validateConnectionWithoutCredentials: unauthorized,
+        ...overrides
+      });
+    }
+
     it('should disable the login button and show a pending state while logging in', async function() {
 
       // given
       let resolveLogin;
 
-      const validator = new MockValidator({
-        validateConnectionWithoutCredentials: () => Promise.resolve({
-          code: GenericApiErrors.UNAUTHORIZED
-        }),
+      const validator = createOIDCValidator({
         loginOIDC: () => new Promise((resolve) => {
           resolveLogin = resolve;
         })
@@ -721,10 +740,7 @@ describe('<DeploymentConfigOverlay>', function() {
     it('should show success status after a successful login', async function() {
 
       // given
-      const validator = new MockValidator({
-        validateConnectionWithoutCredentials: () => Promise.resolve({
-          code: GenericApiErrors.UNAUTHORIZED
-        }),
+      const validator = createOIDCValidator({
         loginOIDC: () => Promise.resolve({ success: true })
       });
 
@@ -747,10 +763,7 @@ describe('<DeploymentConfigOverlay>', function() {
     it('should show an error status and re-enable the button when login rejects', async function() {
 
       // given
-      const validator = new MockValidator({
-        validateConnectionWithoutCredentials: () => Promise.resolve({
-          code: GenericApiErrors.UNAUTHORIZED
-        }),
+      const validator = createOIDCValidator({
         loginOIDC: () => Promise.reject(new Error('IPC channel closed'))
       });
 
@@ -776,11 +789,7 @@ describe('<DeploymentConfigOverlay>', function() {
     it('should hide the "Remember credentials" toggle for OIDC', async function() {
 
       // given
-      const validator = new MockValidator({
-        validateConnectionWithoutCredentials: () => Promise.resolve({
-          code: GenericApiErrors.UNAUTHORIZED
-        })
-      });
+      const validator = createOIDCValidator();
 
       const { queryByText } = createOverlay({
         configuration: getOIDCConfiguration(),
