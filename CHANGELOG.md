@@ -7,6 +7,30 @@ All notable changes to the [Fluxnova Modeler](https://github.com/finos/fluxnova-
 **\_Note:** Yet to be released changes appear here.\_
 
 
+## 1.3.3
+
+- Added OpenID Connect (OIDC) authentication for deploying and starting process instances on Fluxnova engines (#131)
+- Added support for transient variables in input/output parameters and element templates
+- Added support for 3.1.0 execution platform version
+- Fixed users being unable to override the Fluxnova engine version when creating new BPMNs (#88)
+- Fixed slow performance of diagram updates in very large BPMN files (#110)
+- Fixed tab drag-and-drop reordering
+- Fixed critical security vulnerabilities in tar and shell-quote dependencies
+- Updated electron from 42.3.3 to 44.0.0 and removed Windows ia32 build support
+- Updated diagram-js from 15.2.4 to 15.24.1
+- Updated bpmn-js from 18.3.1 to 18.25.0
+- Updated bpmn-js-properties-panel from 5.32.1 to 5.64.0
+- Updated camunda-bpmn-js from 5.6.1 to 5.32.0
+- Updated dmn-js from 17.1.0 to 17.10.2
+- Updated dmn-js-properties-panel from 3.7.0 to 3.11.1
+- Updated camunda-dmn-js from 3.1.1 to 3.8.2
+- Updated drag-tabs from 2.3.1 to 3.0.0
+- Updated GitHub Actions workflows to Node.js 24 and actions/checkout v6 (#135)
+- Updated actions/upload-artifact from v4 to v6 (#135)
+- Updated CodeQL action from v3 to v4
+- Added MAINTAINERS.md file
+- Updated SECURITY.md to the FINOS CRA stewardship template
+
 ## 1.3.2
 
 - Fixed form properties and form components missing on form import/create (#119)
