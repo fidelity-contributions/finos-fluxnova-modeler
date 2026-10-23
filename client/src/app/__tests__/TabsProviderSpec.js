@@ -253,7 +253,7 @@ describe('TabsProvider', function() {
         const { file: { contents } } = tabsProvider.createTab('bpmn');
 
         // then
-        expect(contents).to.include('modeler:executionPlatformVersion="3.1.0"');
+        expect(contents).to.include('modeler:executionPlatformVersion="3.1.1"');
       });
 
 
@@ -269,7 +269,7 @@ describe('TabsProvider', function() {
         const { file: { contents } } = tabsProvider.createTab('dmn');
 
         // then
-        expect(contents).to.include('modeler:executionPlatformVersion="3.1.0"');
+        expect(contents).to.include('modeler:executionPlatformVersion="3.1.1"');
       });
 
 
@@ -285,7 +285,7 @@ describe('TabsProvider', function() {
         const { file: { contents } } = tabsProvider.createTab('form');
 
         // then
-        expect(contents).to.include('"executionPlatformVersion": "3.1.0"');
+        expect(contents).to.include('"executionPlatformVersion": "3.1.1"');
       });
 
       describe('invalid flag', function() {
